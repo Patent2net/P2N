@@ -1,0 +1,9 @@
+**** *Label_EP0305255.txt *Country_EP *CIB3_A61-A61 *CIB1_A-A *CIB4_A61F-A61F *Date_1992 *Applicant_empty-domile *Kind_B1-A1-A1 *InventCountry_empty *ApplCountry_F-R 
+1- Lentille intraoculaire de chambre postérieure du type consti­tuée d'une partie centrale formant lentille et d'une partie d'appui élastique en forme de couronne circulaire, caractérisée en ce que la partie d'appui (22) est reliée à la partie centrale (21) par une seule attache (24) formée en une seule pièce avec la partie d'appui (22) et la partie centrale (21) et présentant une importante largeur relativement à celle de la partie d'appui (22), et en ce que la partie d'appui (22) est inclinée par rapport à la partie centrale (21).
+2- Lentille selon la revendication 1, caractérisée en ce que la largeur de l'attache (24) est environ dix fois supérieure à celle de la partie d'appui (22).
+3- Lentille selon la revendication 1 ou la revendication 2, caractérisée en ce que l'attache (25) est munie d'un trou non débouchant (25).
+4- Lentille selon l'une quelconque des revendications 1 à 3, caractérisée en ce que l'angle d'inclinaison de la partie d'appui (22) par rapport à la partie centrale (21) dans la direction de la convexité de celle-ci est d'environ 35°.
+5- Lentille selon l'une quelconque des revendications 1 à 4, caractérisée en ce que la partie centrale (21) de l'implant est en forme de ménisque.
+6- Lentille selon l'une des revendications 1 à 3, caractérisée en ce que la partie centrale formant lentille présente une forme biconvexe de manière à la rapprocher de la forme du cristallin naturel.
+7- Lentille selon la revendication 6, caractérisée en ce que l'angle d'inclinaison de la partie d'appui par rapport à cette partie centrale est d'environ 20°.
+8- Lentille selon la revendication 6 ou la revendication 7, carac­térisée en ce que le rapport du rayon de la face avant sur le rayon de la face arrière de cette partie centrale est d'environ 1/2.

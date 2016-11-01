@@ -1,0 +1,96 @@
+**** *Label_CH528964.txt *Country_C *CIB3_B24-B29 *CIB1_B *CIB4_B24B-B29D *Date_1972 *Applicant_lunetterie-e *Kind_A *InventCountry_F-R *ApplCountry_F-R 
+no 528 964
+EXPOSÉ D'INVENTION
+no 528964
+CONFÉDÉRATION SUISSE
+BUREAU FÉDÉRAL DE LA PROPRIÉTÉ INTELLECTUELLE
+Classification internationale: B 29 d 11/00
+G 02 c 7/04
+Numéro de la demande : Date de dépôt :
+Priorité :
+937/71
+21 janvier 1971, I8V4 h
+France, 22 janvier 1970 (7002216)
+Brevet délivré le 15 octobre 1972
+Exposé d'invention publié le 30 novembre 1972
+BREVET PRINCIPAL
+Société Industrielle de Lunetterie et d'Optique Rationnelle S.I.L.O.R., Paris (France)
+Procédé pour l'usinage du bord périphérique d'une lentille de contact en matière souple et installation pour la mise en œuvre de ce procédé
+Gérard Gomond, Paris (France), est mentionné comme étant l'inventeur
+1
+La présente invention concerne d'une manière générale l'usinage des lentilles de contact en matière souple.
+De telles lentilles sont bien connues par elles-mêmes. Elles peuvent être obtenues par coulée dans des moules d'une matière synthétique appropriée, silicone par exemple, et sont de préférence soumises ultérieurement à un traitement propre à les rendre hydrophiles, par exemple par greffage radiochimique de N-vinylpyrrolidone.
+Après leur moulage, et avant ce traitement de greffage, ces lentilles doivent être détourées et usinées. Le détourage consiste en l'élimination de la partie périphérique en excès d'une lentille brute, pour ramener celle-ci à un diamètre convenant à son utilisation, et l'usinage consiste à un amincissement aproprié des bords ainsi détourés d'une telle lentille.
+Mais la souplesse de la lentille, due à la nature de sa matière constitutive aussi bien qu'à sa minceur, rend difficile une exécution correcte de ces opérations de détourage et d'usinage.
+En effet, cet usinage étant exécuté de manière conventionnelle sur une machine comportant deux broches tournantes entre lesquelles la lentille à usiner est serrée, il est nécessaire de centrer cette lentille sur lesdites broches, et ce centrage, réalisé à ce jour à la main, est rendu difficile et délicat du fait de la souplesse et de la minceur d'une telle lentille.
+En outre, la lentille est le siège, lors de son usinage, de déformations dues à la force centrifuge, ces déformations se traduisant le plus souvent par un aplatissement de sa courbure et par suite par une variation en diamètre.
+La présente invention a pour objets un procédé et une installation permettant de pallier ces difficultés, et par suite permettant d'usiner les lentilles de contact souples aussi facilement et aussi efficacement que s'il s'agissait de lentilles de contact rigides.
+10
+15
+25
+30
+85
+Le procédé selon l'invention est caractérisé en ce qu'on place la lentille en matière souple entre deux broches tournantes, dont l'une au moins est motrice, on centre cette lentille sur lesdites broches, on rapproche les broches l'une de l'autre pour maintien par serrage de la lentille, on contre-bute l'une des faces de la lentille par un poinçon d'appui annulaire, on met en rotation celle au moins desdites broches qui est motrice, on arrose la lentille et les extrémités desdites broches et dudit poinçon par un jet de fluide réfrigérant, on retire le poinçon d'appui, et on usine la lentille.
+Selon une première forme de mise en œuvre, le centrage de la lentille sur les broches tournantes est fait mécaniquement à l'aide d'un manchon monté coulissant sur l'une de ces broches. De préférence, mais non obligatoirement, la lentille est, en vue de faciliter son centrage ultérieur, munie lors de son moulage d'un épaule-ment de renforcement périphérique qui en améliore avantageusement la rigidité.
+En variante, le centrage de la lentille sur les broches tournantes se fait optiquement à l'aide d'un focomètre placé dans l'axe de celles-ci. Un tel centrage optique permet avantageusement de pallier les conséquences d'un éventuel décentrement l'un par rapport à l'autre des moules ayant servi au moulage de la lentille, ce décentrement conduisant ainsi qu'on le sait à conférer à ladite lentille un effet de prisme intempestif.
+Selon une autre variante, le centrage de la lentille est fait mécaniquement tel que décrit ci-dessus, mais à partir d'une lentille détourée à l'emporte-pièce sur un focomètre ayant permis, préalablement à ce détourage, un centrage de la lentille par rapport à son centre optique.
+Quoi qu'il en soit, l'arrosage par un fluide réfrigérant, qui peut par exemple être de l'azote ou de l'air liquide, confère avantageusement à la lentille, après son centrage, une rigidité suffisante pour être convenablement usinée.
+528964 3
+Cette rigidité intervient alors que la lentille est avantageusement contre-butée par un poinçon d'appui choisi de préférence pour présenter au contact de ladite lentille une surface d'appui de rayon comparable à celui de la face correspondante de cette lentille.
+Cette disposition permet d'assurer à la lentille la permanence de ses caractéristiques dimensionnelles et s'oppose à ce qu'elle prenne ultérieurement une quelconque déformation. Son usinage se fait donc dans les meilleures conditions.
+En particulier, la lentille ne risque pas de se déformer entre les opérations de détourage et d'usinage, puisqu'elle garde toujours sa rigidité due à son arrosage permanent par un fluide réfrigérant ; en outre, son centrage initial demeure inchangé, ces opérations de détourage et d'usinage se faisant avantageusement en continu sur le même dispositif.
+De préférence, la mise en rotation de la broche tournante motrice se fait en deux temps ; dans un premier temps, on lance d'abord cette broche tournante à vitesse réduite, inférieure à 1000 tours-minute par exemple, jusqu'à refroidissement complet de la lentille et des pièces à son contact par le jet de fluide réfrigérant, et ceci afin d'éviter que la force centrifuge ne déforme la lentille pendant qu'elle est encore souple ; puis, dans un deuxième temps, on lance la broche tournante à pleine vitesse, c'est-à-dire à une vitesse supérieure à 15 000 tours-minute par exemple, propre à permettre le détourage et l'usinage de la lentille.
+Une mise en œuvre particulière du procédé objet de l'invention est illustrée par le dessin annexé qui représente, à titre d'exemple, une forme d'exécution particulière de l'installation pour sa mise en œuvre.
+La fig. 1 est une vue en perspective schématique du dispositif ou appareillage d'usinage que comprend cette forme d'exécution.
+La fig. 2 est une vue en coupe axiale partielle des broches tournantes de ce dispositif.
+Les fig. 3A à 3D reprennent à échelles différentes une partie de la fig. 2 et illustrent chacune respectivement une phase d'usinage d'une lentille en matière souple.
+La fig. 4, relative à une variante, est une vue schématique, en coupe axiale, d'un dispositif de détourage susceptible d'être associé au dispositif d'usinage de la fig. 1.
+Une lentille en matière souple est, sur ces figures, désignée par la référence générale 10. Cette lentille est obtenue de manière connue en soi par coulée d'une matière synthétique appropriée, silicone par exemple, entre deux demi-moules rigides. Pour fixer les idées, on en précisera ci-après globalement les dimensions :
+— diamètre périphérique : 14 mm
+— rayon intérieur : 7,6 mm
+— rayon extérieur : 8,3 mm
+— épaisseur : 0,2 mm
+Ainsi qu'il est aisé à comprendre, en raison de sa faible épaisseur et de la nature même de son matériau constitutif, une telle lentille ne constitue qu'une peau extrêmement souple, et ne présente pas en tout cas une rigidité suffisante pour être immédiatement usinée.
+De préférence, mais non obligatoirement, la lentille
+10 est munie, par moulage, d'un épaulement périphérique
+11 qui en améliore la rigidité.
+4
+La fig. 1 représente schématiquement un dispositif d'usinage dont les éléments constitutifs sont, pris individuellement, bien connus par eux-mêmes. Ils ne seront donc pas décrits en détail ci-après. Il suffit de préciser qu'un tel dispositif comporte : une broche 12 montée rotative dans un bloc de bâti 13 et entraînée en rotation par un moteur 14 par l'intermédiaire d'une quelconque transmission 15 ; une broche 17 montée rotative dans un bloc de bâti 18 et mobile axialement dans ce bloc de bâti à l'aide d'une manivelle de commande 19 ; un chariot porte-outil de détourage 20 monté mobile perpendiculairement aux broches 12, 17 et parallèlement à celles-ci, tel que schématiquement suggéré par les flèches 21, 21' et 22, 22' respectivement ; un chariot porte-outil d'usinage 24 monté mobile perpendiculairement aux broches 12, 17 et parallèlement à celles-ci, tel que schématiquement suggéré par les flèches 25, 25' et 26, 26' respectivement.
+Le chariot porte-outil d'usinage 24 est en outre monté mobile autour d'un axe qui, perpendiculaire aux broches tournantes 12, 17, passe sensiblement par la zone de travail 27 de celles-ci, tel que schématisé par la flèche 28. Une disposition analogue peut être adoptée pour le chariot porte-outil de détourage 20, pour des raisons qui apparaîtront ci-après.
+Un tel dispositif est complété par un ajutage 30 disposé à l'aplomb de la zone de travail 27 des broches tournantes 12,17, pour arrosage de celles-ci par un fluide réfrigérant.
+A cet effet, cet ajutage 30 est en liaison avec un réservoir 31 contenant un tel fluide réfrigérant et disposé au-dessus des broches 12, 17, pour écoulement par gravité du fluide réfrigérant.
+Ce dernier est choisi de manière à présenter une température inférieure à —100° C ; il s'agit par exemple d'air liquide, ou encore d'azote liquide ou gazeux, dont on sait que la température de liquéfaction est de —173» C.
+L'expérience montre que cette température est largement suffisante pour conférer à la lentille 10 une rigidité propre à permettre son usinage, alors que l'utilisation de neige carbonique est inefficace dans ce domaine. Le froid rendant les matériaux plus fragiles, le débit doit être fonction du fluide choisi et du matériau constituant la lentille afin d'éviter une trop grande fragilité de celle-ci.
+Un manchon 35, visible à la fig. 2, est monté coulissant sur la broche tournante 12 et ce manchon présente à son extrémité un logement annulaire 36 dont le diamètre est sensiblement égal à celui de la lentille 10 à usiner.
+De même, un manchon 37 est monté coulissant sur la broche tournante 17, ce manchon pouvant être calé en rotation sur cette broche par une vis pointeau 38 à bouton moleté de commande 39. Ce manchon 37 porte un poinçon d'appui annulaire 40 engagé sur une extrémité de diamètre réduit 41 de la broche tournante 17.
+Le poinçon d'appui 40 est composé d'une bague rigide 42, en métal par exemple, présentant une gorge annulaire 43 dans laquelle sont engagés des goujons 44 portés par le manchon 37, et d'un tampon d'appui 45 solidarisé de manière appropriée à la bague 42 ; le poinçon d'appui 40 est donc libre en rotation par rapport au manchon 37 qui le porte.
+La face transversale extrémale 48 du tampon d'appui 45 présente de préférence un rayon sensiblement
+E
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+60
+65
+5
+égal au rayon intérieur de la lentille 10 à usiner ; à cet effet, un tel tampon est avantageusement formé par moulage d'un quelconque matériau dans un moule ayant la même courbure que la lentille 10, et ce matériau, matériau synthétique par exemple, est, de préférence, pour des raisons qui apparaîtront ultérieurement, choisi relativement tendre.
+L'usinage de la lentille 10 se fait dès lors de la manière suivante :
+On place cette lentille entre les broches tournantes 12, 17, on la coiffe par le manchon 35, ce qui assure son centrage sur lesdites broches tournantes, on amène le tampon d'appui 45 à être en contact avec la lentille 10, en continuité avec la face transversale extrémale de l'extrémité de moindre diamètre 41 de la broche 17, et on assure le serrage des broches 12, 17 l'une par rapport à l'autre à l'aide de la manivelle 19, pour maintien de la lentille 10 ainsi centrée (fig. 3A).
+On retire alors le manchon 35, on lance à vitesse réduite la broche tournante 12, à une vitesse inférieure à 1000 tours/minute par exemple, on arrose l'ensemble de la lentille 10 et des extrémités des broches 12, 17 et du tampon 45 par le fluide réfrigérant contenu dans le réservoir 31, jusqu'à refroidissement complet de la lentille 10 et on lance ensuite la broche tournante 12 à pleine vitesse, à une vitesse supérieure à 15 000 tours/minute par exemple (fig. 3B) ; le tampon d'apui 40 permet, par sa forme, d'assurer que la configuration rigide prise par la lentille 10 lors de son refroidissement soit identique à sa configuration initiale.
+On amène le chariot porte-outil de détourage 20 au droit de la zone de travail 27 des broches tournantes 12, 17, et, par déplacement de ce chariot et donc de l'outil de détourage 50 qu'il porte parallèlement aux broches 12, 17, on assure le détourage de la lentille 10 (fig. 3C) ; dans un tel cas, ce détourage est donc exécuté parallèlement à l'axe de la lentille ; en variante, si le chariot 20 peut être pivoté autour d'un axe perpendiculaire aux broches 12, 17, tel que suggéré ci-dessus, le détourage est fait perpendiculairement aux faces de la lentille 10, ce qui est préférable pour une élimination régulière de matière lors de l'usinage ultérieur. Quoi qu'il en soit, la nature de préférence tendre du tampon d'appui évite une quelconque détérioration de l'outil de détourage, et ce tampon d'appui assure un maintien correct de la lentille pendant son détourage.
+On fait ensuite glisser le manchon 37 sur la broche tournante 17, sans arrêter la rotation de celle-ci, jusqu'à escamotage complet du tampon d'appui 45 et par déplacement du chariot porte-outil d'usinage 24 on amène l'outil d'usinage 51 porté par ce dernier au contact du bord détouré 52 de la lentille 10, pour usinage de ce bord (fig. 3D).
+Un tel usinage est rendu possible, tel qu'exposé ci-dessus, par la rigidité conférée par refroidissement à cette lentille, l'arrosage de celle-ci par le fluide réfrigérant étant maintenu tout au long des opérations de détourage et d'usinage.
+La fig. 4 concerne une variante de mise en œuvre suivant laquelle le détourage de la lentille est exécuté avant son passage sur le dispositif d'usinage décrit ci-dessus.
+Ce détourage est effectué sur un focomètre 60 dont on a représenté schématiquement en 61 l'oculaire, en 62 l'objectif, et en 63 le porte-objet qui comporte une bague support 64 et un tampon amortisseur en caoutchouc 65.
+6 528964
+Sur le bâti 66 de l'oculaire, ou sur une partie solidaire de ce bâti, est monté rotatif un découpoir 70 qui, en outre, est mobile axialement, à l'encontre d'un ressort 71. Ce découpoir est porté à cet effet par une tige coudée 72 qui traverse une ouverture 73 du bâti 66. Il est ainsi mobile entre une position de travail, représentée en trait plein, pour laquelle il est dans l'axe du focomètre, et une position de repos, représentée en tirets, pour laquelle il est à l'écart de cet axe.
+En position de travail, et par mouvement axial, il permet de détourer à l'emporte-pièce la lentille 10 qui a au préalable été centrée optiquement sur le focomètre.
+L'usinage de cette lentille 10 s'effectue ensuite comme précédemment, sur le dispositif décrit ci-dessus, cette lentille étant centrée mécaniquement sur ce dispositif à l'aide du manchon 35.
+Le centrage de la lentille sur le dispositif d'usinage pourrait également se faire à l'aide d'un focomètre ; à cet effet, et selon une variante non représentée, les broches 12, 17 sont évidées axialement dans leur longueur, et on place à l'extrémité d'une de ces broches l'oculaire d'un focomètre et, à l'extrémité de l'autre de ces broches, le porte-verre de ce focomètre.
+De plus, dans ce qui précède, l'arrosage de la lentille par un fluide réfrégérant se fait par chute de ce fluide par simple gravité. En variante, cet arrosage peut se faire par jet sous pression de ce fluide. Ce qui importe, c'est d'assurer un refroidissement général de tout le dispositif qui maintient la lentille, afin d'éviter un échauffe-ment de celle-ci par ce dispositif, dû notamment au fonctionnement de ce dernier.

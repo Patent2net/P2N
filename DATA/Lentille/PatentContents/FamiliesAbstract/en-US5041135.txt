@@ -1,0 +1,2 @@
+**** *Label_US5041135 *Country_US *CIB3_A61 *CIB1_A *CIB4_A61F *Date_1991 *Applicant_domilens-lab *Kind_A *InventCountry_FR *ApplCountry_FR 
+An intraocular lens comprising a support part connected to a central part by a single attachment integral with the support part and the central part. The attachment is provided with a blind hole. The support part is inclined relative to the central part in the direction of convexity of the central part. The central part of the implant is in the shape of a meniscus.

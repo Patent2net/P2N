@@ -1,0 +1,25 @@
+**** *Label_ES2388264.txt *Country_E *CIB3_A61 *CIB1_A *CIB4_A61F *Date_2012 *Applicant_cohen-gilber *Kind_T3 *InventCountry_empty *ApplCountry_F-R 
+REIVINDICACIONES
+1. Lentilla difractiva zonal con inversión de fase, con alternancia de zonas anulares ópticamente activas denominadas "llenas" (2) y zonas anulares ópticamente inactivas denominadas "vacías" (3), todas estas zonas
+5  anulares siendo concéntricas o coaxiales, caracterizada porque las zonas anulares "vacías" (3) están ocupadas por un "cemento" ópticamente inactivo que une entre ellas las zonas anulares "llenas" (2), para asegurar la estabilidad de estas zonas anulares "llenas" (2).
+2.  Lentilla difractiva según la reivindicación 1, concebida como una lentilla intracorneal, caracterizada porque
+10  el "cemento" de las zonas anulares inactivas o "vacías" (3) tiene una permeabilidad a los nutrimentos y al oxígeno que es comparable a aquella del tejido córneo y un índice óptico próximo a aquél de la córnea.
+3.  Lentilla difractiva intracorneal según la reivindicación 2 caracterizada porque las zonas anulares "llenas" (2)
+presentan, con relación a las zonas anulares vacías (3), una diferencia de índice óptico tal que el índice óptico de las 15 zonas anulares llenas (2) sea mayor que aquél de las zonas anulares vacías (3).
+4. Lentilla difractiva intracorneal según la reivindicación 2 caracterizada porque las zonas anulares "llenas" (2) presentan, con relación a las zonas anulares vacías (3), una diferencia de índice óptico tal que el índice óptico de las zonas anulares llenas (2) sea menor que aquél de las zonas anulares vacías (3).
+5.  Lentilla difractiva intracorneal según la reivindicación 3 o 4 caracterizada porque las zonas anulares "vacías"
+(3) están rellenas con un hidrogel de alto contenido en agua, permeable pero ópticamente inactivo, que constituye el "cemento" que une entre ellas las zonas anulares "llenas" (2).
+25  6. Lentilla difractiva intracorneal según la reivindicación 5 caracterizada porque el hidrogel que sirve de "cemento" que une las zonas anulares "llenas" (2) es un hidrogel cuyo porcentaje en agua es igual o superior al 78%.
+7.  Lentilla difractiva intracorneal según la reivindicación 6 caracterizada porque las zonas anulares "llenas" (2)
+30  son igualmente de un hidrogel cuyo porcentaje en agua es inferior al 78% y de preferencia comprendido entre el 50 y el 70%.
+8.  Lentilla difractiva intracorneal según la reivindicación 6 caracterizada porque las zonas anulares "llenas" (2)
+son igualmente de un hidrogel cuyo porcentaje en agua es superior al 78% y de preferencia superior al 80%, en 35 realidad constituidas por agua.
+9. Lentilla difractiva intracorneal según cualquiera de las reivindicaciones 2 a 8 caracterizada porque las zonas anulares "llenas" (2), están unidas no solamente por las partes de hidrogel permeable, sino también están rodeadas por partes realizadas del mismo hidrogel.
+10. Lentilla difractiva intracorneal según cualquiera de las reivindicaciones 1 a 9 caracterizada porque comprende en su centro un disco (4) perfilado realizado de la misma materia activa que las zonas anulares "llenas"
+(2) y rodeado concéntricamente o coaxialmente por estas zonas anulares "llenas" (2), el disco central (4)
+constituyendo una zona ópticamente activa a la manera de un primer anillo de radio interior nulo. 45
+11. Lentilla difractiva intracorneal según cualquiera de las reivindicaciones 1 a 9 caracterizada porque comprende en su centro una zona circular "vacía" (5), por lo tanto ópticamente inactiva, que está rodeada concéntricamente por la primera zona anular "llena" (2).
+50  12. Lentilla difractiva intracorneal según la reivindicación 10 u 11 caracterizada porque las zonas anulares "llenas" (2), y llegado el caso el disco central (4), están unidas por una fina membrana (6) realizada de la misma materia ópticamente activa, dicha membrana (6) siendo permeable a los nutrimentos en razón de su grosor muy pequeño.
+13.  Lentilla difractiva intracorneal según la reivindicación 10 u 11 caracterizada porque las zonas anulares
+55  "llenas" (2), y llegado el caso el disco central (4), están unidas por puentes de materia (7) de orientación general radial, realizados de la misma materia ópticamente activa, estos puentes de materia (7) atravesando las zonas anulares "vacías" (3).
+14. Lentilla difractiva intracorneal según cualquiera de las reivindicaciones 1 a 13 caracterizada porque está 60 realizada como una lentilla bifocal adaptada para la corrección de la presbicia.

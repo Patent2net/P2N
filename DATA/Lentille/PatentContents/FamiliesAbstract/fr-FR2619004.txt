@@ -1,0 +1,4 @@
+**** *Label_FR2619004 *Country_FR *CIB3_A61 *CIB1_A *CIB4_A61F *Date_1989 *Applicant_domilens-lab *Kind_A1 *InventCountry_empty *ApplCountry_FR 
+Dans cette lentille, la partie d'appui 22 est reliée à la partie centrale 21 par une seule attache 24, celle-ci étant munie d'un trou non débouchant 25.
+La partie d'appui 22 est inclinée par rapport à la partie centrale 21 dans la direction de la convexité de celle-ci.
+La partie centrale 21 de l'implant est en forme de ménisque.

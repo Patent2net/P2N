@@ -1,0 +1,2 @@
+**** *Label_EP0305255 *Country_EP *CIB3_A61 *CIB1_A *CIB4_A61F *Date_1989 *Applicant_domilens-lab *Kind_A1 *InventCountry_empty *ApplCountry_FR 
+In this lens, the bearing part (22) is connected to the central part (21) via a single attachment (24) forming a single piece with the said bearing (22) and central (21) parts, this attachment (24) being provided with a blind hole (25). <??>The bearing part (22) is inclined relative to the central part (21) in the direction of the convexity of the latter. <??>The central part (21) of the implant is of meniscus shape. <IMAGE>
