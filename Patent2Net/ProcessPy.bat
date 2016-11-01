@@ -2,12 +2,10 @@ python OPSGatherPatentsv2.py
 python FormateExportAttractivityCartography.py
 python FormateExportBiblio.py
 python FormateExportCountryCartography.py
-
 python FormateExportDataTable.py
 python FormateExportPivotTable.py
 python OPSGatherAugment-Families.py
 python FormateExportDataTableFamilies.py
-
 python OPSGatherContentsV2-Iramuteq.py
 python P2N-FreePlane.py
 python FusionCarrot2.py 

@@ -1,0 +1,8 @@
+pip install networkx
+pip install --upgrade setuptools
+install ops_epo client from https://github.com/55minutes/python-epo-ops-client
+http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses using pip install curses-2.2-cp2.7(...)
+install community module from https://bitbucket.org/taynaud/python-louvain (download zip and launch python setup install)
+install Microsoft Visual C++ Compiler for Python 2.7, I took it from: https://www.microsoft.com/en-us/download/confirmation.aspx?id=44266
+install pygraphviz
+install curses (from sources to get unicode?)

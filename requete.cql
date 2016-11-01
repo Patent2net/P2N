@@ -14,17 +14,17 @@ DataDirectory: Lentille
 ###############################
 # Collecting
 # patents list corresponding to the request. e.g the "Patent Universe" (PU)
-GatherPatent: True
+GatherPatent: False
 
 # patents bibliographic data corresponding to patent list
-GatherBiblio: True
+GatherBiblio: False
 
 # patent content (description, abstract, claims) completing patents bibliographic data
-GatherContent: True
+GatherContent: False
 OPSGatherContentsv2-Iramuteq: False
 
 #patents families extending the PU to families
-GatherFamilly: False
+GatherFamilly: True
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi
@@ -75,7 +75,7 @@ FormateExportBiblio: True
 
 ###############################
 # Produce the world maps of inventors, applicants, deposit country
-FormateExportAttractivityCartography: False
+FormateExportAttractivityCartography: True
 FormateExportCountryCartography: True
 
 ###############################
