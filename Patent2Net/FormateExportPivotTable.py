@@ -160,17 +160,17 @@ if IsEnableScript:
     # just create the file    
         contenu2=""
         with codecs.open(ResultPathContent + '//' + ndf+'Pivot.json', 'w', "utf8") as resFic:
-            resFic.write(contenu2)
-        
-    # encode and append line by line to avoid memory error    
-        try:
-            for contenu2 in json.JSONEncoder(indent = 3).iterencode(LstExp2):
-                with codecs.open(ResultPathContent + '//' + ndf+'Pivot.json', 'a', "utf8") as resFic:
+            # encode and append line by line to avoid memory error    
+            try:
+                resFic.write(contenu2)
+                for contenu2 in json.JSONEncoder(indent = 3).iterencode(LstExp2):
+                    #with codecs.open(ResultPathContent + '//' + ndf+'Pivot.json', 'a', "utf8") as resFic:
                     resFic.write(contenu2)
-           
-        except:
-            contenu2 = json.dumps(LstExp2,  indent = 3, ensure_ascii=False, encoding='utf8') #,
-            with codecs.open(ResultPathContent + '//' + ndf+'Pivot.json', 'w', "utf8") as resFic:
+               
+            except:
+                resFic.write(contenu2)
+                contenu2 = json.dumps(LstExp2,  indent = 3, ensure_ascii=False, encoding='utf8') #,
+                #with codecs.open(ResultPathContent + '//' + ndf+'Pivot.json', 'w', "utf8") as resFic:
                 resFic.write(contenu2)
         
         FichierHtml=ndf+'.html'
