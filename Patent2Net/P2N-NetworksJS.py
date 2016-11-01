@@ -6,6 +6,8 @@ Created on Tue Avr 1 13:41:21 2014
 """
 import networkx as nx
 #import copy
+from networkx.drawing.nx_agraph import graphviz_layout
+
 
 #dicot = copy.deepcopy(dict)
 
@@ -149,7 +151,7 @@ if Networks[network][0]:
     #pos = nx.spring_layout( G, dim=2,  scale =10, iterations = 50)
     #arguDot='-Goverlap="0:prism" -Gsize="800,600" -GLT=550 -GKsep='+str(zoom+10) 
     arguDot='-Goverlap="0:prism" -Gsize="1000,800" -GLT=550 -GKsep='+str(zoom)
-    pos = nx.graphviz_layout(G,prog=visu, args = arguDot )
+    pos = graphviz_layout(G,prog=visu, args = arguDot )
  #    pos = nx.graphviz_layout(G,prog=visu)
     
     
