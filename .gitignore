@@ -4,22 +4,8 @@ Thumbs.db
 *.gexf
 *.bak
 *.spec
-Donnees
-Development/build/
-Development/dist/
-distribution/
-tempocomp/
-Development/DONNEES
-Development/cles-epo.txt
-Development/*.spec
-Development/specs/
-Current/lextab.py
-Current/yacctab.py
-Development/lextab.py
-Development/yacctab.py
 Cles-epo.txt
 *.log
-REQUESTS/respirator.cql
 Patent2Net/DONNEES
 Patent2Net/cles-epo.txt
 Patent2Net/*.spec
@@ -29,3 +15,4 @@ Patent2Net/dist/
 Patent2Net/lextab.py
 Patent2Net/yacctab.py
 Patent2Net/Cles-epo.txt
+tempocomp/
