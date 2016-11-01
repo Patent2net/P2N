@@ -2,25 +2,25 @@
 ##############################
 # request
 # insert below your request in cql format as done in the example
-request: lentille
+request: TI=Respirator AND IPC= A61M1
 
 ##############################
 # Directory to use
 # insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
-DataDirectory: Lentille
+DataDirectory: Respirator
 
 ###############################
 #Patent2Net options : Set to *True* or False
 ###############################
 # Collecting
 # patents list corresponding to the request. e.g the "Patent Universe" (PU)
-GatherPatent: False
+GatherPatent: True
 
 # patents bibliographic data corresponding to patent list
-GatherBiblio: False
+GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
-GatherContent: False
+GatherContent: True
 OPSGatherContentsv2-Iramuteq: False
 
 #patents families extending the PU to families
@@ -75,7 +75,7 @@ FormateExportBiblio: True
 
 ###############################
 # Produce the world maps of inventors, applicants, deposit country
-FormateExportAttractivityCartography: True
+FormateExportAttractivityCartography: False
 FormateExportCountryCartography: True
 
 ###############################

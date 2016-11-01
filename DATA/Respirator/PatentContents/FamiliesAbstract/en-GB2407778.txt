@@ -1,0 +1,2 @@
+**** *Label_GB2407778 *Country_GB *CIB3_A61 *CIB1_A *CIB4_A61M *Date_2005 *Applicant_lister-marti *Kind_A *InventCountry_GB *ApplCountry_GB 
+A manual respirator pump which pumps a gas, e.g. air or oxygen, into the lungs, comprises a face mask and bellows (Fig 14). Preferably the pump is portable and has an oxygen 9 inlet that can be attached to an oxygen source (Fig 2). The respiratory can be used on patients with water in their lungs e.g. patients who have nearly drowned.
