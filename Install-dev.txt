@@ -1,7 +1,7 @@
 Softs:
 install Graphviz (I used 2.38)
 
-From Anaconda 2.7 installation
+Starting from Anaconda 2.7 installation
 pip install requests
 pip install --upgrade requests
 
