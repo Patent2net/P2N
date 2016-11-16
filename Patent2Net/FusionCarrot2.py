@@ -248,7 +248,7 @@ if IsEnableScript:
     for det in ['Abstract', 'Claims', 'Description']:
         ind = 0
         for lang in ['FR', 'EN', 'UNK']:
-            NomResult = lang+'_'+det.replace('Abstracts', '') + '_' + ndf.title()+'.xml' # det.replace('Abstracts', '') this command is for old old mispelling :-(.. I think)
+            NomResult = lang+'_'+det.replace('Abstracts', '') + '_' + ndf+'.xml' # det.replace('Abstracts', '') this command is for old old mispelling :-(.. I think)
             ficRes = codecs.open(Rep+'//Carrot2//'+NomResult, "w", 'utf8')
             ficRes.write(complete3(temporar[ind], lang, det, LstBrevet))
             ind+=1
