@@ -131,3 +131,8 @@ copy /y Process.bat dist\Patent2Net\
 copy /y GatherProcess.bat dist\Patent2Net\
 copy /y NetsProcess.bat dist\Patent2Net\
 copy /y FormatingProcess.bat dist\Patent2Net\
+
+Python P2N_Version.py
+copy /y *.info dist
+del *.info
+

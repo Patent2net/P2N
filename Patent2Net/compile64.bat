@@ -130,3 +130,8 @@ copy /y GatherProcess.bat
 copy /y NetsProcess.bat
 copy /y FormatingProcess.bat
 
+Python P2N_Version.py
+copy /y *.info dist
+del *.info
+
+
