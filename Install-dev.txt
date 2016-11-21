@@ -1,15 +1,15 @@
-Softs:
-install Graphviz (I used 2.38)
-
+Install Graphviz (I used 2.38)
 Starting from Anaconda 2.7 installation (32 or 64 bits)
+
 pip install requests
 pip install --upgrade requests
-
 pip install networkx
 pip install --upgrade setuptools
-install ops_epo client from https://github.com/55minutes/python-epo-ops-client
-http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses using pip install curses-2.2-cp2.7(...)
-install community module from https://bitbucket.org/taynaud/python-louvain (download zip and launch python setup install)
-install pygraphviz (for 64 bits use this: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz)
-install curses (from sources to get unicode? I didn't succeed)
+Download the ops_epo directoty of https://github.com/55minutes/python-epo-ops-client in ...\Anaconda2\Lib\site-packages &
+python import epo_ops 
+Download curses http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses &
+pip install curses-2.2-cp2.7(...).whl
+Download https://bitbucket.org/taynaud/python-louvain &
+python setup.py install
+install pygraphviz (for 64 bits use: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz)
 
