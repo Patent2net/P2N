@@ -18,8 +18,8 @@ Patent2Net is available "as it is".
 Results
 -------
 The [results](http://patent2netv2.vlab4u.info/;) provided can be explored as a website with the firefox browser
-A [binary version] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install;)is available
-----------------
+A [binary version] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install;) is available
+--------------------------
 [Train how to search patent information using interface] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:patent_search;)
 ------------------------------------------------------
 
