@@ -46,6 +46,6 @@ follow the "To register and use the CRAWLER:" [described here] (http://patent2ne
 
 Further insformation:
 ---------------------
-In our [documentation page] [http://patent2netv2.vlab4u.info/dokuwiki/doku.php]
+In our [documentation page] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php;)
 
 #### Todo List V 2.0 (Beta) 30/10/2016:
