@@ -24,18 +24,21 @@ A [binary version] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_ma
 ------------------------------------------------------
 Install Patent2Net python scripts on Windows
 --------------------------------------------
-To run as python script need to install python and some libraries (see InstallP2NLinux.txt):
-
-* Install python 2.7  from https://www.python.org/, or with Anaconda https://www.continuum.io/downloads
-* see the file install-dev.txt
+To run as python script need see the file install-dev.txt
 Install Patent2Net on Linux (Need to fix this). See requirements.txt and InstallP2NLinux.txt
 ---------------------------
 If you're using Ubuntu or Debian distributions, make sure to have PIP installed:
+
     sudo apt-get install python-pip build-essential python-dev libjpeg-dev libxml2-dev libfreetype6-dev libpng-dev
+
 Then, run the requirements.txt file to install all dependencies:
+
     sudo pip install -r Development/requirements.txt
+
 To use the current Development version, you can make a symbolic link to your desired folder:
+
     ln -sd Development Patent2Net
+
 Use Patent2Net
 --------------
 
