@@ -24,7 +24,7 @@ A [binary version] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_ma
 ------------------------------------------------------
 Install Patent2Net python scripts on Windows
 --------------------------------------------
-To run as python script, see the file [install-dev.txt] (../Install-dev.txt;)
+To run as python script, see the file install-dev.txt
 Install Patent2Net on Linux (Fix needed).
 ---------------------------
 See requirements.txt and InstallP2NLinux.txt
