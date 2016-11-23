@@ -6,15 +6,15 @@
     |_|   \__,_|\__\___|_| |_|\__| |____| |_| \_|\___|\__|     \ |_|     |____| |_| \_| /       
 About
 -----
-Patent2Net is elaborated and maintained (on a free base) by a small international team of professors and researchers.  
-Patent2Net is a free package, dedicated to :
+Patent2Net is :
+* elaborated and maintained (on a free base) by a small international team of professors and researchers.  
+* an "open source" package and contributions are welcome
+* available "as it is".
 
+Patent2Net is a free package, dedicated to :
 * Augment the use of patent information in academic, nano and small firms, developing countries (all those without pay mode access)
 * learn, study and practice how to collect, treat and communicate "textual bibliographic information", and automation process
 * provide statistical analysis and representations of a set of patents.
-
-Patent2Net is an "open source" package and contributions are welcome.  
-Patent2Net is available "as it is".
 The [results](http://patent2netv2.vlab4u.info/;) of the analysis can be explored as a website with the firefox browser
 ----------------------------------------------------------------------------------------------------------------------
 A [binary version] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install;) is available
