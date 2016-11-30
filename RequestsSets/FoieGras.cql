@@ -1,15 +1,15 @@
 ﻿# Patent2Net configuration file
 ##############################
-# This example treat of around 10 patents containing the word "lentille"
-# very restrictive example, that has no sense, but just 10 patents... Quick test
+# This example treat of around 55 patents dealing with "foie gras"
+# A real simple case
 ##############################
 # the "patents universe" corresponding to the request
 # insert below your request in cql format as done in the example
-request: TA=lentille
+request: TA="foie gras"
 
 ###############################
 # Name of files OR directories
-DataDirectory: Lentille
+DataDirectory: FoieGras
 
 ###############################
 #Patent2Net options : Set to *True* or False
