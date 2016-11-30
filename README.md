@@ -42,9 +42,9 @@ To use the current Development version, you can make a symbolic link to your des
 
 Use Patent2Net (script mode)
 ----------------------------
-Follow the "To register and use the CRAWLER:" [described here] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install;) to install your acreditation in the “cles-epo.txt” file.
+Follow the "To register and use the CRAWLER:" [described here] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install;) to install your acreditation in the “cles-epo.txt” file in root directory.
 
-Copy any of the *.cql file as requete.cql in root directory, and/or adapt the requete.cql to your need.
+Copy any of the *.cql file from /RequestsSets directory as requete.cql in root directory, and/or adapt the requete.cql to your need.
 
 Use the /Patent2Net/ProcessPy.bat and enjoy!
 
