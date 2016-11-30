@@ -1,13 +1,10 @@
-# Patent2Net configuration file
-##############################
-# request
-# insert below your request in cql format as done in the example
-request: TI=Respirator AND IPC= A61M1
-
-##############################
-# Directory to use
-# insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
-DataDirectory: Respirator
+﻿#insert below your request in cql format as done in the example
+#insert also a compliant name (no space or special characters) for 
+#the "patents universe" corresponding to the request
+request: TA=lentille
+###############################
+# Name of files OR directories
+DataDirectory: Lentille
 
 ###############################
 #Patent2Net options : Set to *True* or False
@@ -21,7 +18,7 @@ GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
 GatherContent: True
-OPSGatherContentsv2-Iramuteq: False
+OPSGatherContentsv2-Iramuteq: True
 
 #patents families extending the PU to families
 GatherFamilly: True
@@ -75,7 +72,7 @@ FormateExportBiblio: True
 
 ###############################
 # Produce the world maps of inventors, applicants, deposit country
-FormateExportAttractivityCartography: False
+FormateExportAttractivityCartography: True
 FormateExportCountryCartography: True
 
 ###############################

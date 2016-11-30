@@ -1318,6 +1318,82 @@
          ], 
          "priority-active-indicator": 1, 
          "IPCR7-url": [
+            "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol=A61K0036000000", 
+            "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol=A61K0038000000"
+         ], 
+         "CPC": "A61K36/899, A61K36/48", 
+         "references": 0, 
+         "year": "1993", 
+         "IPCR1-url": [
+            "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol=A"
+         ], 
+         "family lenght": 1, 
+         "Applicant-Country": "", 
+         "title": "Anti-diarrhoeal substance - prepd. by alpha amylase hydrolysis of cereal and leguminous grains mixt., then spray drying", 
+         "CitP": "", 
+         "label": "CH681276", 
+         "IPCR11": "", 
+         "prior-Date": "1990-05-25", 
+         "CitO": "", 
+         "equivalents": "CH681276", 
+         "inventor-url": [
+            "http://worldwide.espacenet.com/searchResults?compact=false&ST=advanced&IN=%22AHMAD%20SHAMIM%22&locale=en_EP&DB=EPODOC"
+         ], 
+         "applicant-url": [
+            "http://worldwide.espacenet.com/searchResults?compact=false&ST=advanced&IN=%22SHAMIM%20AHMAD%22&locale=en_EP&DB=EPODOC"
+         ], 
+         "IPCR4-url": [
+            "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol=A61K"
+         ], 
+         "IPCR11-url": [
+            "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol="
+         ], 
+         "CitedBy": "", 
+         "label-url": [
+            "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=CH681276&locale=en_EP&DB=EPODOC"
+         ], 
+         "representative": 1, 
+         "inventor": "Ahmad Shamim", 
+         "kind": "A5", 
+         "Inventor-Country": "", 
+         "country": "CH", 
+         "applicant": "Shamim Ahmad", 
+         "IPCR4": "A61K", 
+         "IPCR7": "A61K36, A61K38", 
+         "prior": "CH681276", 
+         "equivalents-url": [
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=C&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=H&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=6&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=8&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=1&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=2&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=7&locale=en_EP&DB=EPODOC"
+            ], 
+            [
+               "http://worldwide.espacenet.com/searchResults?compact=false&ST=singleline&query=6&locale=en_EP&DB=EPODOC"
+            ]
+         ]
+      }, 
+      {
+         "IPCR3-url": [
+            "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol=A61"
+         ], 
+         "priority-active-indicator": 1, 
+         "IPCR7-url": [
             "http://web2.wipo.int/ipcpub#lang=enfr&menulang=FR&refresh=page&notion=scheme&version=20140101&symbol=A61F0002000000"
          ], 
          "CPC": "A61F2/1613, A61F2002/1683", 

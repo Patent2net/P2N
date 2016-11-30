@@ -532,6 +532,34 @@
       "inventor": "KIM JOON YOUNG"
    }, 
    {
+      "kind": "A5", 
+      "Inventor-Country": "", 
+      "Applicant-Country": "", 
+      "prior-Date": "1990-05-25", 
+      "country": "CH", 
+      "applicant": "SHAMIM AHMAD", 
+      "IPCR4": "A61K", 
+      "IPCR7": "A61K36", 
+      "label": "CH681276", 
+      "representative": 0, 
+      "year": "1993", 
+      "inventor": "AHMAD SHAMIM"
+   }, 
+   {
+      "kind": "A5", 
+      "Inventor-Country": "", 
+      "Applicant-Country": "", 
+      "prior-Date": "1990-05-25", 
+      "country": "CH", 
+      "applicant": "SHAMIM AHMAD", 
+      "IPCR4": "A61K", 
+      "IPCR7": "A61K38", 
+      "label": "CH681276", 
+      "representative": 0, 
+      "year": "1993", 
+      "inventor": "AHMAD SHAMIM"
+   }, 
+   {
       "kind": "C", 
       "Inventor-Country": "FR", 
       "Applicant-Country": "FR", 

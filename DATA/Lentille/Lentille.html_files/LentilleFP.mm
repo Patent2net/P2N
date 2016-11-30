@@ -11,17 +11,17 @@
   </head> 
   <body> 
     <p> 
-      Chave de pesquisa: lentille 
+      Chave de pesquisa: TA=lentille 
     </p> 
     <p> 
-      Total de patentes encontradas: 10 
+      Total de patentes encontradas: 11 
     </p> 
   </body> 
 </html> 
 </richcontent> 
 <node TEXT="F: Mechanical engineering; Lighting; Heating; Weapons; Blasting (1 Patents)" POSITION="left"  BACKGROUND_COLOR="#CCFFFF" STYLE="bubble" MAX_WIDTH="200"> 
 <edge COLOR="#0000ff"/> 
-<font NAME="Serif" SIZE="10"/> 
+<font NAME="Serif" SIZE="8"/> 
 <node TEXT="F21	Lighting
  (1 Patents)" POSITION="left"  BACKGROUND_COLOR="#CCFFFF" STYLE="bubble" MAX_WIDTH="300">
 <font SIZE="12"/> 
@@ -78,11 +78,11 @@
 </node> 
 </node> 
 </node> 
-<node TEXT="A: Human necessities (2 Patents)" POSITION="right"  BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="200"> 
+<node TEXT="A: Human necessities (3 Patents)" POSITION="right"  BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="200"> 
 <edge COLOR="#0000ff"/> 
-<font NAME="Serif" SIZE="12"/> 
+<font NAME="Serif" SIZE="14"/> 
 <node TEXT="A61	Medical or veterinary science; Hygiene
- (2 Patents)" POSITION="right"  BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+ (3 Patents)" POSITION="right"  BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
 <font SIZE="12"/> 
 <edge COLOR="#0000ff"/> 
 <node TEXT="A61F	Filters implantable into blood vessels; Prostheses; Devices providing patency to, or preventing collapsing of, tubular structures of the body, e.g. Stents; Orthopaedic, nursing or contraceptive devices; Fomentation; Treatment or protection of eyes or ears; Bandages, dressings or absorbent pads; First-aid kits 
@@ -99,6 +99,41 @@
 <edge COLOR="#0000ff"/> 
 </node> 
 <node TEXT="A61F2/16	Intraocular lenses
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+</node> 
+</node> 
+</node> 
+<node TEXT="A61K	Preparations for medical, dental, or toilet purposes 
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+<node TEXT="A61K36	Medicinal preparations of undetermined constitution containing material from algae, lichens, fungi or plants, or derivatives thereof, e.g. traditional herbal medicines
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+<node TEXT="A61K36/48	Fabaceae or Leguminosae (Pea or Legume family); Caesalpiniaceae; Mimosaceae; Papilionaceae
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+</node> 
+<node TEXT="A61K36/899	Poaceae or Gramineae (Grass family), e.g. bamboo, corn or sugar cane
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+</node> 
+</node> 
+<node TEXT="A61K38	Medicinal preparations containing peptides
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+</node> 
+<node TEXT="A61K31	Medicinal preparations containing organic active ingredients
+ (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
+<font SIZE="10"/> 
+<edge COLOR="#0000ff"/> 
+<node TEXT="A61K31/715	Polysaccharides, i.e. having more than five saccharide radicals attached to each other by glycosidic linkages; Derivatives thereof, e.g. ethers, esters
  (1 Patents)" POSITION="right" BACKGROUND_COLOR="#CCFF99" STYLE="bubble" MAX_WIDTH="300">
 <font SIZE="10"/> 
 <edge COLOR="#0000ff"/> 
