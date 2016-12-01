@@ -1,10 +1,14 @@
 Install Graphviz (I used 2.38)
-Starting from Anaconda 2.7 installation (32 or 64 bits)
 
-pip install requests
+Starting from Anaconda 2.7 installation (32 or 64 bits)
+To install Anaconda go to https://www.continuum.io/downloads
+Use Anaconda 4.2.0 or superior version
+Use Python 2.7 version
+
 pip install --upgrade requests
-pip install networkx
+pip install --upgrade networkx
 pip install --upgrade setuptools
+  
 Download the ops_epo directoty of https://github.com/55minutes/python-epo-ops-client in ...\Anaconda2\Lib\site-packages &
 python import epo_ops 
 Download curses http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses &
