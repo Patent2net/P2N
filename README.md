@@ -54,16 +54,16 @@ In our [documentation page] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php;)
 
 #### Todo List (not limitative, just ideas):
 Although Patent2Net works fine and is enough to begin using Patent Information, a lot can be done to improve analysis:
--Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
--Correct the issues (of course)
--Build the entire network as a gephi file for download to let new combined network analysis possible
+* Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
+* Correct the issues (of course)
+* Build the entire network as a gephi file for download to let new combined network analysis possible
 
 Add some new capabilities to Patent2Net, i.e.:
--Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent full text (Andre is thinking about)
--Build a small database to display results of a specific (Familly) Patent Universe. Database could be [PouchDB] (https://pouchdb.com/) or equivalent
--Within the Familly Patent Universe, provide all the same analysis as with the Patent Universe
--Within the Familly Patent Universe, provide a new range of analysis, considering a familly as a unique entity (invention)
--Limit the Familly Patent Universe to the only Priority patents, and provide a complete analysis
--Using citations of the Familly Patent Universe, provide genealogic analysis, especially descendants to try to detect invention fronts.
+* Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent full text (Andre is thinking about)
+* Build a small database to display results of a specific (Familly) Patent Universe. Database could be [PouchDB] (https://pouchdb.com/) or equivalent
+* Within the Familly Patent Universe, provide all the same analysis as with the Patent Universe
+* Within the Familly Patent Universe, provide a new range of analysis, considering a familly as a unique entity (invention)
+* Limit the Familly Patent Universe to the only Priority patents, and provide a complete analysis
+* Using citations of the Familly Patent Universe, provide genealogic analysis, especially descendants to try to detect invention fronts.
 
 
