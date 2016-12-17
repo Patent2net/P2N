@@ -1,12 +1,7 @@
-﻿# Patent2Net configuration file
-##############################
-# This example treat of around 520 patents dealing with "social interaction"
-# If search improved, could be a "real case"
-##############################
-# the "patents universe" corresponding to the request
-# insert below your request in cql format as done in the example
-request: TA="social interaction"
-
+﻿#insert below your request in cql format as done in the example
+#insert also a compliant name (no space or special characters) for 
+#the "patents universe" corresponding to the request
+request: TA="social interaction*"
 ############################### 
 # Name of files OR directories
 DataDirectory: SocialInteraction
