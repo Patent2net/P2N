@@ -54,8 +54,9 @@ In our [documentation page] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php;)
 
 #### Todo List (not limitative, just ideas):
 Although Patent2Net works fine and is enough to begin using Patent Information, a lot can be done to improve analysis:
-* Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Correct the issues (of course)
+* Add some more information in the result html page (ModeleContenuIndex.html). Great to add the treating date (thus can be different from gathering) and P2N version
+* Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Build the entire network as a gephi file for download to let new combined network analysis possible
 
 Add some new capabilities to Patent2Net, i.e.:
