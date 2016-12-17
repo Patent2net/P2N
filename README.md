@@ -65,5 +65,5 @@ Add some new capabilities to Patent2Net, i.e.:
 * Within the Familly Patent Universe, provide a new range of analysis, considering a familly as a unique entity (invention)
 * Limit the Familly Patent Universe to the only Priority patents, and provide a complete analysis
 * Using citations of the Familly Patent Universe, provide genealogic analysis, especially descendants to try to detect invention fronts.
-
+* New ideas are welcome
 
