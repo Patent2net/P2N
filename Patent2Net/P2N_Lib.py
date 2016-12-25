@@ -2231,10 +2231,14 @@ def MakeIram(patent, FileName, patentBibData, AbstractPath):
             CIB4 = '-'.join(dat for dat in patent['IPCR4'])
         else:
             CIB4 =  patent['IPCR4']
-        if isinstance(patent['year'], list):
-            Year = patent['year'][0]
+ # Issue #6 - by cvanderlei in 21-dec-2016 
+        if 'year' in patent:    
+            if isinstance(patent['year'], list):
+                Year = patent['year'][0]
+            else:
+                Year = patent['year']
         else:
-            Year = patent['year']
+            Year = 'empty'
         kindIra = patent['kind']
         invCountIra = '-'.join(dat for dat in patent['Inventor-Country'])
         appCountIra = '-'.join(dat for dat in patent['Applicant-Country'])
@@ -2390,10 +2394,12 @@ def GetFamilly(client, brev, rep):
                         # should check what is reprensentativeness for patent :-/
         
                 PatentData[u'family lenght'] = len(dico)
-                if not isinstance(PatentData['dateDate'], datetime.date) and PatentData['date'] is not None:
-                    PatentData['dateDate'] = datetime.date(int(PatentData['dateDate'].split('-')[0]),
-                        int(PatentData['dateDate'].split('-')[1]),
-                        int(PatentData['dateDate'].split('-')[2]))
+# Issue #6 - by cvanderlei in 21-dec-2016 
+                if 'dateDate' in PatentData and 'date' in PatentData:
+                    if not isinstance(PatentData['dateDate'], datetime.date) and PatentData['date'] is not None:
+                        PatentData['dateDate'] = datetime.date(int(PatentData['dateDate'].split('-')[0]),
+                            int(PatentData['dateDate'].split('-')[1]),
+                            int(PatentData['dateDate'].split('-')[2]))
 
 #            for cle in PatentData.keys():
 #                if isinstance(PatentData[cle], list):
