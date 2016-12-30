@@ -2,7 +2,7 @@ rmdir /S /Q dist\Patent2Net64
 
 pyinstaller -y --noupx --specpath=specs --clean  --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
-pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherContentsv2-Iramuteq.txt OPSGatherContentsv2-Iramuteq.py
+pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherContentsV2-Iramuteq.txt OPSGatherContentsV2-Iramuteq.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherAugment-Families.txt OPSGatherAugment-Families.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Compatibilizer.txt  Compatibilizer.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-PreNetworks.txt P2N-PreNetworks.py
@@ -24,7 +24,7 @@ pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Interface
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Parallel3.txt Parallel3.py
 
 pyinstaller -y --noupx --version-file=version-FormateExportAttractivityCartography.txt specs\FormateExportAttractivityCartography.spec
-pyinstaller -y --noupx --version-file=version-OPSGatherPatentsv2.txt specs\OPSGatherPatentsv2.spec
+pyinstaller -y --noupx --version-file=version-OPSGatherPatentsV2.txt specs\OPSGatherPatentsV2.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherContentsv2-Iramuteq.txt specs\OPSGatherContentsv2-Iramuteq.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherAugment-Families.txt specs\OPSGatherAugment-Families.spec
 pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
@@ -50,7 +50,7 @@ mkdir dist\Patent2Net64\
 
 xcopy /S /Y dist\FormateExportAttractivityCartography dist\Patent2Net64\ 
 xcopy /S /Y dist\OPSGatherPatentsv2 dist\Patent2Net64\ 
-xcopy /S /Y dist\OPSGatherContentsv2-Iramuteq dist\Patent2Net64\
+xcopy /S /Y dist\OPSGatherContentsV2-Iramuteq dist\Patent2Net64\
 xcopy /S /Y dist\OPSGatherAugment-Families dist\Patent2Net64\
 xcopy /S /Y dist\Compatibilizer dist\Patent2Net64\
 
@@ -73,7 +73,7 @@ xcopy /S /Y dist\Parallel3 dist\Patent2Net64\
 
 rmdir /S /Q dist\FormateExportAttractivityCartography
 rmdir /S /Q dist\OPSGatherPatentsv2
-rmdir /S /Q dist\OPSGatherContentsv2-Iramuteq
+rmdir /S /Q dist\OPSGatherContentsV2-Iramuteq
 rmdir /S /Q dist\OPSGatherAugment-Families
 rmdir /S /Q dist\Compatibilizer
 rmdir /S /Q  dist\P2N-Networks

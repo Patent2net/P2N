@@ -2,7 +2,7 @@ rmdir /S /Q dist\Patent2Net
 
 pyinstaller  --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
 pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsv2-Iramuteq.txt OPSGatherContentsv2-Iramuteq.py
+pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt OPSGatherContentsV2-Iramuteq.py
 pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherAugment-Families.txt OPSGatherAugment-Families.py
 REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt Compatibilizer.py
 
@@ -54,7 +54,7 @@ REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
 
 pyinstaller  --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt ..\specs\FormateExportAttractivityCartography.spec
 pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt ..\specs\OPSGatherPatentsv2.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsv2-Iramuteq.txt ..\specs\OPSGatherContentsv2-Iramuteq.spec
+pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt ..\specs\OPSGatherContentsV2-Iramuteq.spec
 pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherAugment-Families.txt ..\specs\OPSGatherAugment-Families.spec
 REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt ..\specs\Compatibilizer.spec
 
@@ -79,7 +79,7 @@ mkdir  ..\distribution\Patent2Net\
 
 xcopy /S /Y ..\distribution\FormateExportAttractivityCartography ..\distribution\Patent2Net\ 
 xcopy /S /Y ..\distribution\OPSGatherPatentsv2 ..\distribution\Patent2Net\ 
-xcopy /S /Y ..\distribution\OPSGatherContentsv2-Iramuteq ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\OPSGatherContentsV2-Iramuteq ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherAugment-Families ..\distribution\Patent2Net\
 REM xcopy /S /Y ..\distribution\Compatibilizer ..\distribution\Patent2Net\
 
