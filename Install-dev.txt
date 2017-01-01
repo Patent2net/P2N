@@ -9,8 +9,8 @@ pip install --upgrade requests
 pip install --upgrade networkx
 pip install --upgrade setuptools
   
-Download the ops_epo directoty of https://github.com/55minutes/python-epo-ops-client in ...\Anaconda2\Lib\site-packages &
-python import epo_ops 
+Download the epo_ops directoty of https://github.com/55minutes/python-epo-ops-client in ...\Anaconda2\Lib\site-packages &
+in IPython :import epo_ops 
 Download curses http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses &
 pip install curses-2.2-cp2.7(...).whl
 Download https://bitbucket.org/taynaud/python-louvain &
