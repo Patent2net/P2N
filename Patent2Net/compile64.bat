@@ -1,4 +1,5 @@
 rmdir /S /Q dist\Patent2Net64
+Python P2N_Version.py
 
 pyinstaller -y --noupx --specpath=specs --clean  --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
@@ -125,12 +126,12 @@ mkdir dist\Patent2Net64\extensions
 mkdir dist\Patent2Net64\media
 xcopy /S /Y extensions dist\Patent2Net64\extensions
 xcopy /S /Y media dist\Patent2Net64\media
-copy /y Process.bat
-copy /y GatherProcess.bat
-copy /y NetsProcess.bat
-copy /y FormatingProcess.bat
+copy /y Process.bat  dist\
+copy /y GatherProcess.bat  dist\
+copy /y NetsProcess.bat  dist\
+copy /y FormatingProcess.bat  dist\
 
-Python P2N_Version.py
+
 copy /y *.info dist
 del *.info
 

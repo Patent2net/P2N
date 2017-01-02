@@ -1,12 +1,13 @@
 ECHO This is the batch to build a Windows 32 bits version
 
 rmdir /S /Q dist\Patent2Net
+Python P2N_Version.py
 
 pyinstaller -y --noupx --specpath=specs --clean  --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
-pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherContentsv2-Iramuteq.txt OPSGatherContentsv2-Iramuteq.py
+pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherContentsV2-Iramuteq.txt OPSGatherContentsV2-Iramuteq.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherAugment-Families.txt OPSGatherAugment-Families.py
-pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Compatibilizer.txt  Compatibilizer.py
+REM pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Compatibilizer.txt  Compatibilizer.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-PreNetworks.txt P2N-PreNetworks.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-Networks.txt P2N-Networks.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-NetworksJS.txt P2N-NetworksJS.py
@@ -27,9 +28,9 @@ pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Parallel3
 
 pyinstaller -y --noupx --version-file=version-FormateExportAttractivityCartography.txt specs\FormateExportAttractivityCartography.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherPatentsv2.txt specs\OPSGatherPatentsv2.spec
-pyinstaller -y --noupx --version-file=version-OPSGatherContentsv2-Iramuteq.txt specs\OPSGatherContentsv2-Iramuteq.spec
+pyinstaller -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt specs\OPSGatherContentsV2-Iramuteq.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherAugment-Families.txt specs\OPSGatherAugment-Families.spec
-pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
+REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
 
 pyinstaller -y --noupx --version-file=version-P2N-Networks.txt specs\P2N-Networks.spec
 pyinstaller -y --noupx --version-file=version-P2N-PreNetworks.txt specs\P2N-PreNetworks.spec
@@ -52,9 +53,9 @@ mkdir dist\Patent2Net\
 
 xcopy /S /Y dist\FormateExportAttractivityCartography dist\Patent2Net\ 
 xcopy /S /Y dist\OPSGatherPatentsv2 dist\Patent2Net\ 
-xcopy /S /Y dist\OPSGatherContentsv2-Iramuteq dist\Patent2Net\
+xcopy /S /Y dist\OPSGatherContentsV2-Iramuteq dist\Patent2Net\
 xcopy /S /Y dist\OPSGatherAugment-Families dist\Patent2Net\
-xcopy /S /Y dist\Compatibilizer dist\Patent2Net\
+REM xcopy /S /Y dist\Compatibilizer dist\Patent2Net\
 
 
 xcopy /S /Y dist\P2N-Networks dist\Patent2Net\
@@ -75,9 +76,9 @@ xcopy /S /Y dist\Parallel3 dist\Patent2Net\
 
 rmdir /S /Q dist\FormateExportAttractivityCartography
 rmdir /S /Q dist\OPSGatherPatentsv2
-rmdir /S /Q dist\OPSGatherContentsv2-Iramuteq
+rmdir /S /Q dist\OPSGatherContentsV2-Iramuteq
 rmdir /S /Q dist\OPSGatherAugment-Families
-rmdir /S /Q dist\Compatibilizer
+REM rmdir /S /Q dist\Compatibilizer
 rmdir /S /Q  dist\P2N-Networks
 rmdir /S /Q  dist\P2N-PreNetworks
 rmdir /S /Q  dist\P2N-NetworksJS
@@ -132,7 +133,7 @@ copy /y GatherProcess.bat dist\Patent2Net\
 copy /y NetsProcess.bat dist\Patent2Net\
 copy /y FormatingProcess.bat dist\Patent2Net\
 
-Python P2N_Version.py
+
 copy /y *.info dist
 del *.info
 

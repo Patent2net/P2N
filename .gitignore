@@ -19,3 +19,5 @@ tempocomp/
 distribution/
 specs/
 DATA/
+_Compile*
+Patent2Net/_Compile*
