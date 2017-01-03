@@ -1,10 +1,13 @@
-﻿#insert below your request in cql format as done in the example
-#insert also a compliant name (no space or special characters) for 
-#the "patents universe" corresponding to the request
-request: TA=lentille
-###############################
-# Name of files OR directories
-DataDirectory: Lentille
+# Patent2Net configuration file
+##############################
+# request
+# insert below your request in cql format as done in the example
+request: ta=passiflor* or ta="passion fruit*" 
+
+##############################
+# Directory to use
+# insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
+DataDirectory: Passiflora
 
 ###############################
 #Patent2Net options : Set to *True* or False
@@ -21,7 +24,7 @@ GatherContent: True
 OPSGatherContentsv2-Iramuteq: True
 
 #patents families extending the PU to families
-GatherFamilly: True
+GatherFamilly: False
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi

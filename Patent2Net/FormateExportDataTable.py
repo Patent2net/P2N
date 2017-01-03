@@ -121,21 +121,23 @@ if IsEnableScript:
                 else:
                     tempo[key] = brev[key].capitalize().strip()
             else:
-                if isinstance(brev[key], list) and len(brev[key])>1:
-                    try:
-                        tempo[key] = ', '.join(brev[key])
-                    except:
-                        print "pas youp ", key, brev[key]
-                elif isinstance(brev[key], list) and len(brev[key]) == 1:
-                    if brev[key][0] is not None:
-                        tempo[key] = brev[key][0]
-                    else:
+                try:
+                    if isinstance(brev[key], list) and len(brev[key])>1:
+                        try:
+                            tempo[key] = ', '.join(brev[key])
+                        except:
+                            print "pas youp ", key, brev[key]
+                    elif isinstance(brev[key], list) and len(brev[key]) == 1:
+                        if brev[key][0] is not None:
+                            tempo[key] = brev[key][0]
+                        else:
+                            tempo[key] = u''
+                    elif brev[key] is None:
                         tempo[key] = u''
-                elif brev[key] is None:
-                    tempo[key] = u''
-                else:
-                    tempo[key] = brev[key]
-     
+                    else:
+                        tempo[key] = brev[key]
+                except:
+                    tempo[key] = "0" #hum this is fully arbttrary...
     #   tempo[url]
                     
         tempo['inventor-url'] = UrlInventorBuild(brev['inventor'])

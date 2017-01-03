@@ -312,6 +312,7 @@ if GatherBibli and GatherBiblio:
 
     else:
         YetGathered = []
+    import datetime
     for brevet in lstBrevets:
 
         # may be current patent has already be gathered in a previous attempt
@@ -325,7 +326,32 @@ if GatherBibli and GatherBiblio:
                 except:
                     print ndb, " ignored... error occured"
                     next
-
+                tempor=[]
+                for pat in BiblioPatents:
+                    if "year" not in pat.keys():
+                        if 'date' not in pat.keys():
+                            if 'dateDate' not in pat.keys():
+                                if 'prior-Date' not in pat.keys():
+                                    if 'prior-dateDate' not in pat.keys():
+                                        pat['date'] = ['1-1-1']
+                                        pat['prior-Date'] = [u'1-1-1']
+                                        pat['dateDate'] = datetime.date(1,1,1)
+                                        pat['prior-Date'] = datetime.date(1,1,1)
+                                        pat['year'] =  ['1']
+                                    elif pat['prior-dateDate'] is not None:
+                                        pat['dateDate'] = pat['prior-dateDate']
+                                        pat['date'] = pat['dateDate'].year + '-'  + pat['dateDate'].month +'-'+pat['dateDate'].day
+                                        pat['prior-Date'] = pat['date']
+                                        pat['year'] = pat ['dateDate'].year
+                                    
+                    else:
+                        pat['date'] = ['1-1-1']
+                        pat['prior-Date'] = [u'1-1-1']
+                        pat['dateDate'] = datetime.date(1,1,1)
+                        pat['prior-Date'] = datetime.date(1,1,1)
+                        pat['year'] =  ['1']                 
+                    tempor.append(pat)
+                BiblioPatents = tempor
                 if BiblioPatents is not None and BiblioPatents !=[]:
                     with open(ResultPathBiblio +'//'+ndf, 'a') as ficRes:
 

@@ -164,6 +164,8 @@ if Networks[network][0]:
     for brev in DataBrevet["brevets"]:
             #tempo = pickle.load(fic) # we only memorize needed nfo
         pat = OrderedDict ()
+        if "date" not in brev.keys():
+            brev['date'] = '1-1-1'
         for key in NeededInfo:
             
             if key.count('nice')>0 and isinstance(brev[key], list):

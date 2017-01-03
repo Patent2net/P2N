@@ -5,7 +5,7 @@ pyinstaller -y --noupx --specpath=specs --clean  --version-file=version-FormateE
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherContentsV2-Iramuteq.txt OPSGatherContentsV2-Iramuteq.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-OPSGatherAugment-Families.txt OPSGatherAugment-Families.py
-pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Compatibilizer.txt  Compatibilizer.py
+REM pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Compatibilizer.txt  Compatibilizer.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-PreNetworks.txt P2N-PreNetworks.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-Networks.txt P2N-Networks.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-NetworksJS.txt P2N-NetworksJS.py
@@ -25,10 +25,10 @@ pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Interface
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Parallel3.txt Parallel3.py
 
 pyinstaller -y --noupx --version-file=version-FormateExportAttractivityCartography.txt specs\FormateExportAttractivityCartography.spec
-pyinstaller -y --noupx --version-file=version-OPSGatherPatentsV2.txt specs\OPSGatherPatentsV2.spec
-pyinstaller -y --noupx --version-file=version-OPSGatherContentsv2-Iramuteq.txt specs\OPSGatherContentsv2-Iramuteq.spec
+pyinstaller -y --noupx --version-file=version-OPSGatherPatentsv2.txt specs\OPSGatherPatentsv2.spec
+pyinstaller -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt specs\OPSGatherContentsV2-Iramuteq.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherAugment-Families.txt specs\OPSGatherAugment-Families.spec
-pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
+REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
 
 pyinstaller -y --noupx --version-file=version-P2N-Networks.txt specs\P2N-Networks.spec
 pyinstaller -y --noupx --version-file=version-P2N-PreNetworks.txt specs\P2N-PreNetworks.spec
@@ -53,7 +53,7 @@ xcopy /S /Y dist\FormateExportAttractivityCartography dist\Patent2Net64\
 xcopy /S /Y dist\OPSGatherPatentsv2 dist\Patent2Net64\ 
 xcopy /S /Y dist\OPSGatherContentsV2-Iramuteq dist\Patent2Net64\
 xcopy /S /Y dist\OPSGatherAugment-Families dist\Patent2Net64\
-xcopy /S /Y dist\Compatibilizer dist\Patent2Net64\
+REM xcopy /S /Y dist\Compatibilizer dist\Patent2Net64\
 
 
 xcopy /S /Y dist\P2N-Networks dist\Patent2Net64\
