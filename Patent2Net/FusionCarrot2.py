@@ -7,6 +7,8 @@ Created on Fri Dec 19 07:53:30 2014
 import os
 import codecs
 import cPickle
+import bs4
+    
 from P2N_Lib import LoadBiblioFile, ReturnBoolean
 
 with open("..//Requete.cql", "r") as fic:
@@ -77,7 +79,7 @@ def coupeEnMots(texte):
 def LectureFichier2(fic):
     """read the file, and return purged from coupeEnMots content if lenght is greater thar arbitrary value, here 5"""
     """cleans also Iramuteq Variables"""
-    with open(fic, "r") as fichier:
+    with codecs.open(fic, "r", 'utf8') as fichier:
 #            import bs4 as bs
 #            bs.UnicodeDammit.contains_replacement_characters = True
             
@@ -111,51 +113,6 @@ def LectureFichier2(fic):
             else:
                 return None, None
                 
-def complete(listeFic, lang, det):
-   
-    resum = [fi for fi in set(listeFic) if fi.count(det)>0]
-#    desc = [fi for fi in set(listeFic) if fi.count('description')>0]
-#    autres = [fi for fi in set(listeFic) if fi not in resum and fi not in desc]
-    dejaVu = []
-    Ignore = 0
-
-    Contenu = """"""
-    for fichier in set(resum):
-        dejaVu.append(fichier)
-        if LectureFichier(fichier) is not None:
-            Contenu+=LectureFichier(fichier)
-        else:
-            Ignore+=1
-#            tmp = fichier.name.split('//')
-            
-#        if FicResume in resum:
-#            dejaVu.append(FicResume)
-#            if LectureFichier(FicResume) is not None:
-#                Contenu+=LectureFichier(FicResume)
-#            else:
-#                Ignore+=1
-#        FicRevend= fichier.replace('description', 'claims')
-#        if FicRevend in autres:
-#            dejaVu.append(FicRevend)
-#            if LectureFichier(FicRevend) is not None:
-#                Contenu+=LectureFichier(FicRevend)
-#            else:
-#                Ignore+=1
-#                
-#    for fichier in set(autres):
-#        
-#        if fichier not in dejaVu:
-#            dejaVu.append(FicResume)
-#            if LectureFichier(fichier) is not None:
-#                Contenu+=LectureFichier(fichier)
-#            else:
-#                Ignore+=1
-    print len(set(resum)), "fichiers "+det+ " à traiter en langage : ", lang
-    print len(dejaVu), " fichiers "+det+ " traités",
-    if Ignore >0:
-        print " et ", Ignore, " fichier(s) ignores"
-
-    return Contenu
 
                 
 def complete3(listeFic, lang, det, Brevets):
@@ -170,7 +127,7 @@ def complete3(listeFic, lang, det, Brevets):
     Contenu += "<searchresult>\n"
     Contenu += "<query>"+requete+"</query>\n"
     cmpt = 0
-    import bs4
+
     for fichier in set(resum):
         dejaVu.append(fichier)
         tempo, meta =LectureFichier2(fichier)
@@ -182,7 +139,7 @@ def complete3(listeFic, lang, det, Brevets):
                     if isinstance(Brev[0], dict):
                         try: 
                             Brev[0]['title'].decode('utf8')
-                            titre = bs4.BeautifulSoup(Brev[0]['title']).text
+                            titre = bs4.BeautifulSoup(Brev[0]['title'], "lxml").text
                         except:
                             titre = Label
                         
@@ -190,7 +147,7 @@ def complete3(listeFic, lang, det, Brevets):
                         url = "http://worldwide.espacenet.com/searchResults?compact=false&amp;ST=singleline&amp;query="+Label+"&amp;locale=en_EP&amp;DB=EPODOC"
                         cmpt += 1
                         try:
-                            Content = bs4.BeautifulSoup(tempo).text
+                            Content = bs4.BeautifulSoup(tempo, "lxml").text
                             #soupe =  bs4.BeautifulSoup(Content.prettify(Content))
                             tempo = Content#.encode('utf8')
                             tempo=tempo.replace('&lt;', u'>')
