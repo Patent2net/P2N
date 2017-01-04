@@ -105,50 +105,53 @@ if IsEnableScript:
     #        else:
     #            brev[cle] = u'empty'
         for key in clesRef:
-            if key =='inventor' or key =='applicant':
-                if isinstance(brev[key], list) and len(brev[key])>1:
-                    brev[key] = [thing for thing in brev[key] if thing is not None]
-                    tempo[key] = ', '.join(brev[key]).title().strip()
-                elif isinstance(brev[key], list) and len(brev[key]) == 1:
-                    tempo[key] = brev[key][0].title().strip()
-                elif isinstance(brev[key], list) and len(brev[key]) == 0:
-                    tempo[key] = u''
-                else:
-                    tempo[key] = brev[key].title().strip()
-                
-            elif key =='title':
-                if isinstance(brev[key], list):
-                    tempo[key] = unicode(brev[key]).capitalize().strip()
-                else:
-                    tempo[key] = brev[key].capitalize().strip()
-            elif isinstance(brev[key], list) and key=='references':
-                tempo[key] = sum(brev[key])
-            elif isinstance(brev[key], list) and key=='priority-active-indicator':
-                tempo[key] = max(brev[key])
-            elif isinstance(brev[key], list) and key=='representative':
-                if len(brev[key])==0:
-                    tempo[key] = 0
-                else:
-                    tempo[key] = max(brev[key])
-            elif isinstance(brev[key], list) and key=='family lenght':
-                tempo[key] = max(brev[key])
-            else:
-                if isinstance(brev[key], list) and len(brev[key])>1:
-     
-                    try:
-                        tempo[key] = ', '.join(brev[key])
-                    except:
-                        print "pas youp ", key, brev[key]
-                elif isinstance(brev[key], list) and len(brev[key]) == 1:
-                    if brev[key][0] is not None:
-                        tempo[key] = brev[key][0]
-                    else:
+# Issue #6 - by cvanderlei in 3-jan-2017 
+            if key in brev:
+                if key =='inventor' or key =='applicant':
+                    if isinstance(brev[key], list) and len(brev[key])>1:
+                        brev[key] = [thing for thing in brev[key] if thing is not None]
+                        tempo[key] = ', '.join(brev[key]).title().strip()
+                    elif isinstance(brev[key], list) and len(brev[key]) == 1:
+                        tempo[key] = brev[key][0].title().strip()
+                    elif isinstance(brev[key], list) and len(brev[key]) == 0:
                         tempo[key] = u''
-                elif brev[key] is None:
-                    tempo[key] = u''
+                    else:
+                        tempo[key] = brev[key].title().strip()
+                    
+                elif key =='title':
+                    if isinstance(brev[key], list):
+                        tempo[key] = unicode(brev[key]).capitalize().strip()
+                    else:
+                        tempo[key] = brev[key].capitalize().strip()
+                elif isinstance(brev[key], list) and key=='references':
+                    tempo[key] = sum(brev[key])
+                elif isinstance(brev[key], list) and key=='priority-active-indicator':
+                    tempo[key] = max(brev[key])
+                elif isinstance(brev[key], list) and key=='representative':
+                    if len(brev[key])==0:
+                        tempo[key] = 0
+                    else:
+                        tempo[key] = max(brev[key])
+                elif isinstance(brev[key], list) and key=='family lenght':
+                    tempo[key] = max(brev[key])
                 else:
-                    tempo[key] = brev[key]
-     
+                    if isinstance(brev[key], list) and len(brev[key])>1:
+         
+                        try:
+                            tempo[key] = ', '.join(brev[key])
+                        except:
+                            print "pas youp ", key, brev[key]
+                    elif isinstance(brev[key], list) and len(brev[key]) == 1:
+                        if brev[key][0] is not None:
+                            tempo[key] = brev[key][0]
+                        else:
+                            tempo[key] = u''
+                    elif brev[key] is None:
+                        tempo[key] = u''
+                    else:
+                        tempo[key] = brev[key]
+            else:
+                tempo[key] = u''
     #   tempo[url]
                     
         tempo['inventor-url'] = UrlInventorBuild(brev['inventor'])

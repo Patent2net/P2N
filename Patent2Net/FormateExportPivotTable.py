@@ -110,31 +110,35 @@ if IsEnableScript:
             compt+=1
             tempo2=dict()
             for ket in clesRef2:
-                tempo2[ket] = brev[ket] #filtering against clesRef2
-                if ket =="Citations": #special filter... I missed something somewhere
-                    if isinstance(brev[ket], list):
-                        if "empty" in brev[ket] or "Empty" in brev[ket]:
+# Issue #6 - by cvanderlei in 2-jan-2017 
+                if ket in brev:
+                    tempo2[ket] = brev[ket] #filtering against clesRef2
+                    if ket =="Citations": #special filter... I missed something somewhere
+                        if isinstance(brev[ket], list):
+                            if "empty" in brev[ket] or "Empty" in brev[ket]:
+                                tempo2[ket] = 0
+                            else:
+                                print tempo2[ket]
+                        elif isinstance(brev[ket], str) or isinstance(brev[ket], unicode):
+                                if brev[ket].lower() =='empty' or brev[ket] == '':
+                                    tempo2[ket] = 0
+                        else:
+                            pass
+                    elif isinstance(brev[ket], list) and ket=='references':
+                        tempo2[ket] = sum(brev[ket])
+                    elif isinstance(brev[ket], list) and ket=='priority-active-indicator':
+                        tempo2[ket] = max(brev[ket])
+                    elif isinstance(brev[ket], list) and ket=='representative':
+                        if len(brev[ket])==0:
                             tempo2[ket] = 0
                         else:
-                            print tempo2[ket]
-                    elif isinstance(brev[ket], str) or isinstance(brev[ket], unicode):
-                            if brev[ket].lower() =='empty' or brev[ket] == '':
-                                tempo2[ket] = 0
+                            tempo2[ket] = max(brev[ket])
+                    elif isinstance(brev[ket], list) and ket=='family lenght':
+                        tempo2[ket] = max(brev[ket])
                     else:
                         pass
-                elif isinstance(brev[ket], list) and ket=='references':
-                    tempo2[ket] = sum(brev[ket])
-                elif isinstance(brev[ket], list) and ket=='priority-active-indicator':
-                    tempo2[ket] = max(brev[ket])
-                elif isinstance(brev[ket], list) and ket=='representative':
-                    if len(brev[ket])==0:
-                        tempo2[ket] = 0
-                    else:
-                        tempo2[ket] = max(brev[ket])
-                elif isinstance(brev[ket], list) and ket=='family lenght':
-                    tempo2[ket] = max(brev[ket])
                 else:
-                    pass
+                    tempo2[ket] = 0
     #        print compt    
             #next function will split each patent wich as multivaluated entries in a list of patents for each multivaluated one (hope its clear :-) )
             tempoBrev = DecoupeOnTheFly(tempo2, [])
