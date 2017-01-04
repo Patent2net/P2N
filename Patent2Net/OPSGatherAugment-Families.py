@@ -65,7 +65,7 @@ with open("..//Requete.cql", "r") as fic:
             if lig.count('GatherPatent')>0:
                 GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
             if lig.count('GatherFamilly')>0:
-                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
+                GatherFamilly = True #ReturnBoolean(lig.split(':')[1].strip())
 rep = ndf
 
 clesRef = ['label', 'title', 'year','priority-active-indicator', 'prior-Date', 'prior-dateDate', # dates of priority claims
@@ -116,7 +116,7 @@ if GatherFamilly:
         if 'Description'+ndf or "Description" + ndf.title() in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
             data = LoadBiblioFile(ResultPath, ndf)
 
-        else: #Retrocompatibility
+        else: #Retrocompatibility :-)
             print "gather your data again"
             sys.exit()
         if isinstance(data, collections.Mapping):
@@ -196,7 +196,7 @@ if GatherFamilly:
 
                     for pat in LabList:
                         tempoPat = [patent for patent in temp if patent['label'] == pat] # fusionning several patents wwith same label
-                        # OPS model seem to save one entry for several status documents...
+                        # OPS model seems to save one entry for several status documents...
                                 # in P2N model, label is unique key... so properties are lists.. this is the jobs of update function hereafter
 
                         tempoRar = dict()
@@ -304,6 +304,7 @@ if GatherFamilly:
 #                            print "why are we there ? pat:", pat
 
     #            time.sleep(7)
+            
             Done.append(Brev)
             Data = dict()
             with open(ResultPath+'//DescriptionFamilies'+ ndf, 'w') as ndfLstBrev:

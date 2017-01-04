@@ -328,28 +328,47 @@ if GatherBibli and GatherBiblio:
                     next
                 tempor=[]
                 for pat in BiblioPatents:
-                    if "year" not in pat.keys():
-                        if 'date' not in pat.keys():
-                            if 'dateDate' not in pat.keys():
-                                if 'prior-Date' not in pat.keys():
-                                    if 'prior-dateDate' not in pat.keys():
-                                        pat['date'] = ['1-1-1']
-                                        pat['prior-Date'] = [u'1-1-1']
-                                        pat['dateDate'] = datetime.date(1,1,1)
-                                        pat['prior-Date'] = datetime.date(1,1,1)
-                                        pat['year'] =  ['1']
-                                    elif pat['prior-dateDate'] is not None:
-                                        pat['dateDate'] = pat['prior-dateDate']
-                                        pat['date'] = pat['dateDate'].year + '-'  + pat['dateDate'].month +'-'+pat['dateDate'].day
-                                        pat['prior-Date'] = pat['date']
-                                        pat['year'] = pat ['dateDate'].year
-                                    
-                    else:
-                        pat['date'] = ['1-1-1']
-                        pat['prior-Date'] = [u'1-1-1']
-                        pat['dateDate'] = datetime.date(1,1,1)
-                        pat['prior-Date'] = datetime.date(1,1,1)
-                        pat['year'] =  ['1']                 
+                    if "year" not in pat.keys(): # something didn't go well... Forcing 
+                        if 'date' not in pat.keys() and 'prior-Date' not in pat.keys() and 'dateDate' not in pat.keys() and 'prior-dateDate' not in pat.keys():
+                            pat['date'] = ['1-1-1']
+                            pat['prior-Date'] = [u'1-1-1']
+                            pat['dateDate'] = datetime.date(1,1,1)
+                            pat['prior-Date'] = datetime.date(1,1,1)
+                            pat['year'] =  ['1']    
+                        elif 'date' not in pat.keys() and 'prior-Date' not in pat.keys() and 'dateDate' not in pat.keys():
+                            if isinstance(pat['prior-dateDate'], list) and len(pat['prior-dateDate']) ==1:
+                                if pat['prior-dateDate'][0].year>1:
+                                    pat['date'] = [str(pat['prior-dateDate'][0].year) + '-' + str(pat['prior-dateDate'][0].month) + '-' + str(pat['prior-dateDate'][0].day)]
+                                    pat['prior-Date'] = pat['date']
+                                    pat['dateDate'] = pat['prior-dateDate'][0]
+                                    pat['year'] =  [str(pat['prior-dateDate'][0].year)]
+                                else:
+                                    pat['date'] = ['1-1-1']
+                                    pat['prior-Date'] = [u'1-1-1']
+                                    pat['dateDate'] = datetime.date(1,1,1)
+                                    pat['prior-Date'] = datetime.date(1,1,1)
+                                    pat['year'] =  ['1'] 
+                            else: # booring cases, forcing a little hereafter... many case will be good, others less.... need developper here !
+                                pat['date'] = ['1-1-1']
+                                pat['prior-Date'] = [u'1-1-1']
+                                pat['dateDate'] = datetime.date(1,1,1)
+                                pat['prior-Date'] = datetime.date(1,1,1)
+                                pat['year'] =  ['1'] 
+                        
+                        elif 'dateDate' not in pat.keys():
+                            pat['date'] = ['1-1-1']
+                            pat['prior-Date'] = [u'1-1-1']
+                            pat['dateDate'] = datetime.date(1,1,1)
+                            pat['prior-Date'] = datetime.date(1,1,1)
+                            pat['year'] =  ['1'] 
+                        
+                        else:
+                            pat['date'] = ['1-1-1']
+                            pat['prior-Date'] = [u'1-1-1']
+                            pat['dateDate'] = datetime.date(1,1,1)
+                            pat['prior-Date'] = datetime.date(1,1,1)
+                            pat['year'] =  ['1'] 
+                            
                     tempor.append(pat)
                 BiblioPatents = tempor
                 if BiblioPatents is not None and BiblioPatents !=[]:
