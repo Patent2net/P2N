@@ -112,21 +112,25 @@ for net in Nets: #passing other to false, but the script can be called
 
 
 def Cleaning(texte): # this is for graphviz. Maybe an ascii converter would be ok....
-    tempo = texte.replace('empty', '')
-    tempo= tempo.replace('Empty', '')
-#    tempo = tempo.replace('-', '')
-#    tempo = tempo.replace('&', '')
-#    tempo = tempo.replace("'", "")
-#    tempo = tempo.replace('"', "")
-    import curses.ascii
+# Issue #7 - by cvanderlei in 4-jan-2016 
     try:
-        tutu = [car for car in tempo.encode('ascii', 'ignore') if curses.ascii.isalnum(car) or curses.ascii.isblank(car)]
-    except:
-        tutu = ''  # damn unicode
-    tempo = ''.join(tutu)
-    if tempo != '':
-        return tempo.strip()
-    else:
+        tempo = texte.replace('empty', '')
+        tempo= tempo.replace('Empty', '')
+    #    tempo = tempo.replace('-', '')
+    #    tempo = tempo.replace('&', '')
+    #    tempo = tempo.replace("'", "")
+    #    tempo = tempo.replace('"', "")
+        import curses.ascii
+        try:
+            tutu = [car for car in tempo.encode('ascii', 'ignore') if curses.ascii.isalnum(car) or curses.ascii.isblank(car)]
+        except:
+            tutu = ''  # damn unicode
+        tempo = ''.join(tutu)
+        if tempo != '':
+            return tempo.strip()
+        else:
+            return None
+    except UnicodeDecodeError:
         return None
                     
 Category =dict()

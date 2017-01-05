@@ -123,7 +123,11 @@ if IsEnableScript:
                             except:
                                 print
                             tempolist = [nom.replace(' ', ', ', 1).title() for nom in bre['inventor']]
-                            Authors = unicode(' and '.join(tempolist))
+# Issue #7 - by cvanderlei in 4-jan-2016 
+                            try:
+                                Authors = unicode(' and '.join(tempolist))
+                            except UnicodeDecodeError:
+                                Authors = u''
                         else:
                             entryName=bre['inventor'].split(' ')[0]+'etAl'+str(Date.year)
                             Authors = bre['inventor'].replace(' ', ', ', 1).title()
