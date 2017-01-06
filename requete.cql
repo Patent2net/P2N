@@ -1,13 +1,15 @@
-# Patent2Net configuration file
+﻿# Patent2Net configuration file
 ##############################
-# request
+# This example treat of around 10 patents containing the word "lentille"
+# very restrictive example, that has no sense, but just 10 patents... Quick test
+##############################
+# the "patents universe" corresponding to the request
 # insert below your request in cql format as done in the example
-request: ta=passiflor* or ta="passion fruit*" 
+request: TA=lentille
 
-##############################
-# Directory to use
-# insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
-DataDirectory: Passiflora
+###############################
+# Name of files OR directories
+DataDirectory: Lentille
 
 ###############################
 #Patent2Net options : Set to *True* or False
@@ -23,8 +25,11 @@ GatherBiblio: True
 GatherContent: True
 OPSGatherContentsv2-Iramuteq: True
 
+# Patent images
+OPSGatherContentsV2-Images:True
+
 #patents families extending the PU to families
-GatherFamilly: False
+GatherFamilly: True
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi
