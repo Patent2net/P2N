@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Avr 1 13:41:21 2014
+Created on 6/01/2017
 
-@author: dreymond
-After loading patent list (created from
-OPSGather-BiblioPatent), the script will proceed a check for each patent
+@author: Luc, Andre
+After loading patent list (created from OPSGather-BiblioPatent), 
+the script will proceed a check for each patent
 if it is orphan or has a family. In the last case, family patents are added to
 the initial list (may be some are already in it), and a hierarchic within
 the priority patent (selected as the oldest representative) and its brothers is created.
@@ -24,7 +24,7 @@ BiblioProperties =  ['applicant', 'application-ref', 'citations', 'classificatio
 "CPC", "prior", "priority-claim", "year", "family-id", "equivalent",
  'inventor-country', 'applicant-country', 'inventor-nice', 'applicant-nice', 'CitP', 'CitO', 'references']
 #from networkx_functs import *
-import cPickle
+import cPickle #David? seems not used in this module
 
 import os
 import sys
@@ -32,6 +32,7 @@ import epo_ops
 from epo_ops.models import Docdb
 from epo_ops.models import Epodoc
 from P2N_Lib import ReturnBoolean, MakeIram2, LoadBiblioFile
+# David? produce an error in Spyder : ImportError: No module named P2N_Lib
 
 
 os.environ['REQUESTS_CA_BUNDLE'] = 'cacert.pem'#cacert.pem
@@ -61,29 +62,33 @@ with open("..//Requete.cql", "r") as fic:
             if lig.count('request:')>0:
                 requete=lig.split(':')[1].strip()
             if lig.count('DataDirectory:')>0:
-                ndf = lig.split(':')[1].strip()
-            if lig.count('GatherContent')>0:
-                GatherContent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherBiblio')>0:
-                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherPatent')>0:
-                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherFamilly')>0:
-                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('OPSGatherContentsv2-Iramuteq')>0:
+               ndf = lig.split(':')[1].strip()
+#            if lig.count('GatherContent')>0:
+#                GatherContent = ReturnBoolean(lig.split(':')[1].strip())
+#            if lig.count('GatherBiblio')>0:
+#                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
+#            if lig.count('GatherPatent')>0:
+#                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
+#            if lig.count('GatherFamilly')>0:
+#                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
+#            if lig.count('OPSGatherContentsv2-Iramuteq')>0:
+#                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
+            if lig.count('OPSGatherContentsV2-Images')>0:
                 IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
 
 rep = ndf
-ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
-ResultPathContent = '..//DATA//'+rep+'//PatentContents'
+
+#ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
+#ResultPathContent = '..//DATA//'+rep+'//PatentContents'
 temporPath = '..//DATA//'+rep+'//tempo'
-ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
+#ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
+ResultPathImages= '..//DATA//'+rep+'//PatentImages'
 try:
-    os.makedirs(ResultPathContent)
+#    os.makedirs(ResultPathContent)
+    os.makedirs(ResultPathImages)
 except:
     pass
 
-#by default, data are not gathered yet
 ficOk = False
 
 
