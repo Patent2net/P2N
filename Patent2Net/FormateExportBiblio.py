@@ -142,8 +142,13 @@ if IsEnableScript:
                             if len(bre['country']) ==1:
                                 bre['country'] = bre['country'][0]
                         Dones.append(entryName)
-                        resFic.write(u'@Patent{'+entryName+',\n')
-                        resFic.write(u'\t author={' + Authors + '},\n')
+# Issue #6 - by cvanderlei in 6-jan-2017
+                        try:
+                            resFic.write(u'@Patent{'+entryName+',\n')
+                            resFic.write(u'\t author={' + Authors + '},\n')
+                        except UnicodeDecodeError:
+                            resFic.write('@Patent{'+entryName+',\n')
+                            resFic.write('\t author={' + Authors + '},\n')
                         try:
                             resFic.write(u"\t title = {"+unicode(bre['title']).capitalize() +"},\n")
                         except: #damm unicode
