@@ -2484,7 +2484,11 @@ def GetFamilly(client, brev, rep):
 
 def EcritContenu(contenu, fic):
     with open(fic, 'w') as ficW:
-        ficW.write(contenu.encode('utf8'))
+# Issue #6 - by cvanderlei in 6-jan-2017
+        try:
+            ficW.write(contenu.encode('utf8'))
+        except UnicodeDecodeError:
+            ficW.write(contenu)
         return 'OK'
         
 def MakeText(Thing):
@@ -2729,10 +2733,12 @@ def ProcessBiblio(pat):
                     for cit in pat[u'bibliographic-data']['references-cited'][u'citation']:
                         if 'patcit' in cit.keys():
                             # patent ref
-                            if isinstance(cit['patcit'][u'document-id'], list):
-                                PatentData[u'CitP'].append(cit['patcit'][u'document-id'][0][u'doc-number']['$']) #patents citations of patents
-                            else:
-                                PatentData[u'CitP'].append(cit['patcit'][u'document-id'][u'doc-number']['$']) # this may mix Epodoc numbers and docDb
+# Issue #6 - by cvanderlei in 6-jan-2017
+                            if u'document-id' in cit['patcit']:
+                                if isinstance(cit['patcit'][u'document-id'], list):
+                                    PatentData[u'CitP'].append(cit['patcit'][u'document-id'][0][u'doc-number']['$']) #patents citations of patents
+                                else:
+                                    PatentData[u'CitP'].append(cit['patcit'][u'document-id'][u'doc-number']['$']) # this may mix Epodoc numbers and docDb
                         if 'nplcit' in cit.keys():
                             # external ref
                             if isinstance(cit['nplcit'], list):
@@ -2743,10 +2749,12 @@ def ProcessBiblio(pat):
                             print
                 else:
                     if 'patcit' in pat[u'bibliographic-data']['references-cited'][u'citation'].keys():
-                        if isinstance(pat[u'bibliographic-data']['references-cited'][u'citation']['patcit'][u'document-id'], list):
-                            PatentData[u'CitP'] = [pat[u'bibliographic-data']['references-cited'][u'citation']['patcit'][u'document-id'][0][u'doc-number']['$']]
-                        else:## this may mix Epodoc numbers and docDb
-                            PatentData[u'CitP'] = [pat[u'bibliographic-data']['references-cited'][u'citation']['patcit'][u'document-id'][u'doc-number']['$']]
+# Issue #6 - by cvanderlei in 6-jan-2017
+                        if u'document-id' in pat[u'bibliographic-data']['references-cited'][u'citation']['patcit']:
+                            if isinstance(pat[u'bibliographic-data']['references-cited'][u'citation']['patcit'][u'document-id'], list):
+                                PatentData[u'CitP'] = [pat[u'bibliographic-data']['references-cited'][u'citation']['patcit'][u'document-id'][0][u'doc-number']['$']]
+                            else:## this may mix Epodoc numbers and docDb
+                                PatentData[u'CitP'] = [pat[u'bibliographic-data']['references-cited'][u'citation']['patcit'][u'document-id'][u'doc-number']['$']]
 
                     elif 'nplcit' in pat[u'bibliographic-data']['references-cited'][u'citation'].keys():
                         # "extern refs"
