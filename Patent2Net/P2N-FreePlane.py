@@ -182,7 +182,7 @@ if IsEnableScript:
                                                                 fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="bubble" MAX_WIDTH="300" LINK="https://worldwide.espacenet.com/searchResults?ST=singleline&amp;locale=en_EP&amp;submitted=true&amp;DB=&amp;query=ipc%3D''' + nameLink + '''&amp;Submit=Search">\n''')
                                                                 fictemp.write('''<font SIZE="'''+ '10' + '''"/> \n''')
                                                                 fictemp.write('''<edge COLOR="''' + ecolor + '''"/> \n''')
-                                                # Abstracts 
+# Abstracts 
                                                                 for q1 in DataBrevets1['brevets']:
                                                                     if q1['IPCR11'].count(nIpc11) != 0:
                                                                         nodetext = q1['label'] + ": " + q1['title']
@@ -190,9 +190,10 @@ if IsEnableScript:
                                                                             fictemp1=open( '..//DATA//'+rep+'//PatentContents//Abstract//en-'+q1['label']+'.txt', 'r')
                                                                             abstractLines = fictemp1.readlines()
                                                                             textAbstract = abstractLines[1]
+# Issue #6 - by cvanderlei in 6-jan-2017
+                                                                            fictemp1.close()
                                                                         except:
                                                                             textAbstract = 'Not Available!'    
-                                                                        fictemp1.close()
                                                                         fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300">\n''')
                                                                         fictemp.write('''<font SIZE="'''+ '10' + '''"/> \n''')
                                                                         fictemp.write('''<edge COLOR="''' + ecolor + '''"/> \n''')
@@ -211,7 +212,7 @@ if IsEnableScript:
                                                                         fictemp.write('''</html> \n''')
                                                                         fictemp.write('''</richcontent> \n''')
                                                                         fictemp.write('''</node> \n''')
-                                                # End of Abstracts                        
+# End of Abstracts                        
                                                                 fictemp.write('''</node> \n''')
                                     # End node level IPC11
     
