@@ -2313,7 +2313,11 @@ def MakeIram2(patent, FileName, patentBibData, SavePath, contenu):
 #                        resu = ExtraitContenuDict(patentCont, temp)
         TXT = RetrouveLangue(CleList, patentBibData)
         for lang in TXT.keys():                            
-            EcritContenu(IRAM + '\n'.join(TXT[lang]), SavePath+lang+'-'+FileName)
+# Issue #6 - by cvanderlei in 6-jan-2017
+            try:
+                EcritContenu(IRAM + '\n'.join(TXT[lang]), SavePath+lang+'-'+FileName)
+            except UnicodeDecodeError:
+                pass
 #        if len(TXT.keys())>0:
 #            nb = 1
 #        else:
@@ -2484,11 +2488,7 @@ def GetFamilly(client, brev, rep):
 
 def EcritContenu(contenu, fic):
     with open(fic, 'w') as ficW:
-# Issue #6 - by cvanderlei in 6-jan-2017
-        try:
-            ficW.write(contenu.encode('utf8'))
-        except UnicodeDecodeError:
-            ficW.write(contenu)
+        ficW.write(contenu.encode('utf8'))
         return 'OK'
         
 def MakeText(Thing):

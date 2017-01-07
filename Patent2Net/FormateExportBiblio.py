@@ -145,10 +145,9 @@ if IsEnableScript:
 # Issue #6 - by cvanderlei in 6-jan-2017
                         try:
                             resFic.write(u'@Patent{'+entryName+',\n')
-                            resFic.write(u'\t author={' + Authors + '},\n')
                         except UnicodeDecodeError:
-                            resFic.write('@Patent{'+entryName+',\n')
-                            resFic.write('\t author={' + Authors + '},\n')
+                            resFic.write(u'@Patent{""\n')
+                        resFic.write(u'\t author={' + Authors + '},\n')
                         try:
                             resFic.write(u"\t title = {"+unicode(bre['title']).capitalize() +"},\n")
                         except: #damm unicode
