@@ -185,16 +185,19 @@ if IsEnableScript:
 # Abstracts 
                                                                 for q1 in DataBrevets1['brevets']:
                                                                     if q1['IPCR11'].count(nIpc11) != 0:
-                                                                        nodetext = q1['label'] + ": " + q1['title']
+                                                                        nodetext = q1['label'] + ": " + unicode(q1['title'], 'utf8', 'replace').replace('"','')
                                                                         try:
                                                                             fictemp1=open( '..//DATA//'+rep+'//PatentContents//Abstract//en-'+q1['label']+'.txt', 'r')
                                                                             abstractLines = fictemp1.readlines()
-                                                                            textAbstract = abstractLines[1]
+                                                                            textAbstract = abstractLines[1].replace('<','').replace('>','').replace('\\','')
 # Issue #6 - by cvanderlei in 6-jan-2017
                                                                             fictemp1.close()
                                                                         except:
-                                                                            textAbstract = 'Not Available!'    
-                                                                        fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300">\n''')
+                                                                            textAbstract = '(abstract not available)'    
+                                                                        try:
+                                                                            fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300">\n''')
+                                                                        except UnicodeEncodeError:
+                                                                            fictemp.write('''<node TEXT="'''+ q1['label'] +''': (description not available)''' + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300">\n''')
                                                                         fictemp.write('''<font SIZE="'''+ '10' + '''"/> \n''')
                                                                         fictemp.write('''<edge COLOR="''' + ecolor + '''"/> \n''')
                                                                         fictemp.write('''<richcontent TYPE="NOTE"> \n''')
