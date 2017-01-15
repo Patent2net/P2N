@@ -194,11 +194,15 @@ if Networks[network][0]:
             elif isinstance (brev[key], unicode) or isinstance (brev[key], str):
                 pat[key]= Cleaning(brev[key])
 
-            if brev[key] is not None and len(brev[key])>0:
+            if brev[key] is not None and not isinstance(brev[key], datetime.date):
+                if len(brev[key])>0:
+                    pat[key] = brev[key]
+                else:
+                    pat[key] =''
+            elif brev[key] is not None and isinstance(brev[key], datetime.date):
                 pat[key] = brev[key]
             else:
                 pat[key] =''
-
         if 'CitO' in pat.keys():
             if pat['CitO'] != '' and pat['CitO'] != []:
                 pat['CitO'] =[thing.replace('\n', ' ') for thing in pat['CitO']]

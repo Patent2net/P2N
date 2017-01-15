@@ -346,27 +346,27 @@ if GatherBibli and GatherBiblio:
                                     pat['date'] = ['1-1-1']
                                     pat['prior-Date'] = [u'1-1-1']
                                     pat['dateDate'] = datetime.date(1,1,1)
-                                    pat['prior-Date'] = datetime.date(1,1,1)
+                                    pat['prior-dateDate'] = datetime.date(1,1,1)
                                     pat['year'] =  ['1'] 
                             else: # booring cases, forcing a little hereafter... many case will be good, others less.... need developper here !
                                 pat['date'] = ['1-1-1']
                                 pat['prior-Date'] = [u'1-1-1']
                                 pat['dateDate'] = datetime.date(1,1,1)
-                                pat['prior-Date'] = datetime.date(1,1,1)
+                                pat['prior-dateDate'] = datetime.date(1,1,1)
                                 pat['year'] =  ['1'] 
                         
                         elif 'dateDate' not in pat.keys():
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
                             pat['dateDate'] = datetime.date(1,1,1)
-                            pat['prior-Date'] = datetime.date(1,1,1)
+                            pat['prior-dateDate'] = datetime.date(1,1,1)
                             pat['year'] =  ['1'] 
                         
                         else:
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
                             pat['dateDate'] = datetime.date(1,1,1)
-                            pat['prior-Date'] = datetime.date(1,1,1)
+                            pat['prior-dateDate'] = datetime.date(1,1,1)
                             pat['year'] =  ['1'] 
                             
                     tempor.append(pat)
