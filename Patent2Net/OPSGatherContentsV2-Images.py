@@ -63,28 +63,28 @@ with open("..//Requete.cql", "r") as fic:
                 requete=lig.split(':')[1].strip()
             if lig.count('DataDirectory:')>0:
                ndf = lig.split(':')[1].strip()
-#            if lig.count('GatherContent')>0:
-#                GatherContent = ReturnBoolean(lig.split(':')[1].strip())
-#            if lig.count('GatherBiblio')>0:
-#                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-#            if lig.count('GatherPatent')>0:
-#                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-#            if lig.count('GatherFamilly')>0:
-#                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-#            if lig.count('OPSGatherContentsv2-Iramuteq')>0:
-#                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
+            if lig.count('GatherContent')>0:
+                Gather = ReturnBoolean(lig.split(':')[1].strip())
+            if lig.count('GatherBiblio')>0:
+                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
+            if lig.count('GatherPatent')>0:
+                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
+            if lig.count('GatherFamilly')>0:
+                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
+            if lig.count('OPSGatherContentsv2-Iramuteq')>0:
+                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
             if lig.count('OPSGatherContentsV2-Images')>0:
                 IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
 
 rep = ndf
 
-#ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
-#ResultPathContent = '..//DATA//'+rep+'//PatentContents'
+ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
+ResultPathContent = '..//DATA//'+rep+'//PatentContents'
 temporPath = '..//DATA//'+rep+'//tempo'
-#ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
+ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
 ResultPathImages= '..//DATA//'+rep+'//PatentImages'
 try:
-#    os.makedirs(ResultPathContent)
+    os.makedirs(ResultPathContent)
     os.makedirs(ResultPathImages)
 except:
     pass
