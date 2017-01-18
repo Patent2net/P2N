@@ -55,12 +55,11 @@ ResultPathContent = GlobalPath+'//'+ndf
 
 if 'Description'+ndf in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
     data = LoadBiblioFile(ResultPath, ndf)
-
+    requete = data['requete']
 else: #Retrocompatibility
     print "please use Comptatibilizer"
     #if 'Fusion' in data.keys()
-requete = data['requete']
-    
+    data = dict()
 if GatherFamilly:#pdate needed for families
     if 'DescriptionFamilies'+ndf in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
         data2 = LoadBiblioFile(ResultPath, 'Families' + ndf)
