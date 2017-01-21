@@ -317,7 +317,7 @@ if GatherBibli and GatherBiblio:
 
         # may be current patent has already be gathered in a previous attempt
         # should add a condition here to check in os.listdir()
-       if 'invalid result' not in str(brevet) and u'document-id' in brevet.keys():
+        if 'invalid result' not in str(brevet) and u'document-id' in brevet.keys():
             ndb =brevet[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$'] #nameOfPatent for file system save (abstract, claims...)
             listeLabel.append(ndb)
             if ndb not in YetGathered:
@@ -326,6 +326,8 @@ if GatherBibli and GatherBiblio:
                 except:
                     print ndb, " ignored... error occured"
                     next
+                if BiblioPatents is None:
+                    BiblioPatents = []
                 tempor=[]
                 for pat in BiblioPatents:
                     if "year" not in pat.keys(): # something didn't go well... Forcing 
@@ -384,7 +386,7 @@ if GatherBibli and GatherBiblio:
     #
             else:
                 pass # yet gathered
-       else:
+        else:
            print "invalid result"
            if 'label' in brevet.keys():
                if brevet['label'] not in YetGathered:
