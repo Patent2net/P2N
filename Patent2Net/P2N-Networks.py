@@ -57,7 +57,7 @@ Networks["_"+sys.argv[1]][0] = True #setting net to true but reading parameter f
 ListeBrevet = []
 #ouverture fichier de travail
 #On récupère la requête et les noms des fichiers de travail
-with open("../Requete.cql", "r") as fic:
+with open("../requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):

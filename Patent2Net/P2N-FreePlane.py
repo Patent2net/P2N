@@ -31,7 +31,7 @@ ecolor = '#0000ff'
 nsize = '10'
 
 # Load the patent file
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):

@@ -11,7 +11,7 @@ import bs4
     
 from P2N_Lib import LoadBiblioFile, ReturnBoolean
 
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):

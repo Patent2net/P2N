@@ -10,7 +10,7 @@ import codecs
 import os
 import cPickle
 nbFam = 0
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):

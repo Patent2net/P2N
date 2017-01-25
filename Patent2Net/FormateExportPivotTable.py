@@ -15,7 +15,7 @@ from P2N_Lib import ReturnBoolean, DecoupeOnTheFly, LoadBiblioFile # UnNest3#, U
 import datetime
 aujourd = datetime.date.today()
 
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):

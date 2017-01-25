@@ -50,7 +50,7 @@ SchemeVersion = '20140101' #for the url to the classification scheme
 
 ListeBrevet = []
 #opening request file, reading parameters
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):
