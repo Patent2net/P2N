@@ -1,8 +1,5 @@
-ECHO OFF
-ECHO Processing... plese wait...
+echo off
+type warning.txt
 cd Patent2Net
-parallel3.exe 
+parallel3.exe
 cd ..
-ECHO ...
-ECHO Done!
-pause 
