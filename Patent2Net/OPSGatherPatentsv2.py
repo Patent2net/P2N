@@ -335,7 +335,7 @@ if GatherBibli and GatherBiblio:
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
                             pat['dateDate'] = datetime.date(1,1,1)
-                            pat['prior-Date'] = datetime.date(1,1,1)
+                            pat['prior-dateDate'] = datetime.date(1,1,1)
                             pat['year'] =  ['1']    
                         elif 'date' not in pat.keys() and 'prior-Date' not in pat.keys() and 'dateDate' not in pat.keys():
                             if isinstance(pat['prior-dateDate'], list) and len(pat['prior-dateDate']) ==1:
@@ -355,8 +355,7 @@ if GatherBibli and GatherBiblio:
                                 pat['prior-Date'] = [u'1-1-1']
                                 pat['dateDate'] = datetime.date(1,1,1)
                                 pat['prior-dateDate'] = datetime.date(1,1,1)
-                                pat['year'] =  ['1'] 
-                        
+                                pat['year'] =  ['1']                         
                         elif 'dateDate' not in pat.keys():
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
@@ -369,13 +368,11 @@ if GatherBibli and GatherBiblio:
                             pat['prior-Date'] = [u'1-1-1']
                             pat['dateDate'] = datetime.date(1,1,1)
                             pat['prior-dateDate'] = datetime.date(1,1,1)
-                            pat['year'] =  ['1'] 
-                            
+                            pat['year'] =  ['1']                             
                     tempor.append(pat)
                 BiblioPatents = tempor
                 if BiblioPatents is not None and BiblioPatents !=[]:
                     with open(ResultPathBiblio +'//'+ndf, 'a') as ficRes:
-
                         cPickle.dump(BiblioPatents[0], ficRes)
                         YetGathered.append(BiblioPatents[0]["label"])
                         print len(YetGathered), " patent bibliographic data already gathered."
