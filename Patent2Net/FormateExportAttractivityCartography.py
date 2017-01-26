@@ -13,7 +13,7 @@ import cPickle
 #from bs4.dammit import EntitySubstitution
 from P2N_Lib import ReturnBoolean, LoadBiblioFile
 
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):

@@ -3,7 +3,7 @@
 Created on 6/01/2017
 
 @author: Luc, Andre
-After loading patent list (created from OPSGather-BiblioPatent), 
+After loading patent list (created from OPSGather-BiblioPatent),
 the script will proceed a check for each patent
 if it is orphan or has a family. In the last case, family patents are added to
 the initial list (may be some are already in it), and a hierarchic within
@@ -55,7 +55,7 @@ SchemeVersion = '20140101' #for the url to the classification scheme
 ListeBrevet = [] # The patent List
 
 #opening request file, reading parameters
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):
@@ -117,7 +117,7 @@ if IsEnableScript:
     registered_client = epo_ops.RegisteredClient(key, secret)
     #        data = registered_client.family('publication', , 'biblio')
     registered_client.accept_type = 'application/json'
-    
+
     for ndf in [fic2 for fic2 in os.listdir(ResultPathBiblio) if fic2.count('Description')==0]:
         if ndf.startswith('Families'):
             typeSrc = 'Families'
@@ -125,11 +125,11 @@ if IsEnableScript:
             typeSrc = ''
         if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ListPatentPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
             ficBrevet = LoadBiblioFile(ListPatentPath, ndf)
-    
+
         else: #Retrocompatibility
             print 'gather your data again. sorry'
             sys.exit()
-    
+
         if ficBrevet.has_key('brevets'):
             lstBrevet = ficBrevet['brevets']
     #        if data.has_key('requete'):
@@ -138,13 +138,13 @@ if IsEnableScript:
         else:
             print 'gather your data again'
             sys.exit()
-    
+
         registered_client = epo_ops.RegisteredClient(key, secret)
         #        data = registered_client.family('publication', , 'biblio')
         registered_client.accept_type = 'application/json'
         BiblioPatents = []
         #making the directory saving patents
-    
+
         RepDir = ResultPathContent
         try:
             for directory in ['Abstract', 'Claims', u'Description']:
@@ -157,7 +157,7 @@ if IsEnableScript:
         #os.chdir(ndf.replace('.dump', ''))
         desc, clm, ft, abstract = 0,0,0, 0
         Langues = set()
-    
+
         if GatherContent:
             Nombre = dict()
             for brevet in lstBrevet:
@@ -173,7 +173,7 @@ if IsEnableScript:
                 if isinstance(pays, list):
                     pays = pays[0]
                 for content in [typeSrc+'Abstract', typeSrc+'Claims',typeSrc+'Description']:
-    
+
                     if content not in Nombre.keys():
                         Nombre [content] = 0
                     try:
@@ -208,7 +208,7 @@ if IsEnableScript:
                                 for dat in tempoData:
                                     if dat is not None and dat.ok: #doing the same for all content. This may result in redundancy
                                         contenu = content.replace(typeSrc, "").lower()
-    
+
                                         patentCont = dat.json()
                                         Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
                                         if endP == 'biblio':
@@ -224,25 +224,25 @@ if IsEnableScript:
                             #OPS limitation ?
                             #OPS includes character-coded full text only for EP, WO, AT, CH, CA, GB and ES.
                             #http://forums.epo.org/open-patent-services-and-publication-server-web-service/topic3728.html
-    
-    
-    
+
+
+
                         if data is not None and data.ok:
                             contenu = content.replace(typeSrc, "").lower()
-    
+
                             patentCont = data.json()
                             Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
                             if endP == 'biblio':
                                 for contenu in ['claims', 'description']:
                                     Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
                                     #Lang is unused. Trying to gather in biblio endpoint, just in case....
-    
-    
+
+
                                 # Next line is for setting analyses variables for Iramuteq....
-    
+
         else:
             print "no gather parameter set. Finishing."
-    
-    
-    
+
+
+
         #print ft, " fulltext gathered. See ", ndf.replace('.dump', '')+'/fulltext/ directory for files'

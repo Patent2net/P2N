@@ -47,7 +47,7 @@ Networks["_FamiliesNetwork"] =  [True, [ "equivalents", u'family lenght', "appli
 ListeBrevet = []
 #ouverture fichier de travail
 #On récupère la requête et les noms des fichiers de travail
-with open("..//Requete.cql", "r") as fic:
+with open("..//requete.cql", "r") as fic:
     contenu = fic.readlines()
     for lig in contenu:
         #if not lig.startswith('#'):
