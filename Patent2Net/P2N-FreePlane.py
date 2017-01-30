@@ -178,14 +178,13 @@ if IsEnableScript:
                                                                 nameLink = nIpc11.replace('/','%2F')
                                                                 nsize, ncount11 = CalcSizeIpc11(nIpc11,DataBrevets1,ncount7)
                                                                 nodetext = Ipc11Text(nIpc11) + " (" + ncount11 + " Patents)"
-                #                                                fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="#FFFFFF" STYLE="fork" MAX_WIDTH="300">\n''')
                                                                 fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="bubble" MAX_WIDTH="300" LINK="https://worldwide.espacenet.com/searchResults?ST=singleline&amp;locale=en_EP&amp;submitted=true&amp;DB=&amp;query=ipc%3D''' + nameLink + '''&amp;Submit=Search">\n''')
                                                                 fictemp.write('''<font SIZE="'''+ '10' + '''"/> \n''')
                                                                 fictemp.write('''<edge COLOR="''' + ecolor + '''"/> \n''')
 # Abstracts 
                                                                 for q1 in DataBrevets1['brevets']:
                                                                     if q1['IPCR11'].count(nIpc11) != 0:
-                                                                        nodetext = q1['label'] + ": " + unicode(q1['title'], 'utf8', 'replace').replace('"','')
+                                                                        nodetext = q1['label'] + ": " + unicode(q1['title'], 'utf8', 'replace').replace('"','').replace('& ','AND ')
                                                                         try:
                                                                             fictemp1=open( '..//DATA//'+rep+'//PatentContents//Abstract//en-'+q1['label']+'.txt', 'r')
                                                                             abstractLines = fictemp1.readlines()
