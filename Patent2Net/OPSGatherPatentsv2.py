@@ -335,13 +335,8 @@ if GatherBibli and GatherBiblio:
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
                             pat['dateDate'] = datetime.date(1,1,1)
-<<<<<<< HEAD
-                            pat['prior-dateDate'] = datetime.date(1,1,1)
-                            pat['year'] =  ['1']    
-=======
                             pat['prior-Date'] = datetime.date(1,1,1)
                             pat['year'] =  ['1']
->>>>>>> 62d48dec090089f8db26bd1721d20acaad74e836
                         elif 'date' not in pat.keys() and 'prior-Date' not in pat.keys() and 'dateDate' not in pat.keys():
                             if isinstance(pat['prior-dateDate'], list) and len(pat['prior-dateDate']) ==1:
                                 if pat['prior-dateDate'][0].year>1:
@@ -360,12 +355,8 @@ if GatherBibli and GatherBiblio:
                                 pat['prior-Date'] = [u'1-1-1']
                                 pat['dateDate'] = datetime.date(1,1,1)
                                 pat['prior-dateDate'] = datetime.date(1,1,1)
-<<<<<<< HEAD
-                                pat['year'] =  ['1']                         
-=======
                                 pat['year'] =  ['1']
 
->>>>>>> 62d48dec090089f8db26bd1721d20acaad74e836
                         elif 'dateDate' not in pat.keys():
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
@@ -378,12 +369,8 @@ if GatherBibli and GatherBiblio:
                             pat['prior-Date'] = [u'1-1-1']
                             pat['dateDate'] = datetime.date(1,1,1)
                             pat['prior-dateDate'] = datetime.date(1,1,1)
-<<<<<<< HEAD
-                            pat['year'] =  ['1']                             
-=======
                             pat['year'] =  ['1']
 
->>>>>>> 62d48dec090089f8db26bd1721d20acaad74e836
                     tempor.append(pat)
                 BiblioPatents = tempor
                 if BiblioPatents is not None and BiblioPatents !=[]:
