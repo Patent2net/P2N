@@ -55,15 +55,18 @@ In our [documentation page] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php;)
 Todo List (not limitative, just ideas):
 ---------------------------------------
 #### Although Patent2Net works fine and is enough to begin using Patent Information, a lot can be done to improve analysis:
-* Correct the issues (of course)
+* Correct the issues (continuous process, of course)
 * Add some more information in the result html page (ModeleContenuIndex.html). Great to add the treating date (thus can be different from gathering) and P2N version
+* As information analysis do not allways represent the whole Patent Universe (i.e. french abstrat) provide the proportion of P.U. concerned by each analysis
+* Treat Designated State(s) information for EP and WO patentes to complete the attractivity maps
 * Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Build the entire network as a gephi file for download to let new combined network analysis possible
 
 #### Add some new capabilities to Patent2Net, i.e.:
-* Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent full text (Andre is thinking about)
+* Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent (Andre is thinking about)
+* Within the Familly Patent Universe, provide all the same analysis as with the Patent Universe (Roberto is working on)
+* Include the treatment of the Cooperative Patent Classification (CPC) with the proportion of P.U. concerned (http://www.cooperativepatentclassification.org/Archive.html)
 * Build a small database to display results of a specific (Familly) Patent Universe. Database could be [PouchDB] (https://pouchdb.com/) or equivalent
-* Within the Familly Patent Universe, provide all the same analysis as with the Patent Universe
 
 #### Provide some new ways of gathering and anlysis of patent information, i.e.:
 * Within the Familly Patent Universe, provide a new range of analysis, considering a familly as a unique entity (invention)
