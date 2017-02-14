@@ -63,7 +63,7 @@ Todo List (not limitative, just ideas):
 * Build the entire network as a gephi file for download to let new combined network analysis possible
 
 #### Add some new capabilities to Patent2Net, i.e.:
-* Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent (Andre is thinking about)
+* Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent (Andre is working on)
 * Within the Familly Patent Universe, provide all the same analysis as with the Patent Universe (Roberto is working on)
 * Include the treatment of the Cooperative Patent Classification (CPC) with the proportion of P.U. concerned (http://www.cooperativepatentclassification.org/Archive.html)
 * Build a small database to display results of a specific (Familly) Patent Universe. Database could be [PouchDB] (https://pouchdb.com/) or equivalent
