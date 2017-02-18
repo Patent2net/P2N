@@ -1,4 +1,4 @@
-A01B1	Hand tools
+﻿A01B1	Hand tools
 A01B3	Ploughs
 A01B3	Ploughs with fixed plough-shares
 A01B5	Ploughs with rolling non-driven tools, e.g. discs
@@ -1419,7 +1419,7 @@ B21B11	Subsidising the rolling processes by subjecting rollers or work to vibrat
 B21B13	Metal-rolling stands, i.e. an assembly composed of a stand frame, rolls, and accessories ;
 B21B15	Arrangements for performing additional metal-working operations specially combined with or arranged in, or specially adapted for use in connection with, metal-rolling mills
 B21B17	Rolling methods or mills specially designed for making or processing tubes
-B21B17	Tube-rolling by rollers of which the axes are arranged essentially perpendicular to the axis of the work, e.g. "axial" tube-rolling
+B21B17	Tube-rolling by rollers of which the axes are arranged essentially perpendicular to the axis of the work, e.g.  axial  tube-rolling
 B21B19	Tube-rolling by rollers arranged outside the work and having their axes not perpendicular to the axis of the work
 B21B21	Pilgrim-step tube-rolling
 B21B23	Tube-rolling not restricted to methods provided for in only one of groups B21B0017000000-B21B0021000000, e.g. combined processes
@@ -2385,8 +2385,8 @@ B41L3	Platens or like sheet supports for manifolding using pressure-sensitive la
 B41L5	Autographic registers or like apparatus for manifolding by means of pressure-sensitive layers, using movable strips or webs
 B41L7	Apparatus for directly duplicating from hectographic originals, i.e. for obtaining copies in mirror image
 B41L7	Apparatus or machines for duplicating or printing for office or other commercial purposes
-B41L9	Apparatus for indirectly duplicating from hectographic originals by means of hectographic intermediaries or transfer surfaces, i.e. "dry duplicators"
-B41L11	Apparatus for directly duplicating from hectographic masters in mirror image, i.e. "wet duplicators" for producing positive copies
+B41L9	Apparatus for indirectly duplicating from hectographic originals by means of hectographic intermediaries or transfer surfaces, i.e.  dry duplicators 
+B41L11	Apparatus for directly duplicating from hectographic masters in mirror image, i.e.  wet duplicators  for producing positive copies
 B41L13	Stencilling apparatus for office or other commercial use
 B41L15	Letterpress printing apparatus specially adapted for office or other commercial purposes
 B41L17	Lithographic printing apparatus for office or other commercial purposes
@@ -2997,7 +2997,7 @@ B63H13	Effecting propulsion by wind motors driving water-engaging propulsive ele
 B63H15	Effecting propulsion by use of vessel-mounted driving mechanisms co-operating with anchored chains or the like
 B63H16	Effecting propulsion by muscle power
 B63H19	Effecting propulsion of vessels, not otherwise provided for
-B63H20	Outboard propulsion units, i.e. propulsion units having a substantially vertical power leg mounted outboard of a hull and terminating in a propulsion element, e.g. "outboard motors", Z-drives Arrangements thereof on vessels
+B63H20	Outboard propulsion units, i.e. propulsion units having a substantially vertical power leg mounted outboard of a hull and terminating in a propulsion element, e.g.  outboard motors , Z-drives Arrangements thereof on vessels
 B63H21	Use of propulsion power plant or units on vessels ;
 B63H23	Transmitting power from propulsion power plant to propulsive elements
 B63H25	Steering; Slowing-down otherwise than by use of propulsive elements
@@ -3576,7 +3576,7 @@ C06B39	Compositions containing free phosphorus or a binary compound of phosphoru
 C06B41	Compositions containing a nitrated metallo-organic compound
 C06B43	Compositions characterised by explosive or thermic constituents not provided for in groups C06B0025000000-C06B0041000000
 C06B45	Compositions or products which are defined by structure or arrangement of component or product
-C06B47	Compositions in which the components are separately stored until the moment of burning or explosion, e.g. "Sprengel"-type explosives; Suspensions of solid component in a normally non-explosive liquid phase, including a thickened aqueous phase
+C06B47	Compositions in which the components are separately stored until the moment of burning or explosion, e.g.  Sprengel -type explosives; Suspensions of solid component in a normally non-explosive liquid phase, including a thickened aqueous phase
 C06B49	Use of single substances as explosives
 C06C5	Fuses, e.g. fuse cords
 C06C7	Non-electric detonators; Blasting caps; Primers
@@ -7065,7 +7065,7 @@ G04B23	Arrangements producing acoustic signals at preselected times
 G04B25	Indicating the time by other means or by combined means
 G04B27	Mechanical devices for setting the time-indicating means
 G04B29	Frameworks
-G04B29	Frameworks, supports, or arrangements of the clockwork parts in relation to each other, so-called "calibers"
+G04B29	Frameworks, supports, or arrangements of the clockwork parts in relation to each other, so-called  calibers 
 G04B31	Bearings; Point suspensions or counter-point suspensions; Pivot bearings; Single parts therefor
 G04B33	Calibers
 G04B35	Adjusting the gear train, e.g. the backlash of the arbors, depth of meshing of the gears
