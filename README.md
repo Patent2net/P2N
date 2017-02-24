@@ -7,7 +7,7 @@
 About
 -----
 Patent2Net is :
-* elaborated and maintained (on a free base) by a small international team of professors and researchers.  
+* elaborated and maintained (on a free base) by a [small international] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:community;) team of professors and researchers.  
 * an "open source" package and contributions are welcome
 * available "as it is".
 
@@ -50,7 +50,7 @@ Use the /Patent2Net/ProcessPy.bat or the /Patent2Net/Process.sh and enjoy!
 
 Further insformation:
 ---------------------
-In our [documentation page] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php;)
+In our [documentation page] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page)
 
 Todo List (not limitative, just ideas):
 ---------------------------------------
