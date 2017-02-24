@@ -61,6 +61,8 @@ Todo List (not limitative, just ideas):
 * Treat Designated State(s) information for EP and WO patentes to complete the attractivity maps
 * Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Build the entire network as a gephi file for download to let new combined network analysis possible
+* Use the list of standardised applicant names from EPO to normalize nets and tables. 
+
 
 #### Add some new capabilities to Patent2Net, i.e.:
 * Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent (Andre is working on)
@@ -68,10 +70,11 @@ Todo List (not limitative, just ideas):
 * Include the treatment of the Cooperative Patent Classification (CPC) with the proportion of P.U. concerned (http://www.cooperativepatentclassification.org/Archive.html)
 * Build a small database to display results of a specific (Familly) Patent Universe. Database could be [PouchDB] (https://pouchdb.com/) or equivalent
 
-#### Provide some new ways of gathering and anlysis of patent information, i.e.:
+#### Provide some new ways of gathering and analysis of patent information, i.e.:
 * Within the Familly Patent Universe, provide a new range of analysis, considering a familly as a unique entity (invention)
 * Limit the Familly Patent Universe to the only Priority patents, and provide a complete analysis
 * Using citations of the Familly Patent Universe, provide genealogic analysis, especially descendants to try to detect invention fronts.
+* Gather research reports when avalaible and provide analysis chains
 
 #### New contributions and ideas are welcome
 
