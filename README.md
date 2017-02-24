@@ -7,7 +7,7 @@
 About
 -----
 Patent2Net is :
-* elaborated and maintained (on a free base) by a [small international] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:community;) team of professors and researchers.  
+* elaborated and maintained (on a free base) by a [small international team] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:community;) of university professors and researchers.  
 * an "open source" package and contributions are welcome
 * available "as it is".
 
