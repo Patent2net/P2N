@@ -52,7 +52,7 @@ if IsEnableScript:
     temporPath = '..//DATA//'+rep+'//tempo'
     
     
-    print "Hi! This is CountryCartography formatter. "
+    print "\n> Hi! This is CountryCartography formatter. "
     if 'Description'+ndf in os.listdir(ListBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
         LstBrevet = LoadBiblioFile(ListBiblioPath, ndf)
         with open(ListBiblioPath +'//Description'+ndf, 'r') as ficRes:

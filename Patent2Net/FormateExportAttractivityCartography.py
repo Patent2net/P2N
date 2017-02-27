@@ -47,7 +47,7 @@ if IsEnableScript:
     temporPath = '..//DATA//'+rep+'//tempo'
     
     
-    print "Hi! This is CountryAttractivity (applicants, inventors) formatter. "
+    print "\n> Hi! This is CountryAttractivity (applicants, inventors) formatter. "
     
     try:
         os.makedirs(ResultPathContent)
