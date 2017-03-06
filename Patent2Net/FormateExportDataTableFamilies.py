@@ -50,7 +50,7 @@ if IsEnableScript:
     temporPath = '..//DATA//'+rep+'//tempo'
     
     
-    print "Hi, this is DataTable Families formater", ndf
+    print "\n> Hi! This is DataTable Families formater", ndf
     if 'Description'+ndf in os.listdir(ListBiblioPath):
         with open(ListBiblioPath+'//'+ndf, 'r') as data:
             dico = LoadBiblioFile(ListBiblioPath, ndf)

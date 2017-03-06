@@ -98,7 +98,7 @@ def CleanNones(dico):
         return dico
 
 if GatherFamilly:
-    print "Hi! This is the family gatherer. Processing ", ndf
+    print "\n> Hi! This is the family gatherer. Processing ", ndf
     ResultPath = '..//DATA//'+rep+'//PatentBiblios'
     #ResultPathFamilies = '..//DATA//'+rep+'//PatentBiblios'
     temporPath = '..//DATA//'+rep+'//tempo'

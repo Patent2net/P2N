@@ -3,10 +3,10 @@ python FormateExportAttractivityCartography.py
 python FormateExportBiblio.py
 python FormateExportCountryCartography.py
 
+python FormateExportDataTableFamilies.py
 python FormateExportDataTable.py
 python FormateExportPivotTable.py
 python OPSGatherAugment-Families.py
-python FormateExportDataTableFamilies.py
 
 python OPSGatherContentsV2-Iramuteq.py
 python P2N-FreePlane.py
@@ -45,6 +45,3 @@ python P2N-NetworksJS.py References
 python P2N-NetworksJS.py Citations
 python P2N-NetworksJS.py Equivalents
 python Interface2.py
-
-
-

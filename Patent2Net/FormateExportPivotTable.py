@@ -62,7 +62,7 @@ if IsEnableScript:
     for ndf in set(srcFile):
         if 'Description'+ndf in os.listdir(ListBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
             DataBrevet = LoadBiblioFile(ListBiblioPath, ndf)
-            print "hi! this is FormateExportPivotTable"
+            print "\n> Hi! This is FormateExportPivotTable"
         else: #Retrocompatibility... prévious test is ugly: there is an issue with filename in lowercase (sometimes)
             print "please use Comptatibilizer"
             DataBrevet = LoadBiblioFile(ListBiblioPath, ndf) #so I try to laod it....
