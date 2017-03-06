@@ -6,10 +6,10 @@
     |_|   \__,_|\__\___|_| |_|\__| |____| |_| \_|\___|\__|     \ |_|     |____| |_| \_| /       
 About
 -----
-Patent2Net is :
+[Patent2Net] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page) is :
 * elaborated and maintained (on a free base) by a [small international team] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:community;) of university professors and researchers.  
 * an "open source" package and contributions are welcome
-* available "as it is".
+* available "[as it is] (http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:disclaimer)".
 
 Patent2Net is a free package, dedicated to :
 * augment the use of patent information in academic, nano and small firms, developing countries (all those without pay mode access)
@@ -61,7 +61,7 @@ Todo List (not limitative, just ideas):
 * Treat Designated State(s) information for EP and WO patentes to complete the attractivity maps
 * Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Build the entire network as a gephi file for download to let new combined network analysis possible
-* Use the list of standardised applicant names from EPO to normalize nets and tables. 
+* Use the list of standardised applicant names from EPO to normalize nets and tables (not so easy, need a discussion). 
 
 
 #### Add some new capabilities to Patent2Net, i.e.:
