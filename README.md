@@ -61,7 +61,7 @@ Todo List (not limitative, just ideas):
 * Treat Designated State(s) information for EP and WO patentes to complete the attractivity maps
 * Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Build the entire network as a gephi file for download to let new combined network analysis possible
-* Use the list of standardised applicant names from EPO to normalize nets and tables (not so easy, need a discussion). 
+* Use the list of standardised applicant names from EPO to normalize nets and tables. See: http://documents.epo.org/projects/babylon/rawdata.nsf/0/71DE2EB24A084A19C1257F3B0032BA98/
 
 
 #### Add some new capabilities to Patent2Net, i.e.:
