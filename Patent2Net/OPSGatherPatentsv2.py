@@ -31,11 +31,11 @@ BiblioProperties =  ['applicant', 'application-ref', 'citations', 'classificatio
 #from networkx_functs import *
 import cPickle
 #from P2N_Lib import ExtractAbstract, ExtractClassificationSimple2, UniClean, SeparateCountryField, CleanPatent, ExtractPatent, ExtractPubliRefs,
-from P2N_Lib import ReturnBoolean, Initialize, PatentSearch,  GatherPatentsData, LoadBiblioFile
+from P2N_Lib import Initialize, PatentSearch,  GatherPatentsData, LoadBiblioFile
 #from P2N_Lib import ProcessBiblio, MakeIram,  UnNest3, SearchEquiv, PatentCitersSearch
 #from P2N_Lib import Update
 #from P2N_Lib import EcritContenu, coupeEnMots
-
+from P2N_Config import LoadConfig
 #
 import epo_ops
 import os
@@ -68,70 +68,22 @@ nbTrouves = 0
 lstBrevets = [] # The patent List
 BiblioPatents = [] # The bibliographic data
 
-#opening request file, reading parameters
-if len(sys.argv) > 1:
-    with open(sys.argv[1], "r") as fic:
-        contenu = fic.readlines()
-        for lig in contenu:
-            #if not lig.startswith('#'):
-                if lig.count('request:')>0:
-                    requete=lig.split(':')[1].strip()
-                if lig.count('DataDirectory:')>0:
-                    ndf = lig.split(':')[1].strip()
-                if lig.count('GatherContent')>0:
-                    Gather = ReturnBoolean(lig.split(':')[1].strip())
-                if lig.count('GatherBiblio')>0:
-                    GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-                    GatherBibli = ReturnBoolean(lig.split(':')[1].strip())
 
-                if lig.count('GatherPatent')>0:
-                    GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-                if lig.count('GatherFamilly')>0:
-                    GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-else:
-    with open("..//requete.cql", "r") as fic:
-        contenu = fic.readlines()
-        for lig in contenu:
-            #if not lig.startswith('#'):
-                if lig.count('request:')>0:
-                    requete=lig.split(':')[1].strip()
-                if lig.count('DataDirectory:')>0:
-                    ndf = lig.split(':')[1].strip()
-                if lig.count('GatherContent')>0:
-                    Gather = ReturnBoolean(lig.split(':')[1].strip())
-                if lig.count('GatherBiblio')>0:
-                    GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-                    GatherBibli = ReturnBoolean(lig.split(':')[1].strip())
+configFile = LoadConfig()
+requete = configFile.requete
+ndf = configFile.ndf
+GatherBiblio = configFile.GatherBiblio
+GatherBibli = configFile.GatherBiblio
+GatherPatent = configFile.GatherPatent
+GatherFamilly = configFile.GatherFamilly
 
-                if lig.count('GatherPatent')>0:
-                    GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-                if lig.count('GatherFamilly')>0:
-                    GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
+
  #should set a working dir one upon a time... done it is temporPath
-rep = ndf
-ListPatentPath = '..//DATA//'+rep+'//PatentLists'
-ResultPathBiblio = '..//DATA//'+rep+'//PatentBiblios'
-ResultContents= '..//DATA//'+rep+'//PatentContents'
-temporPath = '..//DATA//'+rep+'//tempo'
-ResultAbstractPath = ResultContents+'//Abstract'
-try:
-    os.makedirs(ListPatentPath)
-except:
-    pass
-try:
-    os.makedirs(ResultPathBiblio)
-except:
-    pass
-try:
-    os.makedirs(ResultContents)
-except:
-    pass
-try:
-    os.makedirs(temporPath)
-except:
-    pass
-if 'Abstract' not in os.listdir(ResultContents):
-    os.mkdir(ResultContents+'//Abstract')
+ListPatentPath = configFile.ListPatentPath
+ResultPathBiblio = configFile.ResultPathBiblio
+ResultContents = configFile.ResultContents
+temporPath = configFile.temporPath
+ResultAbstractPath = configFile.ResultAbstractPath
 
 
 #by default, data are not gathered yet
