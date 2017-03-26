@@ -25,9 +25,6 @@ GatherBiblio: True
 GatherContent: True
 OPSGatherContentsv2-Iramuteq: True
 
-# Patent images
-OPSGatherContentsV2-Images:True
-
 #patents families extending the PU to families
 GatherFamilly: True
 
