@@ -86,6 +86,7 @@ class P2NConfig:
         self.ResultContents = '..//DATA//'+self.ndf+'//PatentContents'
         self.temporPath = '..//DATA//'+self.ndf+'//tempo'
         self.ResultAbstractPath = self.ResultContents+'//Abstract'
+        self.ResultFamiliesAbstractPath = self.ResultContents+'//FamiliesAbstract'
         self.ResultPathGephi = '..//DATA//' + self.ndf + '//GephiFiles'
 
         for path in [
@@ -94,6 +95,7 @@ class P2NConfig:
             self.ResultContents,
             self.temporPath,
             self.ResultAbstractPath,
+            self.ResultFamiliesAbstractPath,
             self.ResultPathGephi,
         ]:
             if not os.path.isdir(path):
