@@ -28,10 +28,7 @@ class P2NConfig:
         self.Equivalents = False
 
         #opening request file, reading parameters
-        # if len(sys.argv) > 1:
-        #     content = open(sys.argv[1], "r").readlines()
-        # else:
-        content = open("..//requete.cql", "r").readlines()
+        content = self.readInputFile()
 
         for line in content:
             ### General config loading
@@ -79,6 +76,13 @@ class P2NConfig:
                 self.Equivalents = self.getBoolean(line)
 
         self.generatePaths()
+
+    def readInputFile(self):
+        if len(sys.argv) > 1:
+            for arg in sys.argv:
+                if ".cql" in arg.lower():
+                    return open(arg, "r").readlines()
+        return open("..//requete.cql", "r").readlines()
 
     def generatePaths(self):
         self.ListPatentPath = '..//DATA//'+self.ndf+'//PatentLists'
