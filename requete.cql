@@ -5,11 +5,11 @@
 ##############################
 # the "patents universe" corresponding to the request
 # insert below your request in cql format as done in the example
-request: TA=lentille
+request: ta="filter*" and ta="drink* water" AND (pn = U not (pn = UA or pn = US or pn = UY))
 
 ###############################
 # Name of files OR directories
-DataDirectory: Lentille
+DataDirectory: Water
 
 ###############################
 #Patent2Net options : Set to *True* or False
@@ -23,7 +23,10 @@ GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
 GatherContent: True
-OPSGatherContentsv2-Iramuteq: True
+OPSGatherContentsv2-Iramuteq: False
+
+# Patent images
+OPSGatherContentsV2-Images:True
 
 #patents families extending the PU to families
 GatherFamilly: True
