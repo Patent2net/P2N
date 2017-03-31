@@ -26,6 +26,7 @@ class P2NConfig:
         self.References = False
         self.Citations = False
         self.Equivalents = False
+        self.FormateExportCountryCartography = False
 
         #opening request file, reading parameters
         content = self.readInputFile()
@@ -74,6 +75,8 @@ class P2NConfig:
                 self.Citations = self.getBoolean(line)
             elif line.count('Equivalents') > 0:
                 self.Equivalents = self.getBoolean(line)
+            elif line.count('FormateExportCountryCartography') > 0:
+                self.FormateExportCountryCartography = self.getBoolean(line)
 
         self.generatePaths()
 
@@ -85,13 +88,14 @@ class P2NConfig:
         return open("..//requete.cql", "r").readlines()
 
     def generatePaths(self):
-        self.ListPatentPath = '..//DATA//'+self.ndf+'//PatentLists'
-        self.ResultPathBiblio = '..//DATA//'+self.ndf+'//PatentBiblios'
-        self.ResultContents = '..//DATA//'+self.ndf+'//PatentContents'
-        self.temporPath = '..//DATA//'+self.ndf+'//tempo'
+        self.ResultPath = '..//DATA//' + self.ndf
+        self.ListPatentPath = self.ResultPath+'//PatentLists'
+        self.ResultPathBiblio = self.ResultPath+'//PatentBiblios'
+        self.ResultContents = self.ResultPath+'//PatentContents'
+        self.temporPath = self.ResultPath+'//tempo'
         self.ResultAbstractPath = self.ResultContents+'//Abstract'
         self.ResultFamiliesAbstractPath = self.ResultContents+'//FamiliesAbstract'
-        self.ResultPathGephi = '..//DATA//' + self.ndf + '//GephiFiles'
+        self.ResultPathGephi = self.ResultPath + '//GephiFiles'
 
         for path in [
             self.ListPatentPath,
