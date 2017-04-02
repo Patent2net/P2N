@@ -27,6 +27,7 @@ class P2NConfig:
         self.Citations = False
         self.Equivalents = False
         self.FormateExportCountryCartography = False
+        self.FreePlane = False
 
         #opening request file, reading parameters
         content = self.readInputFile()
@@ -77,7 +78,8 @@ class P2NConfig:
                 self.Equivalents = self.getBoolean(line)
             elif line.count('FormateExportCountryCartography') > 0:
                 self.FormateExportCountryCartography = self.getBoolean(line)
-
+            elif line.count('P2N-FreePlane') > 0:
+                self.FreePlane = self.getBoolean(line)
         self.generatePaths()
 
     def readInputFile(self):
