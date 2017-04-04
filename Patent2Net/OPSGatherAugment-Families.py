@@ -25,7 +25,8 @@ Amy be unconsistent with pivotable formating... (almost)
 import cPickle
 #from Ops2 import ExtraitParties, Clean, ExtraitTitleEn, ExtraitKind, ExtraitCountry, ExtraitIPCR2, ExtractionDate
 from P2N_Lib import Update, GetFamilly, flatten
-from P2N_Lib import ReturnBoolean, LoadBiblioFile
+from P2N_Lib import LoadBiblioFile
+from P2N_Config import LoadConfig
 
 import epo_ops
 import os
@@ -50,22 +51,19 @@ SchemeVersion = '20140101' #for the url to the classification scheme
 
 ListeBrevet = []
 #opening request file, reading parameters
-with open("..//requete.cql", "r") as fic:
-    contenu = fic.readlines()
-    for lig in contenu:
-        #if not lig.startswith('#'):
-            if lig.count('request:')>0:
-                requete=lig.split(':')[1].strip()
-            if lig.count('DataDirectory:')>0:
-                ndf = lig.split(':')[1].strip()
-            if lig.count('GatherContent')>0:
-                Gather = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherBiblio')>0:
-                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherPatent')>0:
-                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherFamilly')>0:
-                GatherFamilly = True #ReturnBoolean(lig.split(':')[1].strip())
+configFile = LoadConfig()
+requete = configFile.requete
+ndf = configFile.ndf
+Gather = configFile.GatherContent
+GatherBiblio = configFile.GatherBiblio
+GatherPatent = configFile.GatherPatent
+GatherFamilly = configFile.GatherFamilly
+
+ #should set a working dir one upon a time... done it is temporPath
+ResultPath = configFile.ResultPathBiblio
+temporPath = configFile.temporPath
+ResultContents = configFile.ResultContents
+
 rep = ndf
 
 clesRef = ['label', 'title', 'year','priority-active-indicator', 'prior-Date', 'prior-dateDate', # dates of priority claims
@@ -99,15 +97,6 @@ def CleanNones(dico):
 
 if GatherFamilly:
     print "\n> Hi! This is the family gatherer. Processing ", ndf
-    ResultPath = '..//DATA//'+rep+'//PatentBiblios'
-    #ResultPathFamilies = '..//DATA//'+rep+'//PatentBiblios'
-    temporPath = '..//DATA//'+rep+'//tempo'
-    ResultContents= '..//DATA//'+rep+'//PatentContents'
-    try:
-        os.makedirs(ResultContents+'//'+'FamiliesAbstract')
-        os.makedirs(temporPath)
-    except:
-        pass
     try:
 
         fic = open(ResultPath+ '//' + ndf, 'r')
@@ -189,6 +178,7 @@ if GatherFamilly:
 
             if Brev is not None and Brev != '':
                 temp = GetFamilly(registered_client, Brev, ResultContents)
+                print "... loading ", Brev['label']
                 temp = CleanNones(temp)
                 if temp is not None:
                     tempFiltered =[]
@@ -304,7 +294,7 @@ if GatherFamilly:
 #                            print "why are we there ? pat:", pat
 
     #            time.sleep(7)
-            
+
             Done.append(Brev)
             Data = dict()
             with open(ResultPath+'//DescriptionFamilies'+ ndf, 'w') as ndfLstBrev:

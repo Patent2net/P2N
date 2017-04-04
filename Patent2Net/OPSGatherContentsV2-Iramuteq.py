@@ -31,7 +31,8 @@ import sys
 import epo_ops
 from epo_ops.models import Docdb
 from epo_ops.models import Epodoc
-from P2N_Lib import ReturnBoolean, MakeIram2, LoadBiblioFile
+from P2N_Lib import MakeIram2, LoadBiblioFile
+from P2N_Config import LoadConfig
 
 
 os.environ['REQUESTS_CA_BUNDLE'] = 'cacert.pem'#cacert.pem
@@ -53,35 +54,21 @@ SchemeVersion = '20140101' #for the url to the classification scheme
 
 ListeBrevet = [] # The patent List
 
-#opening request file, reading parameters
-with open("..//requete.cql", "r") as fic:
-    contenu = fic.readlines()
-    for lig in contenu:
-        #if not lig.startswith('#'):
-            if lig.count('request:')>0:
-                requete=lig.split(':')[1].strip()
-            if lig.count('DataDirectory:')>0:
-                ndf = lig.split(':')[1].strip()
-            if lig.count('GatherContent')>0:
-                GatherContent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherBiblio')>0:
-                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherPatent')>0:
-                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherFamilly')>0:
-                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('OPSGatherContentsv2-Iramuteq')>0:
-                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
+configFile = LoadConfig()
+requete = configFile.requete
+ndf = configFile.ndf
+GatherContent = configFile.GatherContent
+GatherBiblio = configFile.GatherBiblio
+GatherPatent = configFile.GatherPatent
+GatherFamilly = configFile.GatherFamilly
+IsEnableScript = configFile.GatherIramuteq
 
-rep = ndf
-ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
-ResultPathContent = '..//DATA//'+rep+'//PatentContents'
-temporPath = '..//DATA//'+rep+'//tempo'
-ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
-try:
-    os.makedirs(ResultPathContent)
-except:
-    pass
+ #should set a working dir one upon a time... done it is temporPath
+ListPatentPath = configFile.ListPatentPath
+ResultPathBiblio = configFile.ResultPathBiblio
+ResultPathContent= configFile.ResultContents
+temporPath = configFile.temporPath
+ResultAbstractPath = configFile.ResultAbstractPath
 
 #by default, data are not gathered yet
 ficOk = False

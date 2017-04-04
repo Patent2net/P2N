@@ -8,19 +8,14 @@ import os
 import codecs
 import cPickle
 import bs4
-    
-from P2N_Lib import LoadBiblioFile, ReturnBoolean
 
-with open("..//requete.cql", "r") as fic:
-    contenu = fic.readlines()
-    for lig in contenu:
-        #if not lig.startswith('#'):
-            if lig.count('request:')>0:
-                requete=lig.split(':')[1].strip()
-            if lig.count('DataDirectory:')>0:
-                ndf = lig.split(':')[1].strip()
-            if lig.count('FusionCarrot2')>0:
-                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
+from P2N_Lib import LoadBiblioFile
+from P2N_Config import LoadConfig
+
+configFile = LoadConfig()
+requete = configFile.requete
+IsEnableScript = configFile.FusionCarrot2
+GatherFamilly = configFile.GatherFamilly
 
 def GenereListeFichiers(rep):
     """ prend un dossier en paramètre (chemin absolu) et génère la liste
@@ -46,13 +41,13 @@ def GenereListeFichiers(rep):
                 else:
                     if fichier.endswith('.txt'):
                         listeFicUNK.append(root+'//'+fichier)
-                
+
     return (list(set(listeFicFR)), list(set(listeFicEN)), list(set(listeFicUNK)))
 
 def Normalise(listeFic):
     """Necessary becaus in OPSGatentsPAtents, I didn't care about abstracts name,
     there is a missing '-' in name creation: should be LANG-PatentNum.txt"""
-    cpt = 0    
+    cpt = 0
     for fic in listeFic:
         if fic.count('Abstracts')>0:
             tmp = fic.split('//')
@@ -64,25 +59,25 @@ def Normalise(listeFic):
                 cpt+=1
             except:
                 pass
-    print cpt, " Abstracts files Names normalized" 
+    print cpt, " Abstracts files Names normalized"
 
 
 def coupeEnMots(texte):
     "renvoie une liste de mots propres des signes de ponctuation et autres cochonneries"
     texte= texte.lower()
-    import re 
-    res = re.sub('['+"[]?!"+']', ' ', texte) # on vire la ponctuation 
+    import re
+    res = re.sub('['+"[]?!"+']', ' ', texte) # on vire la ponctuation
     res = re.sub('\d', ' ', res) # extraction des chiffres #numeric are avoided
     res = re.findall('\w+', res, re.UNICODE) # extraction des lettres seulement #only letters, no symbols
     return res
-    
+
 def LectureFichier2(fic):
     """read the file, and return purged from coupeEnMots content if lenght is greater thar arbitrary value, here 5"""
     """cleans also Iramuteq Variables"""
     with codecs.open(fic, "r", 'utf8') as fichier:
 #            import bs4 as bs
 #            bs.UnicodeDammit.contains_replacement_characters = True
-            
+
             fi = fichier.readlines()
             #cpt = 0
 #            try:
@@ -91,8 +86,8 @@ def LectureFichier2(fic):
 #            except:
 #                fi = ""
 #                cpt +=1
-#                print "loupés ", cpt 
-#            
+#                print "loupés ", cpt
+#
             meta = ''.join([lig for lig in fi if lig.startswith('****')])
             try:
                 for ligne in fi:
@@ -104,7 +99,7 @@ def LectureFichier2(fic):
                         except:
                             lect=''
                             pass
-                
+
             except:
                 lect=''
             if len(' '.join(coupeEnMots(lect)))> 5: #arbitrary
@@ -112,11 +107,11 @@ def LectureFichier2(fic):
                 return contenu, meta
             else:
                 return None, None
-                
 
-                
+
+
 def complete3(listeFic, lang, det, Brevets):
-   
+
     resum = [fi for fi in set(listeFic) if fi.count('//'+det+'//')>0]
     dejaVu = []
     Ignore = 0
@@ -137,13 +132,13 @@ def complete3(listeFic, lang, det, Brevets):
                 Brev = [ele for ele in Brevets if ele['label'] == Label]
                 if len(Brev) ==1:
                     if isinstance(Brev[0], dict):
-                        try: 
+                        try:
                             Brev[0]['title'].decode('utf8')
                             titre = bs4.BeautifulSoup(Brev[0]['title'], "lxml").text
                         except:
                             titre = Label
-                        
-    
+
+
                         url = "http://worldwide.espacenet.com/searchResults?compact=false&amp;ST=singleline&amp;query="+Label+"&amp;locale=en_EP&amp;DB=EPODOC"
                         cmpt += 1
                         try:
@@ -157,23 +152,23 @@ def complete3(listeFic, lang, det, Brevets):
                                 Contenu+=u'<document id="%s">\n' %cmpt
                                 Contenu+=u'<title>%s</title>\n' % titre
                                 Contenu+=u'<url>%s</url>\n' % url
-                                
+
                                 Contenu+=u'<snippet>%s</snippet>\n' %unicode(tempo)
-                                Contenu+=u"</document>\n"       
+                                Contenu+=u"</document>\n"
                         except:
                             #print #bad encoding should be here
                             Ignore+=1
                     else:
                         pass # is this really bibliographic data ?
-            
+
                 else:
                     Ignore+=1
             except:
                 Ignore+=1
                 pass
             #cleaning temporarrary this should be done at gathering process
-#            temp = tempo.split('\n')[1].strip()                
-            
+#            temp = tempo.split('\n')[1].strip()
+
         else:
             Ignore+=1
     print len(set(resum)), "fichiers "+det+ " à traiter en langage : ", lang
@@ -181,33 +176,38 @@ def complete3(listeFic, lang, det, Brevets):
     if Ignore >0:
         print " et ", Ignore, " fichier(s) ignores (non dédoublés)"
     Contenu += u"</searchresult>"
-    
+
     return Contenu.lower()
 
 
 if IsEnableScript:
-    Rep = '..//DATA//'+ndf+'//PatentContents'
-    Bib = '..//DATA//'+ndf+'//PatentBiblios//'
-    
-    if 'Description'+ndf in os.listdir(Bib): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-        DataBrevet = LoadBiblioFile(Bib, ndf)
-        LstBrevet = DataBrevet['brevets'] 
-    else: #Retrocompatibility
-        print "please use Comptatibilizer"
-    
-    try:
-        os.makedirs(Rep+"//Carrot2")
-    except:
-        #directory exists
-        pass
-    temporar = GenereListeFichiers(Rep)
-    
-    for det in ['Abstract', 'Claims', 'Description']:
-        ind = 0
-        for lang in ['FR', 'EN', 'UNK']:
-            NomResult = lang+'_'+det.replace('Abstracts', '') + '_' + ndf+'.xml' # det.replace('Abstracts', '') this command is for old old mispelling :-(.. I think)
-            ficRes = codecs.open(Rep+'//Carrot2//'+NomResult, "w", 'utf8')
-            ficRes.write(complete3(temporar[ind], lang, det, LstBrevet))
-            ind+=1
-            ficRes.close()
-            
+    Rep = configFile.ResultContents
+    Bib = configFile.ResultPathBiblio
+
+    prefixes = [""]
+    if GatherFamilly:
+        prefixes.append("Families")
+
+    for prefix in prefixes:
+        ndf = prefix + configFile.ndf
+
+        if 'Description'+ndf in os.listdir(Bib): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+            DataBrevet = LoadBiblioFile(Bib, ndf)
+            LstBrevet = DataBrevet['brevets']
+        else: #Retrocompatibility
+            print "please use Comptatibilizer"
+
+        try:
+            os.makedirs(Rep+"//Carrot2")
+        except:
+            #directory exists
+            pass
+        temporar = GenereListeFichiers(Rep)
+        for det in ['Abstract', 'Claims', 'Description']:
+            ind = 0
+            for lang in ['FR', 'EN', 'UNK']:
+                NomResult = lang+'_'+det.replace('Abstracts', '') + '_' + ndf+'.xml' # det.replace('Abstracts', '') this command is for old old mispelling :-(.. I think)
+                ficRes = codecs.open(Rep+'//Carrot2//'+NomResult, "w", 'utf8')
+                ficRes.write(complete3(temporar[ind], lang, det, LstBrevet))
+                ind+=1
+                ficRes.close()

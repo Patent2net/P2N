@@ -32,9 +32,9 @@ def CalcSizeIpc1(ipcName, ipcList):
         ntsize = '10'
     else:
       ntsize = '8'
-  
+
     return ntsize, str(int(ipc1count))
-# End CalcSizeIpc1 
+# End CalcSizeIpc1
 
 def CalcSizeIpc3(ipcName, ipcList, ipc1total):
     ipc1total = float(ipc1total)
@@ -54,9 +54,9 @@ def CalcSizeIpc3(ipcName, ipcList, ipc1total):
         ntsize = '8'
     else:
       ntsize = '8'
-  
+
     return ntsize, str(int(ipc3count))
-# End CalcSizeIpc3 
+# End CalcSizeIpc3
 
 def CalcSizeIpc4(ipcName, ipcList, ipc3total):
     ipc3total = float(ipc3total)
@@ -76,9 +76,9 @@ def CalcSizeIpc4(ipcName, ipcList, ipc3total):
         ntsize = '8'
     else:
       ntsize = '8'
-  
+
     return ntsize, str(int(ipc4count))
-# End CalcSizeIpc4 
+# End CalcSizeIpc4
 
 def CalcSizeIpc7(ipcName, ipcList, ipc4total):
     ipc4total = float(ipc4total)
@@ -98,9 +98,9 @@ def CalcSizeIpc7(ipcName, ipcList, ipc4total):
         ntsize = '8'
     else:
       ntsize = '8'
-  
+
     return ntsize, str(int(ipc7count))
-# End CalcSizeIpc7 
+# End CalcSizeIpc7
 
 def CalcSizeIpc11(ipcName, ipcList, ipc7total):
     ipc7total = float(ipc7total)
@@ -120,9 +120,9 @@ def CalcSizeIpc11(ipcName, ipcList, ipc7total):
         ntsize = '8'
     else:
       ntsize = '8'
-  
+
     return ntsize, str(int(ipc11count))
-# End CalcSizeIpc11 
+# End CalcSizeIpc11
 
 def LoadDescs():
 
@@ -132,16 +132,16 @@ def LoadDescs():
     global listdesc11
 
     with open (".//extensions//IPC-Ressources//IPC_3.txt","r") as fidesc:
-        listdesc3 = fidesc.readlines()    
+        listdesc3 = fidesc.readlines()
     with open (".//extensions//IPC-Ressources//IPC_4.txt","r") as fidesc:
-        listdesc4 = fidesc.readlines()    
+        listdesc4 = fidesc.readlines()
     with open (".//extensions//IPC-Ressources//IPC_8.txt","r") as fidesc:
-        listdesc7 = fidesc.readlines()    
+        listdesc7 = fidesc.readlines()
     with open (".//extensions//IPC-Ressources//IPC_11.txt","r") as fidesc:
-        listdesc11 = fidesc.readlines()    
+        listdesc11 = fidesc.readlines()
 
 # end LoadDescs
- 
+
 def nodecolor(thiscolor):
     if thiscolor == '#ff0000':
         return '#CCFFFF'
@@ -161,7 +161,7 @@ def nodecolor(thiscolor):
         return '#33FFCC'
     if thiscolor == '#33FFCC':
         return '#ff0000'
-# end nodecolor        
+# end nodecolor
 
 def Ipc1Text(ipc1):
     if ipc1 == 'A':
@@ -181,7 +181,7 @@ def Ipc1Text(ipc1):
     elif ipc1 == 'H':
         return 'H:  Electricity'
 # end Ipc1Text
-        
+
 def Ipc3Text(ipc3):
 
     global listdesc3
@@ -191,10 +191,10 @@ def Ipc3Text(ipc3):
                 return lines
         except:
             pass
-    return ipc3  
-          
+    return ipc3
+
 # end Ipc3Text
-    
+
 def Ipc4Text(ipc4):
 
     global listdesc4
@@ -204,8 +204,8 @@ def Ipc4Text(ipc4):
                 return lines
         except:
             pass
-    return ipc4            
-    
+    return ipc4
+
 # end Ipc4Text
 
 def Ipc7Text(ipc7):
@@ -218,8 +218,8 @@ def Ipc7Text(ipc7):
         except:
             pass
 
-    return ipc7            
-    
+    return ipc7
+
 def Ipc11Text(ipc11):
 
     global listdesc11
@@ -230,6 +230,6 @@ def Ipc11Text(ipc11):
         except:
             pass
 
-    return ipc11            
+    return ipc11
 
 # end Ipc7Text
