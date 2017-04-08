@@ -11,7 +11,7 @@ import json
 import os
 import cPickle
 #from bs4.dammit import EntitySubstitution
-from P2N_Lib import LoadBiblioFile
+from P2N_Lib import LoadBiblioFile, RenderTemplate
 from P2N_Config import LoadConfig
 
 configFile = LoadConfig()
@@ -123,15 +123,15 @@ if IsEnableScript:
             nameFic = field.split('-')[0]
             with open(ResultPathContent+'//'+ndf+"Map"+nameFic+ ".json", "w") as fic:
                 json.dump(dico, fic)
-                resJsonName = ndf+"Map"+nameFic+ ".json"
-            with open("ModeleCartoDeposant.html") as fic:
-                html = fic.read()
-            html = html.replace("***Field***", nameFic)
-            html = html.replace("***requete***", DataBrevet["requete"])
-            html = html.replace("ficJson", '"'+resJsonName+'"')
-
-            with open(ResultPathContent+'//'+ndf+"Carto"+nameFic+ ".html", "w") as fic:
-                fic.write(html)
+                
+            resJsonName = ndf+"Map"+nameFic+ ".json"
+            RenderTemplate(
+                "ModeleCartoDeposant.html",
+                ResultPathContent+'//'+ndf+"Carto"+nameFic+ ".html",
+                field=nameFic,
+                request=DataBrevet["requete"],
+                jsonFile=resJsonName
+            )
         #due to limit of D3, countries ressources are necessary placed
         # in same working directory... other solution is to start an http server
         # http://stackoverflow.com/questions/17077931/d3-samples-in-a-microsoft-stack

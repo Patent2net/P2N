@@ -38,6 +38,8 @@ SchemeVersion = '20140101'
 
 import re
 import datetime
+import codecs
+from jinja2 import Environment, FileSystemLoader
 
 def isMaj(car):
     if car.lower() != car:
@@ -3095,6 +3097,13 @@ def NomBrevet(Brev):
     except:
         return None
 
+
+def RenderTemplate(name, dest, **context):
+    handler = codecs.open(dest, 'w', 'utf8')
+    handler.write(Environment(
+        loader=FileSystemLoader('templates')
+    ).get_template(name).render(**context))
+    handler.close()
 
 #############
 # tests unitaires
