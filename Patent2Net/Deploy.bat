@@ -10,33 +10,25 @@ REM next is for publishing in github..this file
 copy /y Deploy.bat ..\..\P2N-Git\Development
 REM HTML Formating : Datatable
 copy /y ScriptSearch.js ..\..\P2N-Git\Development
-copy /y Modele.html ..\..\P2N-Git\Development\Modele.html
 REM special, next one is for families datatable
 copy /y SearchScript.js ..\..\P2N-Git\Development
-copy /y ModeleFamille.html ..\..\P2N-Git\Development\ModeleFamille.html
-REM HTML Formating : Pivotable
-copy /y Pivot.html ..\..\P2N-Git\Development\Pivot.html
-copy /y ModeleFamillePivot.html ..\..\P2N-Git\Development\ModeleFamillePivot.html
 REM HTML Formating : Cartography
 copy /y countries.json ..\..\P2N-Git\Development
-copy /y ModeleCarto.html ..\..\P2N-Git\Development
-copy /y ModeleCartoDeposant.html ..\..\P2N-Git\Development
 copy /y NameCountryMap.csv ..\..\P2N-Git\Development
 REM HTML Formating : NetWorks
-copy /y Graphe.html ..\..\P2N-Git\Development
-copy /y config.js ..\..\P2N-Git\Development
 REM HTML Formating : Launching firefox # Deprecated
 copy /y OpenNav.bat ..\..\P2N-Git\Development
 REM HTML Formating : General index
 REM THE MENU in root
 copy /y ..\index.html dist
 REM content of analyses
-copy /y index.js dist 
+copy /y index.js dist
 REM Menus for each analyse
-copy /y ModeleIndex.html ..\..\P2N-Git\Development\ModeleIndex.html
 copy /y P2N.css ..\..\P2N-Git\Development\P2N.css
-copy /y ModeleContenuIndex.html ..\..\P2N-Git\Development\ModeleContenuIndex.html
-copy /y ModeleIndexRequete.html ..\..\P2N-Git\Development\ModeleIndexRequete.html
+
+REM templates folder
+mkdir ..\..\P2N-Git\Development\templates
+xcopy /y /s templates ..\..\P2N-Git\Development\templates\
 
 REM HTML Formating : External libraries
 mkdir ..\..\P2N-Git\Development\extensions

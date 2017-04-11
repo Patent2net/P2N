@@ -60,9 +60,9 @@ GatherPatent = configFile.GatherPatent
 GatherFamilly = configFile.GatherFamilly
 
  #should set a working dir one upon a time... done it is temporPath
-ResultPath = configFile.ResultPathBiblio
+ResultPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
-ResultContents = configFile.ResultContents
+ResultContentsPath = configFile.ResultContentsPath
 
 rep = ndf
 
@@ -177,7 +177,7 @@ if GatherFamilly:
         for Brev in ListeBrevet:
 
             if Brev is not None and Brev != '':
-                temp = GetFamilly(registered_client, Brev, ResultContents)
+                temp = GetFamilly(registered_client, Brev, ResultContentsPath)
                 print "... loading ", Brev['label']
                 temp = CleanNones(temp)
                 if temp is not None:

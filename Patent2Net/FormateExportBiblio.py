@@ -27,7 +27,7 @@ GatherPatent = configFile.GatherPatent
 IsEnableScript = configFile.FormateExportBiblio
 GatherFamilly = configFile.GatherFamilly
 
-ListBiblioPath = configFile.ResultPathBiblio
+ListBiblioPath = configFile.ResultBiblioPath
 ResultPathContent = configFile.ResultPath
 temporPath = configFile.temporPath
 

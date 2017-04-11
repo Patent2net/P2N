@@ -40,8 +40,8 @@ IsEnableScript = configFile.FreePlane
 P2NFamilly = configFile.GatherFamilly
 rep = configFile.ndf
 
-ListPatentPath = configFile.ListPatentPath
-ResultPathBiblio = configFile.ResultPathBiblio
+ResultListPath = configFile.ResultListPath
+ResultBiblioPath = configFile.ResultBiblioPath
 
 if IsEnableScript:
     LoadDescs()
@@ -53,8 +53,8 @@ if IsEnableScript:
     for prefix in prefixes:
         ndf = prefix + configFile.ndf
         try:
-            with open(ResultPathBiblio+'//'+ndf, 'r') as fic:
-                DataBrevets1 = LoadBiblioFile(ResultPathBiblio, ndf)
+            with open(ResultBiblioPath+'//'+ndf, 'r') as fic:
+                DataBrevets1 = LoadBiblioFile(ResultBiblioPath, ndf)
                 BrevetsTotal = str(len(DataBrevets1['brevets']))
         except:
             print "Error: there are no data to generate de FreePlane file"

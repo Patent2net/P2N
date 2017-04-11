@@ -69,8 +69,8 @@ P2NFamilly = configFile.FamiliesNetwork
 P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
 
 # should set a working dir one upon a time... done it is temporPath
-ResultPathGephi = configFile.ResultPathGephi
-BiblioPath = configFile.ResultPathBiblio
+ResultGephiPath = configFile.ResultGephiPath
+BiblioPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
 
 

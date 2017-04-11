@@ -77,8 +77,8 @@ pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribut
 
 mkdir  ..\distribution\Patent2Net\
 
-xcopy /S /Y ..\distribution\FormateExportAttractivityCartography ..\distribution\Patent2Net\ 
-xcopy /S /Y ..\distribution\OPSGatherPatentsv2 ..\distribution\Patent2Net\ 
+xcopy /S /Y ..\distribution\FormateExportAttractivityCartography ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\OPSGatherPatentsv2 ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherContentsV2-Iramuteq ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherAugment-Families ..\distribution\Patent2Net\
 REM xcopy /S /Y ..\distribution\Compatibilizer ..\distribution\Patent2Net\
@@ -108,22 +108,13 @@ xcopy /Y root\* ..\distribution\
 copy /y cacert.pem ..\distribution\Patent2Net\
 copy /y countries.json ..\distribution\patent2Net
 copy /y P2N.css ..\distribution\patent2Net
-copy /y ModeleCarto.html ..\distribution\patent2Net
-copy /y ModeleCartoDeposant.html ..\distribution\patent2Net
 copy /y NameCountryMap.csv ..\distribution\Patent2Net\
 copy /y scriptSearch.js ..\distribution\Patent2Net\
 copy /y Searchscript.js ..\distribution\Patent2Net\
-copy /y config.js ..\distribution\Patent2Net\
 copy /y CollecteETRaite.bat dist
-copy /y Modele.html ..\distribution\Patent2Net\Modele.html
-copy /y Graphe.html ..\distribution\Patent2Net\Graphe.html
 copy /y OpenNav.bat ..\distribution\Patent2Net\OpenNav.bat
-copy /y ModeleFamille.html ..\distribution\Patent2Net\ModeleFamille.html
-copy /y ModeleFamillePivot.html ..\distribution\Patent2Net\ModeleFamillePivot.html
-copy /y Pivot.html ..\distribution\Patent2Net\Pivot.html
-copy /y ModeleIndex.html ..\distribution\Patent2Net\ModeleIndex.html
-copy /y ModeleContenuIndex.html ..\distribution\Patent2Net\ModeleContenuIndex.html
-copy /y ModeleIndexRequete.html ..\distribution\Patent2Net\
+mkdir dist\Patent2Net\templates
+xcopy /S /Y templates dist\Patent2Net\templates
 copy /y cles-epo.txt dist
 mkdir ..\distribution\Patent2Net\lib2to3
 xcopy /S /Y lib2to3 ..\distribution\Patent2Net\lib2to3

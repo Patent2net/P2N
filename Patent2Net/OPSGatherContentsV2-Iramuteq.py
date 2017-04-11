@@ -64,9 +64,9 @@ GatherFamilly = configFile.GatherFamilly
 IsEnableScript = configFile.GatherIramuteq
 
  #should set a working dir one upon a time... done it is temporPath
-ListPatentPath = configFile.ListPatentPath
-ResultPathBiblio = configFile.ResultPathBiblio
-ResultPathContent= configFile.ResultContents
+ResultListPath = configFile.ResultListPath
+ResultBiblioPath = configFile.ResultBiblioPath
+ResultPathContent= configFile.ResultContentsPath
 temporPath = configFile.temporPath
 ResultAbstractPath = configFile.ResultAbstractPath
 
@@ -100,13 +100,13 @@ if IsEnableScript:
     #        data = registered_client.family('publication', , 'biblio')
     registered_client.accept_type = 'application/json'
 
-    for ndf in [fic2 for fic2 in os.listdir(ResultPathBiblio) if fic2.count('Description')==0]:
+    for ndf in [fic2 for fic2 in os.listdir(ResultBiblioPath) if fic2.count('Description')==0]:
         if ndf.startswith('Families'):
             typeSrc = 'Families'
         else:
             typeSrc = ''
-        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ListPatentPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-            ficBrevet = LoadBiblioFile(ListPatentPath, ndf)
+        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ResultListPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+            ficBrevet = LoadBiblioFile(ResultListPath, ndf)
 
         else: #Retrocompatibility
             print 'gather your data again. sorry'

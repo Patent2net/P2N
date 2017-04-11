@@ -23,7 +23,7 @@ from collections import OrderedDict
 from networkx_functs import calculate_degree, calculate_betweenness, calculate_degree_centrality
 import cPickle as pickle
 import copy
-from P2N_Lib import UrlPatent,UrlApplicantBuild,UrlInventorBuild,UrlIPCRBuild, cmap_discretize, flatten, DecoupeOnTheFly
+from P2N_Lib import UrlPatent,UrlApplicantBuild,UrlInventorBuild,UrlIPCRBuild, cmap_discretize, flatten, DecoupeOnTheFly, RenderTemplate
 #from P2N_Lib import getStatus2, getClassif,getCitations, getFamilyLenght, isMaj, quote, GenereDateLiens
 #from P2N_Lib import  symbole, ReturnBoolean, FormateGephi, GenereListeSansDate, GenereReseaux3, cmap_discretize
 #from Ops3 import UnNest2List
@@ -79,8 +79,8 @@ P2NFamilly = configFile.FamiliesNetwork
 P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
 
  #should set a working dir one upon a time... done it is temporPath
-ResultPathGephi = configFile.ResultPathGephi
-BiblioPath = configFile.ResultPathBiblio
+ResultGephiPath = configFile.ResultGephiPath
+BiblioPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
 
 print "bibliographic data of ", ndf, " patent universe found."
@@ -273,19 +273,19 @@ for prefix in prefixes:
         outputFile = ndf+network+prefix+'JS.gexf'
 
         try:
-            os.remove(ResultPathGephi+'/'+outputFile)
+            os.remove(ResultGephiPath+'/'+outputFile)
         except:
             try:
-                os.remove(ResultPathGephi+'/'+outputFile)
+                os.remove(ResultGephiPath+'/'+outputFile)
             except:
                 pass
     #
-        nx.write_gexf(G, ResultPathGephi+'/'+outputFile, version='1.2draft')
-        fic = open(ResultPathGephi+'/'+outputFile, 'r')
+        nx.write_gexf(G, ResultGephiPath+'/'+outputFile, version='1.2draft')
+        fic = open(ResultGephiPath+'/'+outputFile, 'r')
 
         # Next is a hack to correct the bad writing of the header of the gexf file
         # with dynamics properties
-        fictemp=open(ResultPathGephi+'/'+"Good"+outputFile, 'w')
+        fictemp=open(ResultGephiPath+'/'+"Good"+outputFile, 'w')
 
 
         ecrit = True
@@ -302,29 +302,29 @@ for prefix in prefixes:
         fictemp.close()
         fic.close()
         try:
-            #os.remove(ResultPathGephi+'\\'+ndf+'.gexf')
-            os.remove(ResultPathGephi+'/'+outputFile)
+            #os.remove(ResultGephiPath+'\\'+ndf+'.gexf')
+            os.remove(ResultGephiPath+'/'+outputFile)
         except:
             pass
 
-        os.rename(ResultPathGephi+'/'+"Good"+outputFile, ResultPathGephi+'/'+outputFile)
-        print "Network file writen in ",  ResultPathGephi+' directory.\n See file: '+outputFile
+        os.rename(ResultGephiPath+'/'+"Good"+outputFile, ResultGephiPath+'/'+outputFile)
+        print "Network file writen in ",  ResultGephiPath+' directory.\n See file: '+outputFile
         print
         print
         #making the html from model
-        with open('Graphe.html', 'r') as  fic:
-            contHtml = fic.read()
-            contHtml = contHtml.replace('***TitleNet***', network[1:]+' Network for ' + requete)
-            #contHtml = contHtml.replace('***fichier***','../../../GephiFiles/'+outputFile)
-            contHtml = contHtml.replace('media/styles', '../../../Patent2Net/media/styles', contHtml.count('media/styles'))
-            contHtml = contHtml.replace('media/js', '../../../Patent2Net/media/js', contHtml.count('media/js'))
-            contHtml = contHtml.replace('***fichierConfigJS***', outputFile.replace('.gexf','') +'Conf.js')
-            with open( ResultPathGephi + '/'+outputFile.replace('.gexf','.html'), 'w') as FicRes:
-                FicRes.write(contHtml)
+        RenderTemplate(
+            "Graphe.html",
+            ResultGephiPath + '/'+outputFile.replace('.gexf','.html'),
+            TitleNet=network[1:]+' Network for ' + requete,
+            fichierConfigJS=outputFile.replace('.gexf','') +'Conf.js',
+            mediaStyle='../../../Patent2Net/media/styles',
+            mediaJs='../../../Patent2Net/media/js',
+        )
+
         # making the js from model
-                # maybe we could adjust node size and other parameters here
-        with open("config.js", 'r') as fic:
-            with open(ResultPathGephi + '/'+outputFile.replace('.gexf','') +'Conf.js', 'w') as ficRes:
-                fichierJS = fic.read()
-                ficRes.write(fichierJS.replace('FicRezo', outputFile))
-        #
+        # maybe we could adjust node size and other parameters here
+        RenderTemplate(
+            "gephiConfig.js",
+            ResultGephiPath + '/'+outputFile.replace('.gexf','') +'Conf.js',
+            FicRezo=outputFile,
+        )

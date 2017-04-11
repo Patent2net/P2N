@@ -23,8 +23,8 @@ IsEnableScript = configFile.FormateExportCountryCartography
 P2NFamilly = configFile.FamiliesNetwork
 
  #should set a working dir one upon a time... done it is temporPath
-ListPatentPath = configFile.ListPatentPath
-ListBiblioPath = configFile.ResultPathBiblio
+ResultListPath = configFile.ResultListPath
+ListBiblioPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
 ResultPathContent = configFile.ResultPath
 
@@ -56,7 +56,7 @@ if IsEnableScript:
         else: #Retrocompatibility
             with open(ListBiblioPath+'//'+ndf, 'r') as data:
                 LstBrevet = cPickle.load(data)
-            with open(ListPatentPath+'//'+ndf, 'r') as data:
+            with open(ResultListPath+'//'+ndf, 'r') as data:
                 DataBrevet = cPickle.load(data)
         ##next may need clarifying update
         if isinstance(LstBrevet, dict):
@@ -123,7 +123,7 @@ if IsEnableScript:
             nameFic = field.split('-')[0]
             with open(ResultPathContent+'//'+ndf+"Map"+nameFic+ ".json", "w") as fic:
                 json.dump(dico, fic)
-                
+
             resJsonName = ndf+"Map"+nameFic+ ".json"
             RenderTemplate(
                 "ModeleCartoDeposant.html",

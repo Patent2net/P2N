@@ -5,68 +5,53 @@ Created on Sun Feb 15 09:12:25 2015
 @author: dreymond
 """
 
-from P2N_Lib import ReturnBoolean, LoadBiblioFile, RenderTemplate
+from P2N_Lib import LoadBiblioFile, RenderTemplate
+from P2N_Config import LoadConfig
 import codecs
 import os
 import cPickle
 nbFam = 0
-with open("..//requete.cql", "r") as fic:
-    contenu = fic.readlines()
-    for lig in contenu:
-        #if not lig.startswith('#'):
-            if lig.count('request:')>0:
-                requete=lig.split(':')[1].strip()
-            if lig.count('DataDirectory:')>0:
-                ndf = lig.split(':')[1].strip()
-            if lig.count('GatherContent')>0:
-                Gather = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherBiblio')>0:
-                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherPatent')>0:
-                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherFamilly')>0:
-                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('InventorNetwork')>0:
-                P2NInv = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('ApplicantNetwork')>0:
-                AppP2N = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('ApplicantInventorNetwork')>0:
-                P2NAppInv = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('InventorCrossTechNetwork')>0:
-                P2NInvCT = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('CompleteNetwork')>0:
-                P2NComp = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('CountryCrossTechNetwork')>0:
-                P2NCountryCT = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('FamiliesNetwork')>0:
-                P2NFamilly = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('FamiliesHierarchicNetwork')>0:
-                P2NHieracFamilly = ReturnBoolean(lig.split(':')[1].strip())
 
-GlobalPath ='..//DATA'
-ResultPath = GlobalPath+'//'+ndf+'//PatentBiblios'
-ResultPatentPath = GlobalPath+'//'+ndf+'//PatentLists'
+configFile = LoadConfig()
+requete = configFile.requete
+ndf = configFile.ndf
+Gather = configFile.GatherContent
+GatherBiblio = configFile.GatherBiblio
+GatherPatent = configFile.GatherPatent
+GatherFamilly = configFile.GatherFamilly
+P2NInv = configFile.InventorNetwork
+AppP2N = configFile.ApplicantNetwork
+P2NAppInv = configFile.ApplicantInventorNetwork
+P2NInvCT = configFile.InventorCrossTechNetwork
+P2NComp = configFile.CompleteNetwork
+P2NCountryCT = configFile.CountryCrossTechNetwork
+P2NFamilly = configFile.FamiliesNetwork
+P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
 
-ResultPathGephi = GlobalPath+'//'+ndf+'//GephiFiles'
-ResultPathContent = GlobalPath+'//'+ndf
+ #should set a working dir one upon a time... done it is temporPath
+ResultBiblioPath = configFile.ResultBiblioPath
+ResultPatentPath = configFile.ResultListPath
+ResultContentsPath = configFile.ResultContentsPath
+
+GlobalPath = configFile.GlobalPath
 
 # take request from BiblioPatent file
 
 
-if 'Description'+ndf in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-    data = LoadBiblioFile(ResultPath, ndf)
+if 'Description'+ndf in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+    data = LoadBiblioFile(ResultBiblioPath, ndf)
     requete = data['requete']
 else: #Retrocompatibility
     print "please use Comptatibilizer"
     #if 'Fusion' in data.keys()
     data = dict()
 if GatherFamilly:#pdate needed for families
-    if 'DescriptionFamilies'+ndf in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-        data2 = LoadBiblioFile(ResultPath, 'Families' + ndf)
+    if 'DescriptionFamilies'+ndf in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+        data2 = LoadBiblioFile(ResultBiblioPath, 'Families' + ndf)
         nbFam = len(data2['brevets'])
     else: #Retrocompatibility
         print "please use Comptatibilizer"
-    #if 'Fusion' in data.keys()with open( ResultPath+'//Families'+ndf, 'r') as ficBib:
+    #if 'Fusion' in data.keys()with open( ResultBiblioPath+'//Families'+ndf, 'r') as ficBib:
  #        data2 = cPickle.load(ficBib)
 
 else:
@@ -86,7 +71,7 @@ else:
 totalsPerType = {}
 if Gather:
     for content in [u'Abstract', u'Claims', u'Description', u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription' ]:
-        path = ResultPathContent+'//PatentContents//' + content
+        path = ResultContentsPath + content
         if os.path.isdir(path):
             lstfic = os.listdir(path)
             languages = set([str(fi[0:2]) for fi in lstfic])
@@ -109,35 +94,6 @@ RenderTemplate(
 
 
 )
-
-
-
-
-
-
-#
-#
-# ficRes = codecs.open(GlobalPath+'//'+ndf+'.html', 'w', 'utf8')
-#
-# with codecs.open('ModeleContenuIndex.html', 'r', 'utf8') as fic:
-#     NouveauContenu = fic.read()
-#
-#
-# with open('ModeleIndexRequete.html', 'r') as fic:
-#     html = fic.read()
-#     html = html[:html.index('</body>')]
-# html  = html .replace("***Request***", requete)
-#
-#
-#
-#
-#
-# html += NouveauContenu + """
-#   </body>
-# </html>
-# """
-# ficRes.write(html)
-# ficRes.close()
 
 # updating index.js for server side and local menu
 inFile =[] # memorize content

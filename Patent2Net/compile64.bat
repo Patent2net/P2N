@@ -49,8 +49,8 @@ pyinstaller -y --noupx --version-file=version-Parallel3.txt specs\Parallel3.spec
 
 mkdir dist\Patent2Net64\
 
-xcopy /S /Y dist\FormateExportAttractivityCartography dist\Patent2Net64\ 
-xcopy /S /Y dist\OPSGatherPatentsv2 dist\Patent2Net64\ 
+xcopy /S /Y dist\FormateExportAttractivityCartography dist\Patent2Net64\
+xcopy /S /Y dist\OPSGatherPatentsv2 dist\Patent2Net64\
 xcopy /S /Y dist\OPSGatherContentsV2-Iramuteq dist\Patent2Net64\
 xcopy /S /Y dist\OPSGatherAugment-Families dist\Patent2Net64\
 REM xcopy /S /Y dist\Compatibilizer dist\Patent2Net64\
@@ -89,7 +89,7 @@ rmdir /S /Q dist\FormateExportPivotTable
 rmdir /S /Q dist\FormateExportDataTableFamilies
 rmdir /S /Q dist\FormateExportBiblio
 rmdir /S /Q dist\FormateExportCountryCartography
-rmdir /S /Q dist\FusionCarrot2 
+rmdir /S /Q dist\FusionCarrot2
 rmdir /S /Q dist\Interface2
 rmdir /S /Q dist\Parallel3
 
@@ -103,23 +103,14 @@ copy /Y requete.cql dist
 copy /y cacert.pem dist\Patent2Net64\
 copy /y countries.json dist\Patent2Net64
 copy /y P2N.css dist\Patent2Net64
-copy /y ModeleCarto.html dist\Patent2Net64
-copy /y ModeleCartoDeposant.html dist\Patent2Net64
 copy /y NameCountryMap.csv dist\Patent2Net64\
 copy /y scriptSearch.js dist\Patent2Net64\
 copy /y Searchscript.js dist\Patent2Net64\
-copy /y config.js dist\Patent2Net64\
 copy /y CollecteETRaite.bat dist
-copy /y Modele.html dist\Patent2Net64\Modele.html
-copy /y Graphe.html dist\Patent2Net64\Graphe.html
 copy /y OpenNav.bat dist\Patent2Net64\OpenNav.bat
-copy /y ModeleFamille.html dist\Patent2Net64\ModeleFamille.html
-copy /y ModeleFamillePivot.html dist\Patent2Net64\ModeleFamillePivot.html
-copy /y Pivot.html dist\Patent2Net64\Pivot.html
-copy /y ModeleIndex.html dist\Patent2Net64\ModeleIndex.html
-copy /y ModeleContenuIndex.html dist\Patent2Net64\ModeleContenuIndex.html
-copy /y ModeleIndexRequete.html dist\Patent2Net64\
 copy /y cles-epo.txt dist
+mkdir dist\Patent2Net\templates
+xcopy /S /Y templates dist\Patent2Net\templates
 mkdir dist\Patent2Net64\lib2to3
 xcopy /S /Y lib2to3 dist\Patent2Net64\lib2to3
 mkdir dist\Patent2Net64\extensions
@@ -134,5 +125,3 @@ copy /y FormatingProcess.bat  dist\
 
 copy /y *.info dist
 del *.info
-
-

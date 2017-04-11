@@ -21,10 +21,10 @@ with open("..//requete.cql", "r") as fic:
                 IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
 
 rep = ndf
-ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
+ResultListPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
 ResultPathContent = '..//DATA//'+rep+'//PatentContents'
 temporPath = '..//DATA//'+rep+'//tempo'
-ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
+ResultBiblioPath= '..//DATA//'+rep+'//PatentBiblios'
 
 def GenereListeFichiers(rep):
     """ prend un dossier en paramètre (chemin absolu) et génère la liste

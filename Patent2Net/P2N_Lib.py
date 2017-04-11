@@ -2134,7 +2134,7 @@ def LoadBiblioFile(rep, name):
                     break
     return DataBrevets
 
-def ExtractPatent(pat, ResultContents, BiblioPatents):
+def ExtractPatent(pat, ResultContentsPath, BiblioPatents):
     DejaLa = [bre['label'] for bre in BiblioPatents]
 
 
@@ -2330,7 +2330,7 @@ def GetFamilly(client, brev, rep):
     #from OPS2NetUtils2 import ExtractClassificationSimple2, SeparateCountryField, ExtractAbstract, UniClean
     from epo_ops.models import Epodoc, Docdb
     import datetime
-    ResultContents = rep
+    ResultContentsPath = rep
     lstres = []
     comptExcept = 0
 
@@ -2436,7 +2436,7 @@ def GetFamilly(client, brev, rep):
 #                  if donnee[u'exchange-document'].has_key('abstract'):
 #                      TXT = ExtractAbstract(donnee[u'exchange-document'][u'abstract'])
 #                for lang in TXT.keys():
-#                    EcritContenu(IRAM + ' *Contenu_Abstract \n' + TXT[lang], ResultContents+'//FamiliesAbstracts//'+lang+'-'+PatentData['label']+'.txt')
+#                    EcritContenu(IRAM + ' *Contenu_Abstract \n' + TXT[lang], ResultContentsPath+'//FamiliesAbstracts//'+lang+'-'+PatentData['label']+'.txt')
 #
                 lstres.append(PatentData)
                 cpt += 1
@@ -3121,7 +3121,7 @@ def RenderTemplate(name, dest, **context):
 #import networkx as nx
 #G = nx.DiGraph()
 #ResultPath = 'BiblioPatents'
-#ResultPathGephi = 'GephiFiles'
+#ResultGephiPath = 'GephiFiles'
 #
 #Brev = dict()
 #
@@ -3374,12 +3374,12 @@ def RenderTemplate(name, dest, **context):
 #
 #
 #ndf = 'test'
-#nx.write_gexf(G, ResultPathGephi+'\\'+ndf + ".gexf", version='1.2draft')
-#fic = open(ResultPathGephi+'\\'+ndf+'.gexf', 'r')
+#nx.write_gexf(G, ResultGephiPath+'\\'+ndf + ".gexf", version='1.2draft')
+#fic = open(ResultGephiPath+'\\'+ndf+'.gexf', 'r')
 ##
 ## Next is a hack to correct the bad writing of the header of the gexf file
 ## with dynamics properties
-#fictemp=open(ResultPathGephi+'\\'+"Good"+ndf+'.gexf', 'w')
+#fictemp=open(ResultGephiPath+'\\'+"Good"+ndf+'.gexf', 'w')
 #fictemp.write("""<?xml version="1.0" encoding="utf-8"?><gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
 #  <graph defaultedgetype="directed" mode="dynamic" timeformat="date">
 #<attributes class="edge" mode="static">
@@ -3409,7 +3409,7 @@ def RenderTemplate(name, dest, **context):
 #        fictemp.write(lig)
 #fictemp.close()
 #fic.close()
-#os.remove(ResultPathGephi+'\\'+ndf+'.gexf')
+#os.remove(ResultGephiPath+'\\'+ndf+'.gexf')
 #
-#os.rename(ResultPathGephi+'\\'+"Good"+ndf+'.gexf', ResultPathGephi+'\\'+ndf+'.gexf')
-#print "Network file writen in ",  ResultPathGephi+' directory.\n See file: '+ndf + ".gexf"
+#os.rename(ResultGephiPath+'\\'+"Good"+ndf+'.gexf', ResultGephiPath+'\\'+ndf+'.gexf')
+#print "Network file writen in ",  ResultGephiPath+' directory.\n See file: '+ndf + ".gexf"
