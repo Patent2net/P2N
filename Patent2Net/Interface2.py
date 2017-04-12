@@ -19,14 +19,6 @@ Gather = configFile.GatherContent
 GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
 GatherFamilly = configFile.GatherFamilly
-P2NInv = configFile.InventorNetwork
-AppP2N = configFile.ApplicantNetwork
-P2NAppInv = configFile.ApplicantInventorNetwork
-P2NInvCT = configFile.InventorCrossTechNetwork
-P2NComp = configFile.CompleteNetwork
-P2NCountryCT = configFile.CountryCrossTechNetwork
-P2NFamilly = configFile.FamiliesNetwork
-P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
 
  #should set a working dir one upon a time... done it is temporPath
 ResultBiblioPath = configFile.ResultBiblioPath
@@ -92,6 +84,25 @@ RenderTemplate(
     Date=date,
     TotalsPerType=totalsPerType,
 
+    InventorNetwork=configFile.InventorNetwork,
+    ApplicantNetwork=configFile.ApplicantNetwork,
+    ApplicantInventorNetwork=configFile.ApplicantInventorNetwork,
+    InventorCrossTechNetwork=configFile.InventorCrossTechNetwork,
+    ApplicantCrossTechNetwork=configFile.ApplicantCrossTechNetwork,
+    CountryCrossTechNetwork=configFile.CountryCrossTechNetwork,
+    CrossTechNetwork=configFile.CrossTechNetwork,
+    CompleteNetwork=configFile.CompleteNetwork,
+    References=configFile.References,
+    Citations=configFile.Citations,
+    Equivalents=configFile.Equivalents,
+
+    FormateExportCountryCartography=configFile.FormateExportCountryCartography,
+    FormateExportBiblio=configFile.FormateExportBiblio,
+    FormateExportDataTable=configFile.FormateExportDataTable,
+    FormateExportPivotTable=configFile.FormateExportPivotTable,
+
+    FreePlane=configFile.FreePlane,
+    FusionCarrot2=configFile.FusionCarrot2,
 
 )
 

@@ -24,8 +24,6 @@ class P2NConfig:
         self.CountryCrossTechNetwork = False
         self.CrossTechNetwork = False
         self.CompleteNetwork = False
-        self.FamiliesNetwork = False
-        self.FamiliesHierarchicNetwork = False
         self.References = False
         self.Citations = False
         self.Equivalents = False
@@ -74,10 +72,6 @@ class P2NConfig:
                 self.CrossTechNetwork = self.getBoolean(line)
             elif line.count('CompleteNetwork') > 0:
                 self.CompleteNetwork = self.getBoolean(line)
-            elif line.count('FamiliesNetwork') > 0:
-                self.FamiliesNetwork = self.getBoolean(line)
-            elif line.count('FamiliesHierarchicNetwork') > 0:
-                self.FamiliesHierarchicNetwork = self.getBoolean(line)
             elif line.count('References') > 0:
                 self.References = self.getBoolean(line)
             elif line.count('Citations') > 0:

@@ -20,7 +20,7 @@ Gather = configFile.GatherContent
 GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
 IsEnableScript = configFile.FormateExportCountryCartography
-P2NFamilly = configFile.FamiliesNetwork
+P2NFamilly = configFile.GatherFamilly
 
  #should set a working dir one upon a time... done it is temporPath
 ResultListPath = configFile.ResultListPath

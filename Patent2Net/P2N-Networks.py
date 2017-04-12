@@ -66,8 +66,6 @@ ListeBrevet = []
 Networks["_"+sys.argv[1]][0] = True #setting net to true but reading parameter file can reverse this
 
 P2NComp = configFile.CompleteNetwork
-P2NFamilly = configFile.FamiliesNetwork
-P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
 
  #should set a working dir one upon a time... done it is temporPath
 ResultGephiPath = configFile.ResultGephiPath
@@ -83,7 +81,7 @@ for net in Nets: #passing other to false, but the script can be called
     Networks["_"+net][0] = False     # and the switch setted to false: the script won't process
 
 prefixes = [""]
-if P2NFamilly:
+if GatherFamilly:
     prefixes.append("Families")
 
 for prefix in prefixes:
