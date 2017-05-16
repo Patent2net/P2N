@@ -181,8 +181,8 @@ def complete3(listeFic, lang, det, Brevets):
 
 
 if IsEnableScript:
-    Rep = configFile.ResultContents
-    Bib = configFile.ResultPathBiblio
+    Rep = configFile.ResultContentsPath
+    Bib = configFile.ResultBiblioPath
 
     prefixes = [""]
     if GatherFamilly:

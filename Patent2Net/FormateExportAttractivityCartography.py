@@ -11,7 +11,7 @@ import json
 import os
 import cPickle
 #from bs4.dammit import EntitySubstitution
-from P2N_Lib import LoadBiblioFile
+from P2N_Lib import LoadBiblioFile, RenderTemplate
 from P2N_Config import LoadConfig
 
 configFile = LoadConfig()
@@ -20,11 +20,11 @@ Gather = configFile.GatherContent
 GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
 IsEnableScript = configFile.FormateExportCountryCartography
-P2NFamilly = configFile.FamiliesNetwork
+P2NFamilly = configFile.GatherFamilly
 
  #should set a working dir one upon a time... done it is temporPath
-ListPatentPath = configFile.ListPatentPath
-ListBiblioPath = configFile.ResultPathBiblio
+ResultListPath = configFile.ResultListPath
+ListBiblioPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
 ResultPathContent = configFile.ResultPath
 
@@ -56,7 +56,7 @@ if IsEnableScript:
         else: #Retrocompatibility
             with open(ListBiblioPath+'//'+ndf, 'r') as data:
                 LstBrevet = cPickle.load(data)
-            with open(ListPatentPath+'//'+ndf, 'r') as data:
+            with open(ResultListPath+'//'+ndf, 'r') as data:
                 DataBrevet = cPickle.load(data)
         ##next may need clarifying update
         if isinstance(LstBrevet, dict):
@@ -123,15 +123,15 @@ if IsEnableScript:
             nameFic = field.split('-')[0]
             with open(ResultPathContent+'//'+ndf+"Map"+nameFic+ ".json", "w") as fic:
                 json.dump(dico, fic)
-                resJsonName = ndf+"Map"+nameFic+ ".json"
-            with open("ModeleCartoDeposant.html") as fic:
-                html = fic.read()
-            html = html.replace("***Field***", nameFic)
-            html = html.replace("***requete***", DataBrevet["requete"])
-            html = html.replace("ficJson", '"'+resJsonName+'"')
 
-            with open(ResultPathContent+'//'+ndf+"Carto"+nameFic+ ".html", "w") as fic:
-                fic.write(html)
+            resJsonName = ndf+"Map"+nameFic+ ".json"
+            RenderTemplate(
+                "ModeleCartoDeposant.html",
+                ResultPathContent+'//'+ndf+"Carto"+nameFic+ ".html",
+                field=nameFic,
+                request=DataBrevet["requete"],
+                jsonFile=resJsonName
+            )
         #due to limit of D3, countries ressources are necessary placed
         # in same working directory... other solution is to start an http server
         # http://stackoverflow.com/questions/17077931/d3-samples-in-a-microsoft-stack

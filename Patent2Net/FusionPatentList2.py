@@ -27,7 +27,7 @@ print "Usage: FusionPatList dir1 dir2 [...] dirN dirResult"
 
 ###tout est faux en changeant le modèle de stockage de fichiers
 #ListBiblioPath = ['..//DATA//'+ndf1+'//PatentBiblios', '..//DATA//'+ndf2+'//PatentBiblios']
-#ListPatentPath = ['..//DATA//'+ndf1+'//PatentLists', '..//DATA//'+ndf2+'//PatentLists']#List
+#ResultListPath = ['..//DATA//'+ndf1+'//PatentLists', '..//DATA//'+ndf2+'//PatentLists']#List
 #ListContentPath = ['..//DATA//'+ndf1+'//PatentContents', '..//DATA//'+ndf2+'//PatentContents']
 
 data = dict()

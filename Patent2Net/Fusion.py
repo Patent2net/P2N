@@ -15,7 +15,7 @@ res = sys.argv[3]
 
 ###tout est faux en changeant le modèle de stockage de fichiers
 ListBiblioPath = ['..//DATA//'+ndf1+'//PatentBiblios', '..//DATA//'+ndf2+'//PatentBiblios']
-ListPatentPath = ['..//DATA//'+ndf1+'//PatentLists', '..//DATA//'+ndf2+'//PatentLists']#List
+ResultListPath = ['..//DATA//'+ndf1+'//PatentLists', '..//DATA//'+ndf2+'//PatentLists']#List
 ListContentPath = ['..//DATA//'+ndf1+'//PatentContents', '..//DATA//'+ndf2+'//PatentContents']
 ResultFolder = '..//DATA//'+res.title()
 ResultFolderWin = '..\\DATA\\'+res.title()
@@ -37,7 +37,7 @@ try:
     os.mkdir(ResultFolder)
 except:
     pass
-for rep1, rep2 in [ListPatentPath, ListBiblioPath]:
+for rep1, rep2 in [ResultListPath, ListBiblioPath]:
     
     if ndf1.count('Families') >0 or ndf2.count('Families') > 0:
         if rep1 not in ListBiblioPath:

@@ -78,10 +78,10 @@ with open("..//requete.cql", "r") as fic:
 
 rep = ndf
 
-ListPatentPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
+ResultListPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
 ResultPathContent = '..//DATA//'+rep+'//PatentContents'
 temporPath = '..//DATA//'+rep+'//tempo'
-ResultPathBiblio= '..//DATA//'+rep+'//PatentBiblios'
+ResultBiblioPath= '..//DATA//'+rep+'//PatentBiblios'
 ResultPathImages= '..//DATA//'+rep+'//PatentImages'
 try:
     os.makedirs(ResultPathContent)
@@ -118,13 +118,13 @@ if IsEnableScript:
     #        data = registered_client.family('publication', , 'biblio')
     registered_client.accept_type = 'application/json'
 
-    for ndf in [fic2 for fic2 in os.listdir(ResultPathBiblio) if fic2.count('Description')==0]:
+    for ndf in [fic2 for fic2 in os.listdir(ResultBiblioPath) if fic2.count('Description')==0]:
         if ndf.startswith('Families'):
             typeSrc = 'Families'
         else:
             typeSrc = ''
-        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ListPatentPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-            ficBrevet = LoadBiblioFile(ListPatentPath, ndf)
+        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ResultListPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+            ficBrevet = LoadBiblioFile(ResultListPath, ndf)
 
         else: #Retrocompatibility
             print 'gather your data again. sorry'

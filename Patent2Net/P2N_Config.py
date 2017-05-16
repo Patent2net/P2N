@@ -4,6 +4,9 @@ import sys
 class P2NConfig:
     def __init__(self):
 
+        # Global path for results
+        self.GlobalPath = '..//DATA'
+
         # Initiate all empty attributes
         self.requete = ""
         self.ndf = ""
@@ -21,13 +24,14 @@ class P2NConfig:
         self.CountryCrossTechNetwork = False
         self.CrossTechNetwork = False
         self.CompleteNetwork = False
-        self.FamiliesNetwork = False
-        self.FamiliesHierarchicNetwork = False
         self.References = False
         self.Citations = False
         self.Equivalents = False
         self.FormateExportCountryCartography = False
         self.FormateExportBiblio = False
+        self.FormateExportDataTable = False
+        self.FormateExportPivotTable = False
+
         self.FreePlane = False
         self.FusionCarrot2 = False
 
@@ -68,10 +72,6 @@ class P2NConfig:
                 self.CrossTechNetwork = self.getBoolean(line)
             elif line.count('CompleteNetwork') > 0:
                 self.CompleteNetwork = self.getBoolean(line)
-            elif line.count('FamiliesNetwork') > 0:
-                self.FamiliesNetwork = self.getBoolean(line)
-            elif line.count('FamiliesHierarchicNetwork') > 0:
-                self.FamiliesHierarchicNetwork = self.getBoolean(line)
             elif line.count('References') > 0:
                 self.References = self.getBoolean(line)
             elif line.count('Citations') > 0:
@@ -80,8 +80,12 @@ class P2NConfig:
                 self.Equivalents = self.getBoolean(line)
             elif line.count('FormateExportCountryCartography') > 0:
                 self.FormateExportCountryCartography = self.getBoolean(line)
+            elif line.count('FormateExportPivotTable') > 0:
+                self.FormateExportPivotTable = self.getBoolean(line)
             elif line.count('FormateExportBiblio') > 0:
                 self.FormateExportBiblio = self.getBoolean(line)
+            elif line.count('FormateExportDataTable') > 0:
+                self.FormateExportDataTable = self.getBoolean(line)
             elif line.count('P2N-FreePlane') > 0:
                 self.FreePlane = self.getBoolean(line)
             elif line.count('FusionCarrot2') > 0:
@@ -97,23 +101,23 @@ class P2NConfig:
         return open("..//requete.cql", "r").readlines()
 
     def generatePaths(self):
-        self.ResultPath = '..//DATA//' + self.ndf
-        self.ListPatentPath = self.ResultPath+'//PatentLists'
-        self.ResultPathBiblio = self.ResultPath+'//PatentBiblios'
-        self.ResultContents = self.ResultPath+'//PatentContents'
+        self.ResultPath = os.path.join(self.GlobalPath, self.ndf)
+        self.ResultListPath = self.ResultPath+'//PatentLists'
+        self.ResultBiblioPath = self.ResultPath+'//PatentBiblios'
+        self.ResultContentsPath = self.ResultPath+'//PatentContents'
         self.temporPath = self.ResultPath+'//tempo'
-        self.ResultAbstractPath = self.ResultContents+'//Abstract'
-        self.ResultFamiliesAbstractPath = self.ResultContents+'//FamiliesAbstract'
-        self.ResultPathGephi = self.ResultPath + '//GephiFiles'
+        self.ResultAbstractPath = self.ResultContentsPath+'//Abstract'
+        self.ResultFamiliesAbstractPath = self.ResultContentsPath+'//FamiliesAbstract'
+        self.ResultGephiPath = self.ResultPath + '//GephiFiles'
 
         for path in [
-            self.ListPatentPath,
-            self.ResultPathBiblio,
-            self.ResultContents,
+            self.ResultListPath,
+            self.ResultBiblioPath,
+            self.ResultContentsPath,
             self.temporPath,
             self.ResultAbstractPath,
             self.ResultFamiliesAbstractPath,
-            self.ResultPathGephi,
+            self.ResultGephiPath,
         ]:
             if not os.path.isdir(path):
                 os.makedirs(path)
@@ -127,6 +131,7 @@ class P2NConfig:
             return True # to gather contents
         else:
             return False
+
 
 def LoadConfig():
     return P2NConfig()

@@ -65,12 +65,11 @@ ListeBrevet = []
 Networks["_"+sys.argv[1]][0] = True #setting net to true but reading parameter file can reverse this
 
 P2NComp = configFile.CompleteNetwork
-P2NFamilly = configFile.FamiliesNetwork
-P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
+P2NFamilly = configFile.GatherFamilly
 
 # should set a working dir one upon a time... done it is temporPath
-ResultPathGephi = configFile.ResultPathGephi
-BiblioPath = configFile.ResultPathBiblio
+ResultGephiPath = configFile.ResultGephiPath
+BiblioPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
 
 

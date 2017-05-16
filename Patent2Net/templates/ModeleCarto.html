@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
-<title>Country cover for ***requete***</title>     
+<title>Country cover for {{request}}</title>
 <script charset="utf-8" src="../../Patent2Net/media/js/d3.js"></script>
 <script charset="utf-8" src="../../Patent2Net/media/js/topojson.js"></script>
 <script charset="utf-8" src="../../Patent2Net/media/js/d3plus.js"></script>
@@ -18,15 +18,15 @@
 
 			<header class="wrapper dark">
 			<a href="../../index.html"><img class="logo" src="../../Patent2Net/media/img/logo_dark.png" alt=""/></a>
-			
-		 <section> <h1>Country cover for : </h1> <br/>***requete***</section>
+
+		 <section> <h1>Country cover for : </h1> <br/>{{request}}</section>
 		</header>
 
 <div id="viz"></div>
- 
+
 <script>
 
-d3.json(ficJson, function(error, data) {
+d3.json('{{ficJson}}', function(error, data) {
   if (error) return console.warn(error);
 
 var visualization  = d3plus.viz()
@@ -45,9 +45,8 @@ var visualization  = d3plus.viz()
 
 )
 
-</script> 
+</script>
 
-	
+
 		</body>
 </html>
-

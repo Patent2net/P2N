@@ -66,12 +66,10 @@ ListeBrevet = []
 Networks["_"+sys.argv[1]][0] = True #setting net to true but reading parameter file can reverse this
 
 P2NComp = configFile.CompleteNetwork
-P2NFamilly = configFile.FamiliesNetwork
-P2NHieracFamilly = configFile.FamiliesHierarchicNetwork
 
  #should set a working dir one upon a time... done it is temporPath
-ResultPathGephi = configFile.ResultPathGephi
-BiblioPath = configFile.ResultPathBiblio
+ResultGephiPath = configFile.ResultGephiPath
+BiblioPath = configFile.ResultBiblioPath
 temporPath = configFile.temporPath
 
 print "bibliographic data of ", ndf, " patent universe found."
@@ -83,7 +81,7 @@ for net in Nets: #passing other to false, but the script can be called
     Networks["_"+net][0] = False     # and the switch setted to false: the script won't process
 
 prefixes = [""]
-if P2NFamilly:
+if GatherFamilly:
     prefixes.append("Families")
 
 for prefix in prefixes:
@@ -253,15 +251,15 @@ for prefix in prefixes:
         outputFile = ndf+network+prefix+'.gexf'
 
         try:
-            os.remove(ResultPathGephi+'/'+outputFile)
+            os.remove(ResultGephiPath+'/'+outputFile)
         except:
             pass
-        nx.write_gexf(G, ResultPathGephi+'/'+outputFile, version='1.2draft')
-        fic = open(ResultPathGephi+'/'+outputFile, 'r')
+        nx.write_gexf(G, ResultGephiPath+'/'+outputFile, version='1.2draft')
+        fic = open(ResultGephiPath+'/'+outputFile, 'r')
 
         # Next is a hack to correct the bad writing of the header of the gexf file
         # with dynamics properties
-        fictemp=open(ResultPathGephi+'/'+"Good"+outputFile, 'w')
+        fictemp=open(ResultGephiPath+'/'+"Good"+outputFile, 'w')
         fictemp.write("""<?xml version="1.0" encoding="utf-8"?><gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
       <graph defaultedgetype="directed" mode="dynamic" timeformat="date">
       <attributes class="node" mode="static">
@@ -338,11 +336,11 @@ for prefix in prefixes:
 
         try:
             try:
-                os.remove(ResultPathGephi+'/'+outputFile)
+                os.remove(ResultGephiPath+'/'+outputFile)
             except:
                 pass
-            os.rename(ResultPathGephi+'/'+"Good"+outputFile, ResultPathGephi+'/'+outputFile)
-            print "Dynamic Gexf network file writen into ",  ResultPathGephi+' directory.\n See file: '+outputFile
-            os.remove(ResultPathGephi+'/Good'+outputFile)
+            os.rename(ResultGephiPath+'/'+"Good"+outputFile, ResultGephiPath+'/'+outputFile)
+            print "Dynamic Gexf network file writen into ",  ResultGephiPath+' directory.\n See file: '+outputFile
+            os.remove(ResultGephiPath+'/Good'+outputFile)
         except:
             pass

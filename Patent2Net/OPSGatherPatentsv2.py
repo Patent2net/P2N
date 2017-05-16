@@ -79,9 +79,9 @@ GatherFamilly = configFile.GatherFamilly
 
 
  #should set a working dir one upon a time... done it is temporPath
-ListPatentPath = configFile.ListPatentPath
-ResultPathBiblio = configFile.ResultPathBiblio
-ResultContents = configFile.ResultContents
+ResultListPath = configFile.ResultListPath
+ResultBiblioPath = configFile.ResultBiblioPath
+ResultContentsPath = configFile.ResultContentsPath
 temporPath = configFile.temporPath
 ResultAbstractPath = configFile.ResultAbstractPath
 
@@ -97,7 +97,7 @@ registered_client = epo_ops.RegisteredClient(key, secret)
 registered_client.accept_type = 'application/json'
 GatherBibli = GatherBiblio #this parametric option was added after...
 try:
-    with open(ListPatentPath+'//'+ndf, 'r') as fic:
+    with open(ResultListPath+'//'+ndf, 'r') as fic:
         DataBrevets= cPickle.load(fic)
         lstBrevets = DataBrevets['brevets']
         nbActus = DataBrevets['number']
@@ -130,7 +130,7 @@ try:
 except:
     try:
 
-        lstBrevets = LoadBiblioFile(ResultPathBiblio, ndf)
+        lstBrevets = LoadBiblioFile(ResultBiblioPath, ndf)
         nbActus = len(lstBrevets)
         ficOk = True
 
@@ -165,7 +165,7 @@ if not ficOk and GatherPatent:
         #cos.system('cls')
         print nbTrouves, " patents corresponding to the request."
         print len(lstBrevets), ' patents added',
-    with open(ListPatentPath+'//'+ndf, 'w') as ficRes1:
+    with open(ResultListPath+'//'+ndf, 'w') as ficRes1:
         DataBrevets =dict() # this is the list of patents, same variable name as description and patent data in the following
         # this may cause problem sometime
         DataBrevets['brevets'] = lstBrevets
@@ -186,8 +186,8 @@ print "Gathering bibliographic data"
 if GatherBibli and GatherBiblio:
     DataBrevets = dict()
     DataBrevets['brevets'] = []
-    if ndf in os.listdir(ResultPathBiblio):
-        with open(ResultPathBiblio+'//'+ndf, 'r') as fic:
+    if ndf in os.listdir(ResultBiblioPath):
+        with open(ResultBiblioPath+'//'+ndf, 'r') as fic:
             while 1:
                 try:
                     DataBrevets['brevets'].append(cPickle.load(fic))
@@ -208,14 +208,14 @@ if GatherBibli and GatherBiblio:
 #    except:    #new data model
 #        DataBrevets = dict()
 #        DataBrevets['brevets'] = []
-#        if ndf in os.listdir(ResultPathBiblio+'//'):
-#            with open(ResultPathBiblio+'//'+ndf, 'r') as fic:
+#        if ndf in os.listdir(ResultBiblioPath+'//'):
+#            with open(ResultBiblioPath+'//'+ndf, 'r') as fic:
 #                while 1:
 #                    try:
 #                        DataBrevets['brevets'].append(cPickle.load(fic))
 #                    except EOFError:
 #                        break
-#            with open(ResultPathBiblio+'//Description'+ndf, 'r') as fic:
+#            with open(ResultBiblioPath+'//Description'+ndf, 'r') as fic:
 #                Descript = cPickle.load(fic)
 #                DataBrevets['ficBrevets'] = Descript['ficBrevets']
 #                DataBrevets['requete'] =  Descript['requete']
@@ -255,10 +255,10 @@ if GatherBibli and GatherBiblio:
 #                if bre not in DataBreTemp:
 #                    DataBreTemp.append(bre)
 #            try:
-#                os.remove(ResultPathBiblio +'//'+ndf)
+#                os.remove(ResultBiblioPath +'//'+ndf)
 #            except:
 #                pass #should never be here
-#            with open(ResultPathBiblio +'//'+ndf, 'w') as ficRes:
+#            with open(ResultBiblioPath +'//'+ndf, 'w') as ficRes:
 #                for bre in DataBreTemp:
 #                    cPickle.dump(bre, ficRes)
 
@@ -274,7 +274,7 @@ if GatherBibli and GatherBiblio:
             listeLabel.append(ndb)
             if ndb not in YetGathered:
                 try:
-                    BiblioPatents = GatherPatentsData(brevet, registered_client, ResultContents, ResultAbstractPath,  PatIgnored, [])
+                    BiblioPatents = GatherPatentsData(brevet, registered_client, ResultContentsPath, ResultAbstractPath,  PatIgnored, [])
                 except:
                     print ndb, " ignored... error occured"
                     next
@@ -326,7 +326,7 @@ if GatherBibli and GatherBiblio:
                     tempor.append(pat)
                 BiblioPatents = tempor
                 if BiblioPatents is not None and BiblioPatents !=[]:
-                    with open(ResultPathBiblio +'//'+ndf, 'a') as ficRes:
+                    with open(ResultBiblioPath +'//'+ndf, 'a') as ficRes:
                         cPickle.dump(BiblioPatents[0], ficRes)
                         YetGathered.append(BiblioPatents[0]["label"])
                         print len(YetGathered), " patent bibliographic data already gathered."
@@ -341,14 +341,14 @@ if GatherBibli and GatherBiblio:
            print "invalid result"
            if 'label' in brevet.keys():
                if brevet['label'] not in YetGathered:
-                    with open(ResultPathBiblio +'//'+ndf, 'a') as ficRes:
+                    with open(ResultBiblioPath +'//'+ndf, 'a') as ficRes:
 
                         cPickle.dump(brevet, ficRes)
                         YetGathered.append(brevet["label"])
                         print len(YetGathered), " patent bibliographic data gathered."
                else:
                     pass #bad OPS entry
-    with open(ResultPathBiblio +'//Description'+ndf, 'w') as ficRes:
+    with open(ResultBiblioPath +'//Description'+ndf, 'w') as ficRes:
         DataBrevets['ficBrevets'] = ndf
         DataBrevets['requete'] = requete
         DataBrevets["YetGathered"] = YetGathered

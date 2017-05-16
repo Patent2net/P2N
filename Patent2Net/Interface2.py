@@ -5,162 +5,106 @@ Created on Sun Feb 15 09:12:25 2015
 @author: dreymond
 """
 
-from P2N_Lib import ReturnBoolean, LoadBiblioFile
+from P2N_Lib import LoadBiblioFile, RenderTemplate
+from P2N_Config import LoadConfig
 import codecs
 import os
 import cPickle
 nbFam = 0
-with open("..//requete.cql", "r") as fic:
-    contenu = fic.readlines()
-    for lig in contenu:
-        #if not lig.startswith('#'):
-            if lig.count('request:')>0:
-                requete=lig.split(':')[1].strip()
-            if lig.count('DataDirectory:')>0:
-                ndf = lig.split(':')[1].strip()
-            if lig.count('GatherContent')>0:
-                Gather = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherBiblio')>0:
-                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherPatent')>0:
-                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherFamilly')>0:
-                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('InventorNetwork')>0:
-                P2NInv = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('ApplicantNetwork')>0:
-                AppP2N = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('ApplicantInventorNetwork')>0:
-                P2NAppInv = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('InventorCrossTechNetwork')>0:
-                P2NInvCT = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('CompleteNetwork')>0:
-                P2NComp = ReturnBoolean(lig.split(':')[1].strip())    
-            if lig.count('CountryCrossTechNetwork')>0:
-                P2NCountryCT = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('FamiliesNetwork')>0:
-                P2NFamilly = ReturnBoolean(lig.split(':')[1].strip())    
-            if lig.count('FamiliesHierarchicNetwork')>0:
-                P2NHieracFamilly = ReturnBoolean(lig.split(':')[1].strip())    
 
-GlobalPath ='..//DATA'
-ResultPath = GlobalPath+'//'+ndf+'//PatentBiblios'
-ResultPatentPath = GlobalPath+'//'+ndf+'//PatentLists'
+configFile = LoadConfig()
+requete = configFile.requete
+ndf = configFile.ndf
+Gather = configFile.GatherContent
+GatherBiblio = configFile.GatherBiblio
+GatherPatent = configFile.GatherPatent
+GatherFamilly = configFile.GatherFamilly
 
-ResultPathGephi = GlobalPath+'//'+ndf+'//GephiFiles'
-ResultPathContent = GlobalPath+'//'+ndf
+ #should set a working dir one upon a time... done it is temporPath
+ResultBiblioPath = configFile.ResultBiblioPath
+ResultPatentPath = configFile.ResultListPath
+ResultContentsPath = configFile.ResultContentsPath
+
+GlobalPath = configFile.GlobalPath
 
 # take request from BiblioPatent file
 
 
-if 'Description'+ndf in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-    data = LoadBiblioFile(ResultPath, ndf)
+if 'Description'+ndf in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+    data = LoadBiblioFile(ResultBiblioPath, ndf)
     requete = data['requete']
 else: #Retrocompatibility
     print "please use Comptatibilizer"
     #if 'Fusion' in data.keys()
     data = dict()
 if GatherFamilly:#pdate needed for families
-    if 'DescriptionFamilies'+ndf in os.listdir(ResultPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-        data2 = LoadBiblioFile(ResultPath, 'Families' + ndf)
+    if 'DescriptionFamilies'+ndf in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+        data2 = LoadBiblioFile(ResultBiblioPath, 'Families' + ndf)
         nbFam = len(data2['brevets'])
     else: #Retrocompatibility
         print "please use Comptatibilizer"
-    #if 'Fusion' in data.keys()with open( ResultPath+'//Families'+ndf, 'r') as ficBib:
+    #if 'Fusion' in data.keys()with open( ResultBiblioPath+'//Families'+ndf, 'r') as ficBib:
  #        data2 = cPickle.load(ficBib)
-        
+
 else:
     nbFam=0
 
-#if 'Description'+ndf in os.listdir(ListBiblioPath):
-#    with open(ListBiblioPath+'//'+ndf, 'r') as data:
-#        dico = LoadBiblioFile(ListBiblioPath, ndf)
-#else: #Retrocompatibility
-#    print "please use Comptatibilizer"    
-#    sys.exit()
-#LstBrevet = dico['brevets']    
-#if dico.has_key('requete'): 
-#    requete = dico["requete"]
-#    print "Using ", ndf," file. Found ", len(dico["brevets"]), " patents! Formating to HMTL tables"
-#
-#
-#    
-#formating html
-#try: 
-#    with open(GlobalPath+'//index.html', 'r') as ficRes:
-#        data = ficRes.read()
-#        contenuExist = data[data.index('<body ')+len('<body onload="DetectBrowser()">'):data.index('/body>')-1]
-#    ficRes = open('..//index.html', 'w')
-#except:
-
-ficRes = codecs.open(GlobalPath+'//'+ndf+'.html', 'w', 'utf8')
-    
-with codecs.open('ModeleContenuIndex.html', 'r', 'utf8') as fic:
-    NouveauContenu = fic.read()
-
-
-with open('ModeleIndexRequete.html', 'r') as fic:
-    html = fic.read()
-    html = html[:html.index('</body>')]
-        
-html  = html .replace("***Request***", requete)
-
-NouveauContenu  = NouveauContenu .replace("***CollectName***", ndf)
-NouveauContenu  = NouveauContenu .replace("***Request***", requete)
-if data.has_key("brevets"): #compatibility, this may be useless
-    if nbFam ==0:
-        NouveauContenu  = NouveauContenu.replace("***NombreRes***", str(len(data["brevets"])))
-    else:
-        NouveauContenu  = NouveauContenu.replace("***NombreRes***", str(len(data["brevets"])) + " <br> <li> Family lenght:" + str(nbFam) +"</li>")
-else:
-    NouveauContenu  = NouveauContenu.replace("***NombreRes***", "see datatable :-)")
-    
-
 import datetime
 today = datetime.datetime.today()
-date= today.strftime('%d, %b %Y')
+date = today.strftime('%d, %b %Y')
 
-
-if Gather:
-    
-    FileComps = ""
-    nbFic = dict()
-    for content in [u'Abstract', u'Claims', u'Description', u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription' ]:
-        nbFic[content] = dict()
-        try:
-            lstfic = os.listdir(ResultPathContent+'//PatentContents//' + content)
-            Langues = set()
-            for fi in lstfic:
-                Langues.add(str(fi[0:2]))
-        except:
-            lstfic = []
-            Langues =set()
-        if len(Langues)>0:            
-            for ling in Langues:
-                nbFic[content][ling] = len([fi for fi in lstfic if fi.startswith(ling)])
-        else:
-            pass
-    for content in [u'Abstract', u'Claims', u'Description', u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription' ]:
-        if len(Langues)>0:
-            FileComps  += u"<li>"+content+": " +  " &nbsp; ".join([str(nbFic[content][ling]) +u" ("+ling.upper() +")" for ling in nbFic[content].keys()]) +u"</li>\n"
-        else:
-            FileComps  += u"<li>"+content+": 0 </li>\n"             
-        FileComps = FileComps .replace('[', '')   
-        FileComps = FileComps .replace(']', '')
-        FileComps = str(FileComps .replace("'", ''))  
-
-        NouveauContenu  = unicode(NouveauContenu) 
-        NouveauContenu  = NouveauContenu .replace(u"***Date***", date + FileComps )
+totalPatents = ""
+if data.has_key("brevets"): #compatibility, this may be useless
+    totalPatents = len(data["brevets"])
 else:
-    NouveauContenu  = NouveauContenu .replace(u"***Date***", unicode(date))
+    totalPatents = "see datatable :-)"
 
-    
-html += NouveauContenu + """
-  </body>
-</html>
-"""
-ficRes.write(html)
-ficRes.close()
+# new method to count documents by type
+totalsPerType = {}
+if Gather:
+    for content in [u'Abstract', u'Claims', u'Description', u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription' ]:
+        path = ResultContentsPath + content
+        if os.path.isdir(path):
+            lstfic = os.listdir(path)
+            languages = set([str(fi[0:2]) for fi in lstfic])
+            totalsPerType[content] = {
+                "total": len(lstfic),
+                "languages": ", ".join(languages)
+            }
+
+
+RenderTemplate(
+    "ModeleContenuIndex.html",
+    GlobalPath+'//'+ndf+'.html',
+    CollectName=ndf,
+    Request=requete,
+    TotalPatents=totalPatents,
+    TotalFamily=nbFam,
+    HasFamily=GatherFamilly,
+    Date=date,
+    TotalsPerType=totalsPerType,
+
+    InventorNetwork=configFile.InventorNetwork,
+    ApplicantNetwork=configFile.ApplicantNetwork,
+    ApplicantInventorNetwork=configFile.ApplicantInventorNetwork,
+    InventorCrossTechNetwork=configFile.InventorCrossTechNetwork,
+    ApplicantCrossTechNetwork=configFile.ApplicantCrossTechNetwork,
+    CountryCrossTechNetwork=configFile.CountryCrossTechNetwork,
+    CrossTechNetwork=configFile.CrossTechNetwork,
+    CompleteNetwork=configFile.CompleteNetwork,
+    References=configFile.References,
+    Citations=configFile.Citations,
+    Equivalents=configFile.Equivalents,
+
+    FormateExportCountryCartography=configFile.FormateExportCountryCartography,
+    FormateExportBiblio=configFile.FormateExportBiblio,
+    FormateExportDataTable=configFile.FormateExportDataTable,
+    FormateExportPivotTable=configFile.FormateExportPivotTable,
+
+    FreePlane=configFile.FreePlane,
+    FusionCarrot2=configFile.FusionCarrot2,
+
+)
 
 # updating index.js for server side and local menu
 inFile =[] # memorize content
@@ -169,22 +113,21 @@ with open('../dex.js') as FicRes:
     for lig in data[2:]:
         if '</ul>' not in lig and "');" not in lig:
             inFile.append(lig)
-        
+
 with open('../dex.js', 'w') as ficRes:
     ficRes.write("document.write('\ ".strip())
-    ficRes.write("\n") 
-    ficRes.write(" <ul>\ ".strip()) 
-    ficRes.write("\n") 
+    ficRes.write("\n")
+    ficRes.write(" <ul>\ ".strip())
+    ficRes.write("\n")
 
      # write last analyse
     ficRes.write("""<li><a href="DATA/***request***.html" target="_blank">***request***</a></li>\ """.replace('***request***', ndf).strip())
-    ficRes.write("\n")     
+    ficRes.write("\n")
     for exist in inFile:
         if ndf not in exist:
             ficRes.write(exist.strip().replace('</ul>\ ', ''))
-            ficRes.write("\n") 
-            
+            ficRes.write("\n")
+
     ficRes.write(" </ul>\ ".strip())
-    ficRes.write("\n") 
+    ficRes.write("\n")
     ficRes.write("');")
-    
