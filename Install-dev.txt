@@ -16,5 +16,5 @@ pip install curses-2.2-cp2.7(...).whl
 Download https://bitbucket.org/taynaud/python-louvain &
 python setup.py install
 install pygraphviz (for 64 bits use: http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygraphviz)
-pip install jinja2
+pip install --upgrade jinja2
 
