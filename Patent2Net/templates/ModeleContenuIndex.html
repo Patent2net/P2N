@@ -72,7 +72,11 @@
         {% endif %}
         <li>Gathering date: {{ Date }} </li>
         {% for type, obj in TotalsPerType.iteritems() %}
-        <li>{{type}}: {{ obj.total }} &nbsp; {{obj.languages}}</li>
+        <li>{{type}}:
+            {% for lang, total in obj.languages.iteritems() %}
+                {{total}} ({{lang.upper()}})  &nbsp;
+            {% endfor %}
+        </li>
         {% endfor %}
     </ul>
     <hr>

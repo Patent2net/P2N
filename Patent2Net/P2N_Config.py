@@ -40,7 +40,7 @@ class P2NConfig:
 
         for line in content:
             ### General config loading
-            ### replade her line.count by .startwith method 
+            ### replade her line.count by .startwith method
             if line.startswith('request:') > 0:
                 self.requete = self.getStr(line)
             elif line.startswith('DataDirectory:') > 0:

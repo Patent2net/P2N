@@ -63,14 +63,18 @@ else:
 totalsPerType = {}
 if Gather:
     for content in [u'Abstract', u'Claims', u'Description', u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription' ]:
-        path = ResultContentsPath + content
+        path = os.path.join(ResultContentsPath, content)
         if os.path.isdir(path):
             lstfic = os.listdir(path)
             languages = set([str(fi[0:2]) for fi in lstfic])
+            totalLanguages = {l: 0 for l in languages}
+            for fi in lstfic:
+                totalLanguages[str(fi[0:2])] += 1
             totalsPerType[content] = {
                 "total": len(lstfic),
-                "languages": ", ".join(languages)
+                "languages": totalLanguages
             }
+
 
 
 RenderTemplate(

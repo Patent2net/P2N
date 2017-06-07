@@ -208,6 +208,6 @@ if IsEnableScript:
             for lang in ['FR', 'EN', 'UNK']:
                 NomResult = lang+'_'+det.replace('Abstracts', '') + '_' + ndf+'.xml' # det.replace('Abstracts', '') this command is for old old mispelling :-(.. I think)
                 ficRes = codecs.open(Rep+'//Carrot2//'+NomResult, "w", 'utf8')
-                ficRes.write(complete3(temporar[ind], lang, det, LstBrevet))
+                ficRes.write(complete3(temporar[ind], lang, prefix+det, LstBrevet))
                 ind+=1
                 ficRes.close()
