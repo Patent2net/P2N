@@ -68,8 +68,9 @@ if IsEnableScript:
                 DataBrevet['requete'] = "?"
             if data.has_key('number'):
                 print "Found ", data["number"], " patents! Formating to HMTL Cartography (Beta)"
-
-        print "mapping ", len(LstBrevet), "patents. Excepting EP and WO"
+            else:
+                print "Found ", len(LstBrevet), " patents! Formating to HMTL Cartography (Beta)"
+        print "mapping ", len(LstBrevet), "patents excepting WO and EP"#%, field
 
         # the list of keys in database
         clesRef = ['label', 'title', 'year','priority-active-indicator',

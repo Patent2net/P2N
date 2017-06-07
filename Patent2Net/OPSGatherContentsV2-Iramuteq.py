@@ -94,9 +94,7 @@ def dictCleaner(dico): #same in OpsGatherAugmentFamilies
     return dico
 
 if IsEnableScript:
-    GatherContent = True
-    #not fun
-    registered_client = epo_ops.RegisteredClient(key, secret)
+    registered_client = epo_ops.Client(key, secret)
     #        data = registered_client.family('publication', , 'biblio')
     registered_client.accept_type = 'application/json'
 
@@ -105,8 +103,8 @@ if IsEnableScript:
             typeSrc = 'Families'
         else:
             typeSrc = ''
-        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ResultListPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-            ficBrevet = LoadBiblioFile(ResultListPath, ndf)
+        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+            ficBrevet = LoadBiblioFile(ResultBiblioPath, ndf)
 
         else: #Retrocompatibility
             print 'gather your data again. sorry'
@@ -121,7 +119,7 @@ if IsEnableScript:
             print 'gather your data again'
             sys.exit()
 
-        registered_client = epo_ops.RegisteredClient(key, secret)
+        registered_client = epo_ops.Client(key, secret)
         #        data = registered_client.family('publication', , 'biblio')
         registered_client.accept_type = 'application/json'
         BiblioPatents = []
@@ -152,9 +150,9 @@ if IsEnableScript:
                     ndb = ndb[0]
                     for key in ['label', 'country', 'kind']:
                         brevet[key] = list(set(brevet[key])) # hum some problem (again) in cleaning data within the family gatherer... 22/12/15
-                if isinstance(pays, list):
+                if isinstance(pays, list): # this may lay inconsistent data !!
                     pays = pays[0]
-                for content in [typeSrc+'Abstract', typeSrc+'Claims',typeSrc+'Description']:
+                for content in [typeSrc+'Abstract', typeSrc+'Claims',typeSrc+'Description']: # 
 
                     if content not in Nombre.keys():
                         Nombre [content] = 0
@@ -165,6 +163,8 @@ if IsEnableScript:
                     endP= content.replace(typeSrc, "").lower()
                     if endP == 'abstract':
                         endP = 'biblio'
+                    pays='GB'
+                    ndb='GB1506082'
                     fichier = [fics[3:] for fics in lstfic]   # content already gathered
                     if ndb+'.txt' not in fichier: #hack here as chinese patents seems not be in claims or description endpoint
                     #, u'fulltext'
@@ -185,7 +185,7 @@ if IsEnableScript:
                                     try:
                                         tempoData.append(registered_client.published_data(*temp, endpoint = endP))
                                     except:
-                                        data = None
+                                        #data = None
                                         pass
                                 for dat in tempoData:
                                     if dat is not None and dat.ok: #doing the same for all content. This may result in redundancy

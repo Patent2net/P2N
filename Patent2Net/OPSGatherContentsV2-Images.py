@@ -114,7 +114,7 @@ def dictCleaner(dico): #same in OpsGatherAugmentFamilies
 if IsEnableScript:
     GatherContent = True
     #not fun
-    registered_client = epo_ops.RegisteredClient(key, secret)
+    registered_client = epo_ops.Client(key, secret)
     #        data = registered_client.family('publication', , 'biblio')
     registered_client.accept_type = 'application/json'
 
@@ -139,7 +139,7 @@ if IsEnableScript:
             print 'gather your data again'
             sys.exit()
 
-        registered_client = epo_ops.RegisteredClient(key, secret)
+        registered_client = epo_ops.Client(key, secret)
         #        data = registered_client.family('publication', , 'biblio')
         registered_client.accept_type = 'application/json'
         BiblioPatents = []

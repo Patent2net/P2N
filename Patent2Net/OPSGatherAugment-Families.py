@@ -169,7 +169,7 @@ if GatherFamilly:
         ListeBrevetAug = []
         Done = []
     if ficOk and GatherFamilly:
-        registered_client = epo_ops.RegisteredClient(key, secret)
+        registered_client = epo_ops.Client(key, secret)
     #        data = registered_client.family('publication', , 'biblio')
         registered_client.accept_type = 'application/json'
         DejaVu = []

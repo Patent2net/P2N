@@ -1778,6 +1778,7 @@ def UniClean(ch):
             return string
         else:
             print "what kind of thing is that ch", ch
+            return ""
     else:
         return u'empty'
 
@@ -1894,18 +1895,19 @@ def ExtractPatentsData(patentBib, client, contentPath):
                 tempoPat['equivalents'] = 'empty'
                     #print "no equivalents"
         tempoPat, YetGathered, BP = ExtractPatent(tempoPat, contentPath, [])
-
-        if u'publication-reference' in patentBib.keys():
+        if u'publication-reference' not in patentBib.keys():
+            request = 'ct='+tempoPat['label']
+            lstCitants, nbCitants = PatentCitersSearch(client, request)
+        else: 
             patents = patentBib[u'publication-reference']
             if isinstance(patents, list):
                 for k in patents:
                     lstCitants.extend(ProcessCitingDoc(k))
             else: #sometimes its a sole patent
                 lstCitants.extend(ProcessCitingDoc(patents))
-        else:
-            request = 'ct='+tempoPat['label']
-
-            lstCitants, nbCitants = PatentCitersSearch(client, request)
+#        else:
+#            request = 'ct='+tempoPat['label']
+#            lstCitants, nbCitants = PatentCitersSearch(client, request)
         tempoPat['CitedBy'] = lstCitants
         tempoPat['Citations'] = len(lstCitants)
         MakeIram(tempoPat, tempoPat['label'], patentBib, AbstractsPath)
@@ -2276,16 +2278,16 @@ def MakeIram(patent, FileName, patentBibData, AbstractPath):
 
 def MakeIram2(patent, FileName, patentBibData, SavePath, contenu):
         if isinstance(patent['IPCR1'], list):
-            CIB1 = '-'.join(dat for dat in patent['IPCR1'])
+            CIB1 = '-'.join(dat for dat in patent['IPCR1'])[0:12]
         else:
             CIB1 =  patent['IPCR1']
 
         if isinstance(patent['IPCR3'], list):
-            CIB3 = '-'.join(dat for dat in patent['IPCR3'])
+            CIB3 = '-'.join(dat for dat in patent['IPCR3'])[0:12]
         else:
             CIB3 =  patent['IPCR3']
         if isinstance(patent['IPCR4'], list):
-            CIB4 = '-'.join(dat for dat in patent['IPCR4'])
+            CIB4 = '-'.join(dat for dat in patent['IPCR4'])[0:12]
         else:
             CIB4 =  patent['IPCR4']
  # Issue #6 - by cvanderlei in 21-dec-2016
@@ -2621,7 +2623,21 @@ def NiceName(content):
 #        ContentNice = u''
     return ContentNice
 
+def UrlIPCRBuildWS(IPCR):
+    if not isinstance(IPCR, list):
+        IPCR = [IPCR]
+    try:
+        url = ['http://www.wipo.int/classifications/ipc/ipcpub/' +\
+	          '?get_xml_fragment=scheme' +\
+	          '&classification=IPC' +\
+             '&lang=en'  +\
+	'&version=' +SchemeVersion +\
+	'&symbol='+symbole(ipc) for ipc in IPCR]
 
+        #url = ['http://www.wipo.int/classifications/ipc/ipcpub/?xml2html=definition&lang=en&version='+SchemeVersion+'&imagedir=none'+'&symbol=' +symbole(ipc) for ipc in IPCR]
+    except:
+        url = [u'empty']
+    return url
 def UrlIPCRBuild(IPCR):
     if not isinstance(IPCR, list):
         IPCR = [IPCR]

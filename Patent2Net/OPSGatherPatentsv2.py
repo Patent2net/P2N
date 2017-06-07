@@ -92,7 +92,7 @@ nbTrouves  =0
 #if GatherPatent:
 BiblioPatents, PatIgnored = [], Initialize(GatherPatent, GatherBiblio)
 
-registered_client = epo_ops.RegisteredClient(key, secret)
+registered_client = epo_ops.Client(key, secret)
 #        data = registered_client.family('publication', , 'biblio')
 registered_client.accept_type = 'application/json'
 GatherBibli = GatherBiblio #this parametric option was added after...
@@ -239,7 +239,7 @@ PatIgnored=0
 
 
 if GatherBibli and GatherBiblio:
-    registered_client = epo_ops.RegisteredClient(key, secret)
+    registered_client = epo_ops.Client(key, secret)
     #        data = registered_client.family('publication', , 'biblio')
     registered_client.accept_type = 'application/json'
     if "brevets" in DataBrevets.keys():

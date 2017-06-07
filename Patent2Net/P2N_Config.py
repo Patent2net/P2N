@@ -40,19 +40,20 @@ class P2NConfig:
 
         for line in content:
             ### General config loading
-            if line.count('request:') > 0:
+            ### replade her line.count by .startwith method 
+            if line.startswith('request:') > 0:
                 self.requete = self.getStr(line)
-            elif line.count('DataDirectory:') > 0:
+            elif line.startswith('DataDirectory:') > 0:
                 self.ndf = self.getStr(line)
-            elif line.count('GatherContent') > 0:
+            elif line.startswith('GatherContent') > 0:
                 self.GatherContent = self.getBoolean(line)
-            elif line.count('GatherBiblio') > 0:
+            elif line.startswith('GatherBiblio') > 0:
                 self.GatherBiblio = self.getBoolean(line)
-            elif line.count('GatherPatent') > 0:
+            elif line.startswith('GatherPatent') > 0:
                 self.GatherPatent = self.getBoolean(line)
-            elif line.count('GatherFamilly') > 0:
+            elif line.startswith('GatherFamilly') > 0:
                 self.GatherFamilly = self.getBoolean(line)
-            elif line.count('OPSGatherContentsv2-Iramuteq') > 0:
+            elif line.startswith('OPSGatherContentsv2-Iramuteq') > 0: #OPSGatherContentsv2-Iramuteq
                 self.GatherIramuteq = self.getBoolean(line)
 
             # Networks config loading
@@ -101,7 +102,7 @@ class P2NConfig:
         return open("..//requete.cql", "r").readlines()
 
     def generatePaths(self):
-        self.ResultPath = os.path.join(self.GlobalPath, self.ndf)
+        self.ResultPath = os.path.join(self.GlobalPath, self.ndf).replace('\\','//')
         self.ResultListPath = self.ResultPath+'//PatentLists'
         self.ResultBiblioPath = self.ResultPath+'//PatentBiblios'
         self.ResultContentsPath = self.ResultPath+'//PatentContents'
