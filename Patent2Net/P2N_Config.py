@@ -44,6 +44,8 @@ class P2NConfig:
                 self.requete = self.getStr(line)
             elif line.count('DataDirectory:') > 0:
                 self.ndf = self.getStr(line)
+            elif line.count('OPSGatherContentsv2-Iramuteq') > 0:
+                self.GatherIramuteq = self.getBoolean(line)
             elif line.count('GatherContent') > 0:
                 self.GatherContent = self.getBoolean(line)
             elif line.count('GatherBiblio') > 0:
@@ -52,8 +54,6 @@ class P2NConfig:
                 self.GatherPatent = self.getBoolean(line)
             elif line.count('GatherFamilly') > 0:
                 self.GatherFamilly = self.getBoolean(line)
-            elif line.count('OPSGatherContentsv2-Iramuteq') > 0:
-                self.GatherIramuteq = self.getBoolean(line)
 
             # Networks config loading
             elif line.count('InventorNetwork') > 0:
