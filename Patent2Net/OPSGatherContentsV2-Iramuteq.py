@@ -56,7 +56,6 @@ ListeBrevet = [] # The patent List
 
 configFile = LoadConfig()
 requete = configFile.requete
-ndf = configFile.ndf
 GatherContent = configFile.GatherContent
 GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
@@ -64,7 +63,6 @@ GatherFamilly = configFile.GatherFamilly
 IsEnableScript = configFile.GatherIramuteq
 
  #should set a working dir one upon a time... done it is temporPath
-ResultListPath = configFile.ResultListPath
 ResultBiblioPath = configFile.ResultBiblioPath
 ResultPathContent= configFile.ResultContentsPath
 temporPath = configFile.temporPath
@@ -142,7 +140,8 @@ if IsEnableScript:
             Nombre = dict()
             for brevet in lstBrevet:
                 brevet = dictCleaner(brevet)
-                ndb =brevet[u'label']#[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$']brevet['publication-ref'][u'document-id'][0][u'kind']['$'])
+                ndb = brevet[u'label']#[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$']brevet['publication-ref'][u'document-id'][0][u'kind']['$'])
+                print "Retrieving ", ndb
         #check for already gathered patents
                 pays = brevet['country']
                 if isinstance(ndb, list):
@@ -152,7 +151,7 @@ if IsEnableScript:
                         brevet[key] = list(set(brevet[key])) # hum some problem (again) in cleaning data within the family gatherer... 22/12/15
                 if isinstance(pays, list): # this may lay inconsistent data !!
                     pays = pays[0]
-                for content in [typeSrc+'Abstract', typeSrc+'Claims',typeSrc+'Description']: # 
+                for content in [typeSrc+'Abstract', typeSrc+'Claims',typeSrc+'Description']: #
 
                     if content not in Nombre.keys():
                         Nombre [content] = 0
