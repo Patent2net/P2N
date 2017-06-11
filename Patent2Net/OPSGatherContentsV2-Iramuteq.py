@@ -56,7 +56,6 @@ ListeBrevet = [] # The patent List
 
 configFile = LoadConfig()
 requete = configFile.requete
-ndf = configFile.ndf
 GatherContent = configFile.GatherContent
 GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
@@ -64,7 +63,6 @@ GatherFamilly = configFile.GatherFamilly
 IsEnableScript = configFile.GatherIramuteq
 
  #should set a working dir one upon a time... done it is temporPath
-ResultListPath = configFile.ResultListPath
 ResultBiblioPath = configFile.ResultBiblioPath
 ResultPathContent= configFile.ResultContentsPath
 temporPath = configFile.temporPath
@@ -105,8 +103,8 @@ if IsEnableScript:
             typeSrc = 'Families'
         else:
             typeSrc = ''
-        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ResultListPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-            ficBrevet = LoadBiblioFile(ResultListPath, ndf)
+        if ('Description'+ndf in os.listdir(ResultBiblioPath)) or ('Description'+ndf.lower() in os.listdir(ResultBiblioPath)): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+            ficBrevet = LoadBiblioFile(ResultBiblioPath, ndf)
 
         else: #Retrocompatibility
             print 'gather your data again. sorry'
@@ -144,7 +142,8 @@ if IsEnableScript:
             Nombre = dict()
             for brevet in lstBrevet:
                 brevet = dictCleaner(brevet)
-                ndb =brevet[u'label']#[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$']brevet['publication-ref'][u'document-id'][0][u'kind']['$'])
+                ndb = brevet[u'label']#[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$']brevet['publication-ref'][u'document-id'][0][u'kind']['$'])
+                print "Retrieving ", ndb
         #check for already gathered patents
                 pays = brevet['country']
                 if isinstance(ndb, list):

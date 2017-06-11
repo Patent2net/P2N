@@ -2275,6 +2275,7 @@ def MakeIram(patent, FileName, patentBibData, AbstractPath):
         return
 
 def MakeIram2(patent, FileName, patentBibData, SavePath, contenu):
+        contenu = contenu.lower()
         if isinstance(patent['IPCR1'], list):
             CIB1 = '-'.join(dat for dat in patent['IPCR1'])
         else:
@@ -2310,7 +2311,7 @@ def MakeIram2(patent, FileName, patentBibData, SavePath, contenu):
 
         IRAM = IRAM.replace('_ ', '_empty ', IRAM.count('_ ')) +'\n'
         Contenu = flatten_dict(patentBibData)
-        CleList = [cle for cle in Contenu.keys() if cle.count(contenu)>0]
+        CleList = [cle for cle in Contenu.keys() if cle.lower().count(contenu)>0]
         CleList = [cle for cle in CleList if contenu in cle.split('****')]
 #                        resu = ExtraitContenuDict(patentCont, temp)
         TXT = RetrouveLangue(CleList, patentBibData)
