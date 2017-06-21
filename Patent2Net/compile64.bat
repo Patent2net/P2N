@@ -109,8 +109,8 @@ copy /y Searchscript.js dist\Patent2Net64\
 copy /y CollecteETRaite.bat dist
 copy /y OpenNav.bat dist\Patent2Net64\OpenNav.bat
 copy /y cles-epo.txt dist
-mkdir dist\Patent2Net\templates
-xcopy /S /Y templates dist\Patent2Net\templates
+mkdir dist\Patent2Net64\templates
+xcopy /S /Y templates dist\Patent2Net64\templates
 mkdir dist\Patent2Net64\lib2to3
 xcopy /S /Y lib2to3 dist\Patent2Net64\lib2to3
 mkdir dist\Patent2Net64\extensions
