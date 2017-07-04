@@ -180,7 +180,7 @@ if IsEnableScript:
                                                         ListIpc11 = []
                                                         for q in DataBrevets1['brevets']:
                                                             for r in q['IPCR11']:
-                                                                if ListIpc11.count(r) == 0 and r !='' and r.count(nIpc7,0,7) == 1 and r[len(r)-2:len(r)] != '00':
+                                                                if ListIpc11.count(r) == 0 and r !='' and r.count(nIpc7,0,7) == 1:  # and r[len(r)-2:len(r)] != '00': -- removed in 23-jun-17 to enable tha map show all records
                                     # Node level IPC11
                                                                     nIpc11 = r
                                                                     ListIpc11.append(nIpc11)
@@ -193,7 +193,8 @@ if IsEnableScript:
     # Abstracts
                                                                     for q1 in DataBrevets1['brevets']:
                                                                         if q1['IPCR11'].count(nIpc11) != 0:
-                                                                            nodetext = q1['label'] + ": " + unicode(q1['title'], 'utf8', 'replace').replace('"','').replace('& ','AND ')
+                                                                            nodetext = q1['label'] + ": " + unicode(q1['title'], 'utf8', 'replace').replace('"','').replace('& ','AND ').replace('&','')
+                                                                            nameLink = q1['label']
                                                                             try:
                                                                                 fictemp1=open( '..//DATA//'+rep+'//PatentContents//' + prefix + 'Abstract//en-'+q1['label']+'.txt', 'r')
                                                                                 abstractLines = fictemp1.readlines()
@@ -203,9 +204,9 @@ if IsEnableScript:
                                                                             except:
                                                                                 textAbstract = '(abstract not available)'
                                                                             try:
-                                                                                fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300">\n''')
+                                                                                fictemp.write('''<node TEXT="'''+ nodetext + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300" LINK="https://worldwide.espacenet.com/searchResults?ST=singleline&amp;locale=en_EP&amp;submitted=true&amp;DB=&amp;query=''' + nameLink + '''&amp;Submit=Search">\n''')
                                                                             except UnicodeEncodeError:
-                                                                                fictemp.write('''<node TEXT="'''+ q1['label'] +''': (description not available)''' + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300">\n''')
+                                                                                fictemp.write('''<node TEXT="'''+ q1['label'] +''': (description not available)''' + '''" POSITION="''' + nodeside + '''" BACKGROUND_COLOR="''' + ncolor + '''" STYLE="fork" MAX_WIDTH="300" LINK="https://worldwide.espacenet.com/searchResults?ST=singleline&amp;locale=en_EP&amp;submitted=true&amp;DB=&amp;query=''' + nameLink + '''&amp;Submit=Search">\n''')
                                                                             fictemp.write('''<font SIZE="'''+ '10' + '''"/> \n''')
                                                                             fictemp.write('''<edge COLOR="''' + ecolor + '''"/> \n''')
                                                                             fictemp.write('''<richcontent TYPE="NOTE"> \n''')
@@ -214,7 +215,7 @@ if IsEnableScript:
                                                                             fictemp.write('''  </head> \n''')
                                                                             fictemp.write('''  <body> \n''')
                                                                             fictemp.write('''    <p> \n''')
-                                                                            fictemp.write('''      Abstract: \n''')
+                                                                            fictemp.write('''      Abstract: (''' + q1['year'][0] + ''') \n''')
                                                                             fictemp.write('''    </p> \n''')
                                                                             fictemp.write('''    <p> \n''')
                                                                             fictemp.write('''       ''' + textAbstract + ''' \n''')
