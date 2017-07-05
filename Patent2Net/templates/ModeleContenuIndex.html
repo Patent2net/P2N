@@ -54,7 +54,7 @@
             </nav>
         </header>
         <div class="caption dark animated wow fadeInDown clearfix">
-            <h1><a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page" title="Patent2Net documentation" target="_blank">A crawler</a> to expand your horizon <br/>with various data processing tools<br/> for education and scientific purposes</h1>
+        <h1><a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page" title="Patent2Net documentation" target="_blank">A patent collector and analyser</a> to expand <br/> your horizon with various data processing tools<br/> for education and scientific purposes</h1>
             <p>using EPO's database of over <a href="http://worldwide.espacenet.com/"> 90 000 000 patents </a></p>
 
             <hr>
@@ -110,11 +110,6 @@ window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTech
 window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CitationsJS.html', '_blank');return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
         </li>
         {% endif %}
-        {% if FreePlane %}
-        <li>
-            <a href="'{{ CollectName }}/{{ CollectName }}FP.html" onclick="window.open('{{ CollectName }}/{{ CollectName }}FP.html', '_blank');return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
-        </li>
-        {% endif %}
     </ul>
     {% if HasFamily %}
     <h2>Families</h2>
@@ -142,11 +137,6 @@ window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesJS.html', 
         {% if References or Citations or Equivalents %}
         <li>
             <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_EquivalentsFamiliesJS.html', '_blank'); window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesFamiliesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CitationsFamiliesJS.html', '_blank');return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
-        </li>
-        {% endif %}
-        {% if FreePlane %}
-        <li>
-            <a href="{{ CollectName }}/Families{{ CollectName }}FP.html" onclick="window.open('{{ CollectName }}/Families{{ CollectName }}FP.html', '_blank');return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
         </li>
         {% endif %}
     </ul>
