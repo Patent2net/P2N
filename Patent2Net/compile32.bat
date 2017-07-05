@@ -1,5 +1,3 @@
-ECHO This is the batch to build a Windows 32 bits version
-
 rmdir /S /Q dist\Patent2Net
 Python P2N_Version.py
 
