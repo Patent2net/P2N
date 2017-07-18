@@ -20,7 +20,7 @@ GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
 GatherFamilly = configFile.GatherFamilly
 
- #should set a working dir one upon a time... done it is temporPath
+# should set a working dir one upon a time... done it is temporPath
 ResultBiblioPath = configFile.ResultBiblioPath
 ResultPatentPath = configFile.ResultListPath
 ResultContentsPath = configFile.ResultContentsPath
@@ -30,39 +30,42 @@ GlobalPath = configFile.GlobalPath
 # take request from BiblioPatent file
 
 
-if 'Description'+ndf in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+# NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+if 'Description' + ndf in os.listdir(ResultBiblioPath):
     data = LoadBiblioFile(ResultBiblioPath, ndf)
     requete = data['requete']
-else: #Retrocompatibility
+else:  # Retrocompatibility
     print "please use Comptatibilizer"
-    #if 'Fusion' in data.keys()
+    # if 'Fusion' in data.keys()
     data = dict()
-if GatherFamilly:#pdate needed for families
-    if 'DescriptionFamilies'+ndf in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+if GatherFamilly:  # pdate needed for families
+    # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
+    if 'DescriptionFamilies' + ndf in os.listdir(ResultBiblioPath):
         data2 = LoadBiblioFile(ResultBiblioPath, 'Families' + ndf)
         nbFam = len(data2['brevets'])
-    else: #Retrocompatibility
+    else:  # Retrocompatibility
         print "please use Comptatibilizer"
-    #if 'Fusion' in data.keys()with open( ResultBiblioPath+'//Families'+ndf, 'r') as ficBib:
+    # if 'Fusion' in data.keys()with open( ResultBiblioPath+'//Families'+ndf, 'r') as ficBib:
  #        data2 = cPickle.load(ficBib)
 
 else:
-    nbFam=0
+    nbFam = 0
 
 import datetime
 today = datetime.datetime.today()
 date = today.strftime('%d, %b %Y')
 
 totalPatents = ""
-if data.has_key("brevets"): #compatibility, this may be useless
+if data.has_key("brevets"):  # compatibility, this may be useless
     totalPatents = len(data["brevets"])
 else:
     totalPatents = "see datatable :-)"
 
 # new method to count documents by type
-totalsPerType = {}
+totalsPerType = []
+totalsPerFamilyType = []
 if Gather:
-    for content in [u'Abstract', u'Claims', u'Description', u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription' ]:
+    def generateTotal(content):
         path = os.path.join(ResultContentsPath, content)
         if os.path.isdir(path):
             lstfic = os.listdir(path)
@@ -70,16 +73,23 @@ if Gather:
             totalLanguages = {l: 0 for l in languages}
             for fi in lstfic:
                 totalLanguages[str(fi[0:2])] += 1
-            totalsPerType[content] = {
+            return {
+                "type": content,
                 "total": len(lstfic),
                 "languages": totalLanguages
             }
+        return {}
 
+    for content in [u'Abstract', u'Claims', u'Description']:
+        totalsPerType.append(generateTotal(content))
+
+    for content in [u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription']:
+        totalsPerFamilyType.append(generateTotal(content))
 
 
 RenderTemplate(
     "ModeleContenuIndex.html",
-    GlobalPath+'//'+ndf+'.html',
+    GlobalPath + '//' + ndf + '.html',
     CollectName=ndf,
     Request=requete,
     TotalPatents=totalPatents,
@@ -87,6 +97,7 @@ RenderTemplate(
     HasFamily=GatherFamilly,
     Date=date,
     TotalsPerType=totalsPerType,
+    TotalsPerFamilyType=totalsPerFamilyType,
 
     InventorNetwork=configFile.InventorNetwork,
     ApplicantNetwork=configFile.ApplicantNetwork,
@@ -111,7 +122,7 @@ RenderTemplate(
 )
 
 # updating index.js for server side and local menu
-inFile =[] # memorize content
+inFile = []  # memorize content
 with open('../dex.js') as FicRes:
     data = FicRes.readlines()
     for lig in data[2:]:
@@ -124,8 +135,9 @@ with open('../dex.js', 'w') as ficRes:
     ficRes.write(" <ul>\ ".strip())
     ficRes.write("\n")
 
-     # write last analyse
-    ficRes.write("""<li><a href="DATA/***request***.html" target="_blank">***request***</a></li>\ """.replace('***request***', ndf).strip())
+    # write last analyse
+    ficRes.write(
+        """<li><a href="DATA/***request***.html" target="_blank">***request***</a></li>\ """.replace('***request***', ndf).strip())
     ficRes.write("\n")
     for exist in inFile:
         if ndf not in exist:
