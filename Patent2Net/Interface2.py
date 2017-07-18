@@ -90,6 +90,7 @@ if Gather:
 RenderTemplate(
     "ModeleContenuIndex.html",
     GlobalPath + '//' + ndf + '.html',
+    GlobalPath=GlobalPath,
     CollectName=ndf,
     Request=requete,
     TotalPatents=totalPatents,

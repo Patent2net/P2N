@@ -94,34 +94,32 @@
     <ul>
         {% if FormateExportDataTable or FormateExportPivotTable %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/{{ CollectName }}.html', '_blank');window.open('{{ CollectName }}/{{ CollectName }}Pivot.html', '_blank');return false;">Patents datatable, Pivot table</a>
+            <a href="#" onclick="{{wo('*CollectName*.html')}} {{wo('*CollectName*Pivot.html')}} return false;">Patents datatable, Pivot table</a>
         </li>
         {% endif %}
         {% if FormateExportCountryCartography %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/{{ CollectName }}Carto.html', '_blank');window.open('{{ CollectName }}/{{ CollectName }}CartoApplicant.html', '_blank');window.open('{{ CollectName }}/{{ CollectName }}CartoInventor.html', '_blank');return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
+            <a href="#" onclick="{{wo('*CollectName*Carto.html')}} {{wo('*CollectName*CartoApplicant.html')}} {{wo('*CollectName*CartoInventor.html')}} return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
         </li>
         {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantsJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CrossTechJS.html', '_blank');return false;">Networks (Inventor, Applicant, Technology)</a>
+            <a href="#" onclick="{{wo('GephiFiles/*CollectName*_InventorsJS.html')}} {{wo('GephiFiles/*CollectName*_ApplicantsJS.html')}} {{wo('GephiFiles/*CollectName*_CrossTechJS.html')}} return false;">Networks (Inventor, Applicant, Technology)</a>
         </li>
         {% endif %}
         {% if InventorCrossTechNetwork or ApplicantCrossTechNetwork or CountryCrossTechNetwork %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CountryCrossTechJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsCrossTechJS.html', '_blank');
-window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTechJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantInventorJS.html', '_blank');return false;">Mixed Networks (Country-Technology, Inventor-Technology,  Applicant-Technology, Applicant-Inventor)</a>
+            <a href="#" onclick="{{wo('GephiFiles/*CollectName*_CountryCrossTechJS.html')}} {{wo('GephiFiles/*CollectName*_InventorsCrossTechJS.html')}} {{wo('GephiFiles/*CollectName*_Applicants_CrossTechJS.html')}} {{wo('GephiFiles/*CollectName*_ApplicantInventorJS.html')}} return false;">Mixed Networks (Country-Technology, Inventor-Technology,  Applicant-Technology, Applicant-Inventor)</a>
         </li>
         {% endif %}
         {% if References or Citations or Equivalents %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_EquivalentsJS.html', '_blank');
-window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CitationsJS.html', '_blank');return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
+            <a href="#" onclick="{{wo('GephiFiles/*CollectName*_EquivalentsJS.html')}} {{wo('GephiFiles/*CollectName*_ReferencesJS.html')}} {{wo('GephiFiles/*CollectName*_CitationsJS.html')}} return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
         </li>
         {% endif %}
         {% if FreePlane %}
         <li>
-            <a href="'{{ CollectName }}/{{ CollectName }}FP.html" onclick="window.open('{{ CollectName }}/{{ CollectName }}FP.html', '_blank');return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
+            <a href="'{{ CollectName }}/{{ CollectName }}FP.html" onclick="{{wo('*CollectName*FP.html')}} return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
         </li>
         {% endif %}
     </ul>
@@ -130,32 +128,32 @@ window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesJS.html', 
     <ul>
         {% if FormateExportDataTable or FormateExportPivotTable %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/Families{{ CollectName }}.html', '_blank');window.open('{{ CollectName }}/Families{{ CollectName }}Pivot.html', '_blank');return false;">Patents datatable, Pivot table</a>
+            <a href="#" onclick="{{wo('Families*CollectName*.html')}} {{wo('Families*CollectName*Pivot.html')}} return false;">Patents datatable, Pivot table</a>
         </li>
         {% endif %}
         {% if FormateExportCountryCartography %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/Families{{ CollectName }}Carto.html', '_blank');window.open('{{ CollectName }}/Families{{ CollectName }}CartoApplicant.html', '_blank');window.open('{{ CollectName }}/Families{{ CollectName }}CartoInventor.html', '_blank');return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
+            <a href="#" onclick="{{wo('Families*CollectName*Carto.html')}} {{wo('Families*CollectName*CartoApplicant.html')}} {{wo('Families*CollectName*CartoInventor.html')}} return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
         </li>
         {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsFamiliesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantsFamiliesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CrossTechFamiliesJS.html', '_blank');return false;">Networks (Inventor, Applicant, Technology)</a>
+            <a href="#" onclick="{{wo('GephiFiles/*CollectName*_InventorsFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_ApplicantsFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_CrossTechFamiliesJS.html')}} return false;">Networks (Inventor, Applicant, Technology)</a>
         </li>
         {% endif %}
         {% if InventorCrossTechNetwork or ApplicantCrossTechNetwork or CountryCrossTechNetwork %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CountryCrossTechFamiliesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsCrossTechFamiliesJS.html', '_blank'); window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTechFamiliesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantInventorFamiliesJS.html', '_blank');return false;">Mixed Networks (Country-Technology, Inventor-Technology,  Applicant-Technology, Applicant-Inventor)</a>
+            <a href="#" onclick="{{wo('GephiFiles/*CollectName*_CountryCrossTechFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_InventorsCrossTechFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_Applicants_CrossTechFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_ApplicantInventorFamiliesJS.html')}} return false;">Mixed Networks (Country-Technology, Inventor-Technology,  Applicant-Technology, Applicant-Inventor)</a>
         </li>
         {% endif %}
         {% if References or Citations or Equivalents %}
         <li>
-            <a href="#" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_EquivalentsFamiliesJS.html', '_blank'); window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesFamiliesJS.html', '_blank');window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CitationsFamiliesJS.html', '_blank');return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
+            <a href="#" onclick="{{wo('GephiFiles/*CollectName*_EquivalentsFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_ReferencesFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_CitationsFamiliesJS.html')}}  return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
         </li>
         {% endif %}
         {% if FreePlane %}
         <li>
-            <a href="{{ CollectName }}/Families{{ CollectName }}FP.html" onclick="window.open('{{ CollectName }}/Families{{ CollectName }}FP.html', '_blank');return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
+            <a href="{{ CollectName }}/Families{{ CollectName }}FP.html" onclick="{{wo('Families*CollectName*FP.html')}} return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
         </li>
         {% endif %}
     </ul>

@@ -39,6 +39,7 @@ SchemeVersion = '20140101'
 import re
 import datetime
 import codecs
+import os
 from jinja2 import Environment, FileSystemLoader
 
 def isMaj(car):
@@ -3099,11 +3100,23 @@ def NomBrevet(Brev):
         return None
 
 
+def wo(CollectName, GlobalPath):
+    def window_open(url):
+        url = url.replace('*CollectName*', CollectName)
+        has_path = os.path.exists(os.path.join(GlobalPath, CollectName, url))
+        print 'URL', url, GlobalPath, has_path
+        if has_path:
+            return "window.open('%s/url', '_blank');" % CollectName
+        print('404 file, skipping url for ', url)
+        return ""
+    return window_open
+
 def RenderTemplate(name, dest, **context):
     handler = codecs.open(dest, 'w', 'utf8')
-    handler.write(Environment(
-        loader=FileSystemLoader('templates')
-    ).get_template(name).render(**context))
+    env = Environment(loader=FileSystemLoader('templates'))
+    if (context.has_key('CollectName')):
+        env.globals['wo'] = wo(context['CollectName'], context['GlobalPath'])
+    handler.write(env.get_template(name).render(**context))
     handler.close()
 
 #############
