@@ -61,7 +61,7 @@
             </nav>
         </header>
         <div class="caption dark animated wow fadeInDown clearfix">
-            <h1><a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page" title="Patent2Net documentation" target="_blank">A crawler</a> to expand your horizon <br/>with various data processing tools<br/> for education and scientific purposes</h1>
+        <h1><a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page" title="Patent2Net documentation" target="_blank">A patent collector and analyser</a> to expand <br/> your horizon with various data processing tools<br/> for education and scientific purposes</h1>
             <p>using EPO's database of over <a href="http://worldwide.espacenet.com/"> 90 000 000 patents </a></p>
 
             <hr>
@@ -124,11 +124,6 @@
             <a href="#" onclick="{{wo('GephiFiles/*CollectName*_EquivalentsJS.html')}} {{wo('GephiFiles/*CollectName*_ReferencesJS.html')}} {{wo('GephiFiles/*CollectName*_CitationsJS.html')}} return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
         </li>
         {% endif %}
-        {% if FreePlane %}
-        <li>
-            <a href="'{{ CollectName }}/{{ CollectName }}FP.html" onclick="{{wo('*CollectName*FP.html')}} return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
-        </li>
-        {% endif %}
     </ul>
     {% if HasFamily %}
     <h2>Families</h2>
@@ -156,11 +151,6 @@
         {% if References or Citations or Equivalents %}
         <li>
             <a href="#" onclick="{{wo('GephiFiles/*CollectName*_EquivalentsFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_ReferencesFamiliesJS.html')}} {{wo('GephiFiles/*CollectName*_CitationsFamiliesJS.html')}}  return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
-        </li>
-        {% endif %}
-        {% if FreePlane %}
-        <li>
-            <a href="{{u('Families*CollectName*FP.html')}}" target="_blank"> IPC's Mind-Map (FreePlane PlugIn)</a>
         </li>
         {% endif %}
     </ul>
