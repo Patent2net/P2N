@@ -19,6 +19,13 @@
     <script charset="utf-8" type="text/javascript" src="../Patent2Net/media/js/wow.js"></script>
     <script charset="utf-8" type="text/javascript" src="../Patent2Net/media/js/main.js"></script>
 
+    <style>
+    .stroked {
+        text-decoration: line-through;
+        color: #888;
+        pointer-events: none
+    }
+    </style>
 
     <script type="text/javascript">
         if (navigator.userAgent.indexOf("Chrome") != -1) {
@@ -153,7 +160,7 @@
         {% endif %}
         {% if FreePlane %}
         <li>
-            <a href="{{ CollectName }}/Families{{ CollectName }}FP.html" onclick="{{wo('Families*CollectName*FP.html')}} return false;"> IPC's Mind-Map (FreePlane PlugIn)</a>
+            <a href="{{u('Families*CollectName*FP.html')}}" target="_blank"> IPC's Mind-Map (FreePlane PlugIn)</a>
         </li>
         {% endif %}
     </ul>
@@ -166,35 +173,35 @@
         <table style="width:100%">
             <tr>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants.gexf', '_blank'); return false;">Applicants </a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_Applicants.gexf')}}" download>Applicants </a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_Inventors.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Inventors.gexf', '_blank'); return false;">Inventors </a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_Inventors.gexf')}}" download>Inventors </a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_CrossTech.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CrossTech.gexf', '_blank'); return false;">Technologies (IPC7) </a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_CrossTech.gexf')}}" download>Technologies (IPC7) </a> </td>
             </tr>
             <tr>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_Citations.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Citations.gexf', '_blank'); return false;">Citations</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_Citations.gexf')}}" download>Citations</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_References.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_References.gexf', '_blank'); return false;">References</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_References.gexf')}}" download>References</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_Equivalents.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Equivalents.gexf', '_blank'); return false;">Equivalents</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_Equivalents.gexf')}}" download>Equivalents</a> </td>
             </tr>
             <tr>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_CountryCrossTech.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CountryCrossTech.gexf', '_blank'); return false;">Countries and technologies</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_CountryCrossTech.gexf')}}" download>Countries and technologies</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantInventor.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantInventor.gexf', '_blank'); return false;">Inventors and applicants</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_ApplicantInventor.gexf')}}" download>Inventors and applicants</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsCrossTech.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsCrossTech.gexf', '_blank'); return false;">Inventors and technologies</a>                    </td>
+                    <a href="{{u('GephiFiles/*CollectName*_InventorsCrossTech.gexf')}}" download>Inventors and technologies</a>                    </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTech.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTech.gexf', '_blank'); return false;">Applicants and technologies</a>                    </td>
+                    <a href="{{u('GephiFiles/*CollectName*_Applicants_CrossTech.gexf')}}" download>Applicants and technologies</a>                    </td>
 
             </tr>
         </table>
         <h3><a href="http://freeplane.sourceforge.net"  target="_blank">FreePlane compatible file</a> </h3>
         <ul>
-            <li> <a href="{{ CollectName }}/{{ CollectName }}.html_files/{{ CollectName }}FP.mm" onclick="window.open('{{ CollectName }}/{{ CollectName }}.html_files/{{ CollectName }}FP.mm', '_blank');return false;"> IPC'c Mindmap </a> </li>
+            <li> <a href="{{u('*CollectName*.html_files/*CollectName*FP.mm')}}" download> IPC'c Mindmap </a> </li>
         </ul>
         <!-- <ul style="list-style-type:square"> Next are not working right now (11/2015)
             <li> <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}.gexf', '_blank'); return false;">complete, </a> </li>
@@ -204,27 +211,27 @@
         <h3><a href="http://www.iramuteq.org/"  target="_blank">Iramuteq</a> tagged abstracts (unicode UTF-8 encoding):</h3>
         <table style="width:100%">
             <tr>
-                <td> <a href="{{ CollectName }}/PatentContents/EN_Abstract_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/EN_Abstract_{{ CollectName }}.txt', '_blank');return false;">Abstracts (EN) </a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/EN_Claims_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/EN_Claims_{{ CollectName }}.txt', '_blank');return false;">Claims (EN)</a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/EN_Description_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/EN_Description_{{ CollectName }}.txt', '_blank');return false;">Descriptions (EN)</a></td>
+                <td> <a href="{{u('PatentContents/EN_Abstract_*CollectName*.txt')}}" download>Abstracts (EN) </a></td>
+                <td> <a href="{{u('PatentContents/EN_Claims_*CollectName*.txt')}}" download>Claims (EN)</a></td>
+                <td> <a href="{{u('PatentContents/EN_Description_*CollectName*.txt')}}" download>Descriptions (EN)</a></td>
             </tr>
             <tr>
-                <td> <a href="{{ CollectName }}/PatentContents/FR_Abstract_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/FR_Abstract_{{ CollectName }}.txt', '_blank');return false;">Abstracts (FR)</a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/FR_Claims_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/FR_Claims_{{ CollectName }}.txt', '_blank');return false;">Claims (FR)</a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/FR_Description_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/FR_Description_{{ CollectName }}.txt', '_blank');return false;">Descriptions (FR)</a></td>
+                <td> <a href="{{u('PatentContents/FR_Abstract_*CollectName*.txt')}}" download>Abstracts (FR)</a></td>
+                <td> <a href="{{u('PatentContents/FR_Claims_*CollectName*.txt')}}" download>Claims (FR)</a></td>
+                <td> <a href="{{u('PatentContents/FR_Description_*CollectName*.txt')}}" download>Descriptions (FR)</a></td>
             </tr>
 
         </table>
 
         <h3><a href="http://project.carrot2.org/"  target="_blank">Carrot2</a> clustering engine XML compatible files:</h3>
         <ul style="list-style-type:square">
-            <li> <a href="{{ CollectName }}/PatentContents/Carrot2/EN_Abstract_{{ CollectName }}.xml" onclick="window.open('{{ CollectName }}/PatentContents/Carrot2/EN_Abstract_{{ CollectName }}.xml', '_blank');return false;"> Abstract XML (english only) </a></li>
-            <li> <a href="{{ CollectName }}/PatentContents/Carrot2/FR_Abstract_{{ CollectName }}.xml" onclick="window.open('{{ CollectName }}/PatentContents/Carrot2/FR_Abstract_{{ CollectName }}.xml', '_blank');return false;"> Abstract XML (french only) </a></li>
-            <li> <a href="{{ CollectName }}/PatentContents/Carrot2/UNK_Abstract_{{ CollectName }}.xml" onclick="window.open('{{ CollectName }}/PatentContents/Carrot2/UNK_Abstract_{{ CollectName }}.xml', '_blank');return false;"> Abstract XML (all others language: unknown) </a></li>
+            <li> <a href="{{u('PatentContents/Carrot2/EN_Abstract_*CollectName*.xml')}}" download> Abstract XML (english only) </a></li>
+            <li> <a href="{{u('PatentContents/Carrot2/EN_Abstract_*CollectName*.xml')}}" download> Abstract XML (french only) </a></li>
+            <li> <a href="{{u('PatentContents/Carrot2/UNK_Abstract_*CollectName*.xml')}}" download> Abstract XML (all others language: unknown) </a></li>
         </ul>
         <h3>Download bibliographic format </h3>
         <ul>
-            <li> <a href="{{ CollectName }}/{{ CollectName }}.bib" onclick="window.open('{{ CollectName }}/{{ CollectName }}.bib', '_blank');return false;">Biblatex format, Zotero compatible (only A,B, C statuses)</a></li>
+            <li> <a href="{{u('*CollectName*.bib')}}" download>Biblatex format, Zotero compatible (only A,B, C statuses)</a></li>
         </ul>
     </section>
     {% if HasFamily %}
@@ -234,35 +241,36 @@
         <table style="width:100%">
             <tr>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantsFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantsFamilies.gexf', '_blank'); return false;">Applicants </a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_ApplicantsFamilies.gexf')}}" download>Applicants </a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsFamilies.gexf', '_blank'); return false;">Inventors </a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_InventorsFamilies.gexf')}}" download>Inventors </a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_CrossTechFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CrossTechFamilies.gexf', '_blank'); return false;">Technologies (IPC7) </a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_CrossTechFamilies.gexf')}}" download>Technologies (IPC7) </a> </td>
             </tr>
             <tr>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_CitationsFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CitationsFamilies.gexf', '_blank'); return false;">Citations</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_CitationsFamilies.gexf')}}" download>Citations</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ReferencesFamilies.gexf', '_blank'); return false;">References</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_ReferencesFamilies.gexf')}}" download>References</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_EquivalentsFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_EquivalentsFamilies.gexf', '_blank'); return false;">Equivalents</a> </td>
+                    <a href="{{u('GephiFiles/*CollectName*_EquivalentsFamilies.gexf')}}" download>Equivalents</a> </td>
             </tr>
             <tr>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_CountryCrossTechFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_CountryCrossTechFamilies.gexf', '_blank'); return false;">Countries and technologies</a>                    </td>
+                    <a href="{{u('GephiFiles/*CollectName*_CountryCrossTechFamilies.gexf')}}" download>Countries and technologies</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantInventorFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_ApplicantInventorFamilies.gexf', '_blank'); return false;">Inventors and applicants</a>                    </td>
+                    <a href="{{u('GephiFiles/*CollectName*_ApplicantInventorFamilies.gexf')}}" download>Inventors and applicants</a> </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsCrossTechFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_InventorsCrossTechFamilies.gexf', '_blank'); return false;">Inventors and technologies</a>                    </td>
+                    <a href="{{u('GephiFiles/*CollectName*_InventorsCrossTechFamilies.gexf')}}" download>Inventors and technologies</a>                    </td>
                 <td>
-                    <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTechFamilies.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}_Applicants_CrossTechFamilies.gexf', '_blank'); return false;">Applicants and technologies</a>                    </td>
+                    <a href="{{u('GephiFiles/*CollectName*_Applicants_CrossTechFamilies.gexf')}}" download>Applicants and technologies</a>                    </td>
 
             </tr>
+
         </table>
         <h3><a href="http://freeplane.sourceforge.net"  target="_blank">FreePlane compatible file</a> </h3>
         <ul>
-            <li> <a href="{{ CollectName }}/{{ CollectName }}.html_files/Families{{ CollectName }}FP.mm" onclick="window.open('{{ CollectName }}/{{ CollectName }}.html_files/Families{{ CollectName }}FP.mm', '_blank');return false;"> IPC'c Mindmap </a> </li>
+            <li> <a href="{{u('*CollectName*.html_files/Families*CollectName*FP.mm')}}" download> IPC'c Mindmap </a> </li>
         </ul>
         <!-- <ul style="list-style-type:square"> Next are not working right now (11/2015)
             <li> <a href="{{ CollectName }}/GephiFiles/{{ CollectName }}.gexf" onclick="window.open('{{ CollectName }}/GephiFiles/{{ CollectName }}.gexf', '_blank'); return false;">complete, </a> </li>
@@ -272,27 +280,26 @@
         <h3><a href="http://www.iramuteq.org/"  target="_blank">Iramuteq</a> tagged abstracts (unicode UTF-8 encoding):</h3>
         <table style="width:100%">
             <tr>
-                <td> <a href="{{ CollectName }}/PatentContents/EN_FamiliesAbstract_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/EN_FamiliesAbstract_{{ CollectName }}.txt', '_blank');return false;">Families Abstracts (EN) </a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/EN_FamiliesClaims_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/EN_FamiliesClaims_{{ CollectName }}.txt', '_blank');return false;">Families Claims (EN)</a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/EN_FamiliesDescription_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/EN_FamiliesDescription_{{ CollectName }}.txt', '_blank');return false;">Families Descriptions (EN)</a></td>
+                <td> <a href="{{u('PatentContents/EN_FamiliesAbstract_*CollectName*.txt')}}" download>Abstracts (EN) </a></td>
+                <td> <a href="{{u('PatentContents/EN_FamiliesClaims_*CollectName*.txt')}}" download>Claims (EN)</a></td>
+                <td> <a href="{{u('PatentContents/EN_FamiliesDescription_*CollectName*.txt')}}" download>Descriptions (EN)</a></td>
             </tr>
             <tr>
-                <td> <a href="{{ CollectName }}/PatentContents/FR_FamiliesAbstract_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/FR_FamiliesAbstract_{{ CollectName }}.txt', '_blank');return false;">Families Abstracts (FR)</a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/FR_FamiliesClaims_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/FR_FamiliesClaims_{{ CollectName }}.txt', '_blank');return false;">Families Claims (FR)</a></td>
-                <td> <a href="{{ CollectName }}/PatentContents/FR_FamiliesDescription_{{ CollectName }}.txt" onclick="window.open('{{ CollectName }}/PatentContents/FR_FamiliesDescription_{{ CollectName }}.txt', '_blank');return false;">Families Descriptions (FR)</a></td>
+                <td> <a href="{{u('PatentContents/FR_FamiliesAbstract_*CollectName*.txt')}}" download>Abstracts (FR)</a></td>
+                <td> <a href="{{u('PatentContents/FR_FamiliesClaims_*CollectName*.txt')}}" download>Claims (FR)</a></td>
+                <td> <a href="{{u('PatentContents/FR_FamiliesDescription_*CollectName*.txt')}}" download>Descriptions (FR)</a></td>
             </tr>
-
         </table>
 
         <h3><a href="http://project.carrot2.org/"  target="_blank">Carrot2</a> clustering engine XML compatible files:</h3>
         <ul style="list-style-type:square">
-            <li> <a href="{{ CollectName }}/PatentContents/Carrot2/EN_Abstract_Families{{ CollectName }}.xml" onclick="window.open('{{ CollectName }}/PatentContents/Carrot2/EN_Abstract_Families{{ CollectName }}.xml', '_blank');return false;"> Abstract XML (english only) </a></li>
-            <li> <a href="{{ CollectName }}/PatentContents/Carrot2/FR_Abstract_Families{{ CollectName }}.xml" onclick="window.open('{{ CollectName }}/PatentContents/Carrot2/FR_Abstract_Families{{ CollectName }}.xml', '_blank');return false;"> Abstract XML (french only) </a></li>
-            <li> <a href="{{ CollectName }}/PatentContents/Carrot2/UNK_Abstract_Families{{ CollectName }}.xml" onclick="window.open('{{ CollectName }}/PatentContents/Carrot2/UNK_Abstract_Families{{ CollectName }}.xml', '_blank');return false;"> Abstract XML (all others language: unknown) </a></li>
+            <li> <a href="{{u('PatentContents/Carrot2/EN_Abstract_Families*CollectName*.xml')}}" download> Abstract XML (english only) </a></li>
+            <li> <a href="{{u('PatentContents/Carrot2/EN_Abstract_Families*CollectName*.xml')}}" download> Abstract XML (french only) </a></li>
+            <li> <a href="{{u('PatentContents/Carrot2/UNK_Abstract_Families*CollectName*.xml')}}" download> Abstract XML (all others language: unknown) </a></li>
         </ul>
         <h3>Download bibliographic format </h3>
         <ul>
-            <li> <a href="{{ CollectName }}/Families{{ CollectName }}.bib" onclick="window.open('{{ CollectName }}/Families{{ CollectName }}.bib', '_blank');return false;">Biblatex format, Zotero compatible (only A,B, C statuses)</a></li>
+            <li> <a href="{{u('Families*CollectName*.bib')}}" download>Biblatex format, Zotero compatible (only A,B, C statuses)</a></li>
         </ul>
     </section>
     {% endif %}
@@ -314,6 +321,21 @@
         </div>
     </footer>
     <!--  End footer  -->
+
+    <script>
+    // scripts helpers for not showing empty elements
+    // first for empty htmls / onclicks
+    $('a[href=#]').each(function(i, a){
+        var k = $(a).attr('onclick');
+        k = k.trim().replace('return false;', '');
+        if (k.length === 0) {
+            $(a).addClass('stroked').attr('title', 'Not available')
+        }
+    });
+    $('a[href=""]').each(function(i, a){
+        $(a).addClass('stroked').attr('title', 'Not available')
+    })
+    </script>
 
 </body>
 
