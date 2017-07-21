@@ -8,6 +8,7 @@ import os
 import codecs
 import cPickle
 import bs4
+from xml.sax.saxutils import escape
 
 from P2N_Lib import LoadBiblioFile
 from P2N_Config import LoadConfig
@@ -145,15 +146,15 @@ def complete3(listeFic, lang, det, Brevets):
                             Content = bs4.BeautifulSoup(tempo, "lxml").text
                             #soupe =  bs4.BeautifulSoup(Content.prettify(Content))
                             tempo = Content#.encode('utf8')
-                            tempo=tempo.replace('&lt;', u'>')
-                            tempo=tempo.replace('&', '&amp;')
+                            # tempo=tempo.replace('&lt;', u'>')
+                            # tempo=tempo.replace('&', '&amp;')
                             if tempo not in dejaVu2:
                                 dejaVu2.append(tempo)
                                 Contenu+=u'<document id="%s">\n' %cmpt
-                                Contenu+=u'<title>%s</title>\n' % titre
+                                Contenu+=u'<title>%s</title>\n' % escape(titre)
                                 Contenu+=u'<url>%s</url>\n' % url
 
-                                Contenu+=u'<snippet>%s</snippet>\n' %unicode(tempo)
+                                Contenu+=u'<snippet>%s</snippet>\n' %escape(unicode(tempo))
                                 Contenu+=u"</document>\n"
                         except:
                             #print #bad encoding should be here
