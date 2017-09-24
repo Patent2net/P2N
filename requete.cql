@@ -9,7 +9,7 @@ request: ta="filter*" and ta="drink* water" AND (pn = U not (pn = UA or pn = US 
 
 ###############################
 # Name of files OR directories
-DataDirectory: Water
+DataDirectory: respirator
 
 ###############################
 #Patent2Net options : Set to *True* or False

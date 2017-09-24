@@ -10,6 +10,9 @@ pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-PreNe
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-Networks.txt P2N-Networks.py
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-NetworksJS.txt P2N-NetworksJS.py
 
+pyinstaller -y --noupx --specpath=specs --clean --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.py
+pyinstaller -y --noupx --specpath=specs --clean --version-file=version-ClusterPreProcess.txt ClusterPreProcess.py
+pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
 
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-FusionIramuteq2.txt FusionIramuteq2.py
 REM DEPRECATED pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Fusion.txt Fusion.py
@@ -29,6 +32,9 @@ pyinstaller -y --noupx --version-file=version-OPSGatherPatentsv2.txt specs\OPSGa
 pyinstaller -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt specs\OPSGatherContentsV2-Iramuteq.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherAugment-Families.txt specs\OPSGatherAugment-Families.spec
 REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
+pyinstaller -y --noupx --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.spec
+pyinstaller -y --noupx --version-file=version-ClusterPreProcess.txt ClusterPreProcess.spec
+pyinstaller -y --noupx --version-file=version-P2N-Cluster.txt P2N-Cluster.spec
 
 pyinstaller -y --noupx --version-file=version-P2N-Networks.txt specs\P2N-Networks.spec
 pyinstaller -y --noupx --version-file=version-P2N-PreNetworks.txt specs\P2N-PreNetworks.spec
@@ -55,6 +61,9 @@ xcopy /S /Y dist\OPSGatherContentsV2-Iramuteq dist\Patent2Net64\
 xcopy /S /Y dist\OPSGatherAugment-Families dist\Patent2Net64\
 REM xcopy /S /Y dist\Compatibilizer dist\Patent2Net64\
 
+xcopy /S /Y dist\IPC-Abstracts-Augment dist\Patent2Net64\
+xcopy /S /Y dist\ClusterPreProcess dist\Patent2Net64\
+xcopy /S /Y dist\P2N-Cluster dist\Patent2Net64\
 
 xcopy /S /Y dist\P2N-Networks dist\Patent2Net64\
 xcopy /S /Y dist\P2N-PreNetworks dist\Patent2Net64\
@@ -80,6 +89,10 @@ rmdir /S /Q dist\Compatibilizer
 rmdir /S /Q  dist\P2N-Networks
 rmdir /S /Q  dist\P2N-PreNetworks
 rmdir /S /Q  dist\P2N-NetworksJS
+
+rmdir /S /Q dist\IPC-Abstracts-Augment
+rmdir /S /Q dist\ClusterPreProcess
+rmdir /S /Q dist\P2N-Cluster
 
 rmdir /S /Q dist\FusionIramuteq2
 rmdir /S /Q dist\FusionPatentList2
