@@ -11,8 +11,8 @@ pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-Netwo
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-NetworksJS.txt P2N-NetworksJS.py
 
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.py
-pyinstaller -y --noupx --specpath=specs --clean --version-file=version-ClusterPreProcess.txt ClusterPreProcess.py
-pyinstaller -y --noupx --specpath=specs --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
+pyinstaller -y --noupx --specpath=specs --clean --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt ClusterPreProcess.py
+pyinstaller -y --noupx --specpath=specs --hidden-import sklearn.neighbors.typedefs --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
 
 pyinstaller -y --noupx --specpath=specs --clean --version-file=version-FusionIramuteq2.txt FusionIramuteq2.py
 REM DEPRECATED pyinstaller -y --noupx --specpath=specs --clean --version-file=version-Fusion.txt Fusion.py
@@ -32,9 +32,9 @@ pyinstaller -y --noupx --version-file=version-OPSGatherPatentsv2.txt specs\OPSGa
 pyinstaller -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt specs\OPSGatherContentsV2-Iramuteq.spec
 pyinstaller -y --noupx --version-file=version-OPSGatherAugment-Families.txt specs\OPSGatherAugment-Families.spec
 REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt specs\Compatibilizer.spec
-pyinstaller -y --noupx --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.spec
-pyinstaller -y --noupx --version-file=version-ClusterPreProcess.txt ClusterPreProcess.spec
-pyinstaller -y --noupx --version-file=version-P2N-Cluster.txt P2N-Cluster.spec
+pyinstaller -y --noupx --version-file=version-IPC-Abstracts-Augment.txt specs\IPC-Abstracts-Augment.spec
+pyinstaller -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt specs\ClusterPreProcess.spec
+pyinstaller -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-Cluster.txt specs\P2N-Cluster.spec
 
 pyinstaller -y --noupx --version-file=version-P2N-Networks.txt specs\P2N-Networks.spec
 pyinstaller -y --noupx --version-file=version-P2N-PreNetworks.txt specs\P2N-PreNetworks.spec
@@ -111,7 +111,7 @@ rmdir /S /Q dist\Parallel3
 REM xcopy /S /Y dist\P2N-FamiliesHierarc dist\Patent2Net64\
 
 xcopy /Y root\* dist\
-
+copy /Y ipcr_xml.2015 dist\Patent2Net64\
 copy /Y requete.cql dist
 copy /y cacert.pem dist\Patent2Net64\
 copy /y countries.json dist\Patent2Net64

@@ -10,7 +10,6 @@ from __future__ import print_function
 import numpy as np
 import pandas as pd
 import nltk
-
 import os
 import codecs
 from sklearn import feature_extraction
@@ -33,7 +32,7 @@ import matplotlib as mp
 from sklearn.manifold import MDS
 from sklearn.metrics.pairwise import cosine_similarity
 from collections import OrderedDict
-from TAL_P2N_Lib import tokenize_only, tokenize_only
+from TAL_P2N_Lib import tokenize_only 
 stopwords = nltk.corpus.stopwords.words('english')
 cluster_colors = {0: '#1b9e77', 1: '#d95f02', 2: '#7570b3', 3: '#e7298a', 4: '#66a61e', 5: '#ff6a61',6: '#00ff1e', 7: '#0001FF'}
 #brev_stpswrds = ['production', 'method', 'preparation', 'preparing', 'use', \

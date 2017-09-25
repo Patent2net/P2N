@@ -31,9 +31,6 @@ import logging
 from sklearn.externals import joblib
 from optparse import OptionParser
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(levelname)s %(message)s')
-
 
 num_clusters = 9 
 a = np.linspace(0, 1, num_clusters)
@@ -42,6 +39,7 @@ def get_colors(inp, colormap, vmin=None, vmax=None):
     return colormap(norm(inp))
 colors = get_colors(a, plt.cm.autumn)
 colors2 = get_colors(a, plt.cm.winter)
+
 
 
 cluster_colors=dict()
