@@ -1,4 +1,6 @@
 OPSGatherPatentsv2.exe
+OPSGatherAugment-Families.exe
+
 FormateExportAttractivityCartography.exe
 FormateExportBiblio.exe
 FormateExportCountryCartography.exe
@@ -6,7 +8,6 @@ FormateExportCountryCartography.exe
 FormateExportDataTableFamilies.exe
 FormateExportDataTable.exe
 FormateExportPivotTable.exe
-OPSGatherAugment-Families.exe
 
 OPSGatherContentsV2-Iramuteq.exe
 P2N-FreePlane.exe

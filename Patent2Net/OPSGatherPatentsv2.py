@@ -9,28 +9,28 @@ Then, the bibliographic data associated to each patent in the patent List is col
 stored to the same file name in the directory ../DATA/PatentBiblio.
 """
 
-#BiblioPropertiesOLD = ['publication-ref', 'priority-active-indicator', 'classification',
+# BiblioPropertiesOLD = ['publication-ref', 'priority-active-indicator', 'classification',
 #u'resume', 'IPCR1', 'portee', 'IPCR3', 'applicant', 'IPCR4', 'IPCR7', 'label', 'IPCR11',
 #'date', 'citations', 'application-ref', 'pays', u'abstract', 'titre', 'inventeur',
 #'representative', 'abs' ]
 #
 #
-#BiblioPropertiesOLD2 =  ['applicant', 'application-ref', 'citations', 'classification',
+# BiblioPropertiesOLD2 =  ['applicant', 'application-ref', 'citations', 'classification',
 #'inventor', 'IPCR1', 'IPCR11', 'IPCR3', 'IPCR4', 'IPCR7', 'label', 'country', 'kind',
 #'priority-active-indicator', 'title','date',"publication-ref","representative",
 #"CPC", "prior", "priority-claim", "year", "family-id", "equivalent",
 # 'inventor-country', 'applicant-country', 'inventor-nice', 'applicant-nice']
 
-#New in V2... 11/2015
-BiblioProperties =  ['applicant', 'application-ref', 'citations', 'classification',
-                     'prior-Date', 'prior-dateDate'
-'inventor', 'IPCR1', 'IPCR11', 'IPCR3', 'IPCR4', 'IPCR7', 'label', 'country', 'kind',
-'priority-active-indicator', 'title','date',"publication-ref","representative",
-"CPC", "prior", "priority-claim", "year", "family-id", "equivalent",
- 'inventor-country', 'applicant-country', 'inventor-nice', 'applicant-nice', 'CitP', 'CitO', 'references']
+# New in V2... 11/2015
+BiblioProperties = ['applicant', 'application-ref', 'citations', 'classification',
+                    'prior-Date', 'prior-dateDate'
+                    'inventor', 'IPCR1', 'IPCR11', 'IPCR3', 'IPCR4', 'IPCR7', 'label', 'country', 'kind',
+                    'priority-active-indicator', 'title', 'date', "publication-ref", "representative",
+                    "CPC", "prior", "priority-claim", "year", "family-id", "equivalent",
+                    'inventor-country', 'applicant-country', 'inventor-nice', 'applicant-nice', 'CitP', 'CitO', 'references']
 #from networkx_functs import *
 import cPickle
-#from P2N_Lib import ExtractAbstract, ExtractClassificationSimple2, UniClean, SeparateCountryField, CleanPatent, ExtractPatent, ExtractPubliRefs,
+# from P2N_Lib import ExtractAbstract, ExtractClassificationSimple2, UniClean, SeparateCountryField, CleanPatent, ExtractPatent, ExtractPubliRefs,
 from P2N_Lib import Initialize, PatentSearch,  GatherPatentsData, LoadBiblioFile
 #from P2N_Lib import ProcessBiblio, MakeIram,  UnNest3, SearchEquiv, PatentCitersSearch
 #from P2N_Lib import Update
@@ -55,18 +55,18 @@ fic.close()
 
 
 DureeBrevet = 20
-SchemeVersion = '20140101' #for the url to the classification scheme
+SchemeVersion = '20140101'  # for the url to the classification scheme
 import os
 
-ListeBrevet = [] # LA iste de brevets
-#ouverture fichier de travail
+ListeBrevet = []  # LA iste de brevets
+# ouverture fichier de travail
 
 ficOk = False
-cptNotFound=0
+cptNotFound = 0
 nbTrouves = 0
 
-lstBrevets = [] # The patent List
-BiblioPatents = [] # The bibliographic data
+lstBrevets = []  # The patent List
+BiblioPatents = []  # The bibliographic data
 
 
 configFile = LoadConfig()
@@ -77,8 +77,7 @@ GatherBibli = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
 GatherFamilly = configFile.GatherFamilly
 
-
- #should set a working dir one upon a time... done it is temporPath
+# should set a working dir one upon a time... done it is temporPath
 ResultListPath = configFile.ResultListPath
 ResultBiblioPath = configFile.ResultBiblioPath
 ResultContentsPath = configFile.ResultContentsPath
@@ -86,19 +85,19 @@ temporPath = configFile.temporPath
 ResultAbstractPath = configFile.ResultAbstractPath
 
 
-#by default, data are not gathered yet
+# by default, data are not gathered yet
 # building patentList
-nbTrouves  =0
-#if GatherPatent:
+nbTrouves = 0
+# if GatherPatent:
 BiblioPatents, PatIgnored = [], Initialize(GatherPatent, GatherBiblio)
 
-registered_client = epo_ops.RegisteredClient(key, secret)
-#        data = registered_client.family('publication', , 'biblio')
-registered_client.accept_type = 'application/json'
-GatherBibli = GatherBiblio #this parametric option was added after...
+ops_client = epo_ops.Client(key, secret)
+#        data = ops_client.family('publication', , 'biblio')
+ops_client.accept_type = 'application/json'
+GatherBibli = GatherBiblio  # this parametric option was added after...
 try:
-    with open(ResultListPath+'//'+ndf, 'r') as fic:
-        DataBrevets= cPickle.load(fic)
+    with open(ResultListPath + '//' + ndf, 'r') as fic:
+        DataBrevets = cPickle.load(fic)
         lstBrevets = DataBrevets['brevets']
         nbActus = DataBrevets['number']
         if DataBrevets.has_key('Fusion'):
@@ -116,7 +115,7 @@ try:
             if DataBrevets['requete'] != requete:
                 print "care of using on file for one request, deleting this one."
                 raw_input('sure? Unlee use ^C ( CTRL+C)')
-            lstBrevets2, nbTrouves = PatentSearch(registered_client, requete)
+            lstBrevets2, nbTrouves = PatentSearch(ops_client, requete)
             if len(lstBrevets) == nbTrouves and nbActus == nbTrouves:
                 ficOk = True
                 print nbTrouves, " patents gathered yet. No more patents to retreive. Steping to bibliographic data."
@@ -135,20 +134,22 @@ except:
         ficOk = True
 
     except:
-        lstBrevets = [] # gathering all again, I don t know if of serves the same ordered list of patents
+        lstBrevets = []  # gathering all again, I don t know if of serves the same ordered list of patents
         ficOknd = False
         nbTrouves = 1
 STOP = False
-#else:
+# else:
 #
 #    print "Good, nothing to do"
 if not ficOk and GatherPatent:
     while len(lstBrevets) < nbTrouves and not STOP:
-        if len(lstBrevets)+25<2000:
-            temp,  nbTrouves = PatentSearch(registered_client, requete, len(lstBrevets)+1, len(lstBrevets)+25)
+        if len(lstBrevets) + 25 < 2000:
+            temp,  nbTrouves = PatentSearch(
+                ops_client, requete, len(lstBrevets) + 1, len(lstBrevets) + 25)
             ajouts = 0
         else:
-            temp,  nbTrouves = PatentSearch(registered_client, requete, len(lstBrevets)-25, 2000) #hum should gather twice here
+            temp,  nbTrouves = PatentSearch(ops_client, requete, len(
+                lstBrevets) - 25, 2000)  # hum should gather twice here
             if 'ajouts' not in locals():
                 ajouts = 0
             STOP = True
@@ -156,17 +157,17 @@ if not ficOk and GatherPatent:
             if p not in lstBrevets:
 
                 lstBrevets.append(p)
-                ajouts+=1
+                ajouts += 1
 
         if ajouts == 0:
             STOP = True
             print "too many similar previous matches. Exciting"
 
-        #cos.system('cls')
+        # cos.system('cls')
         print nbTrouves, " patents corresponding to the request."
         print len(lstBrevets), ' patents added',
-    with open(ResultListPath+'//'+ndf, 'w') as ficRes1:
-        DataBrevets =dict() # this is the list of patents, same variable name as description and patent data in the following
+    with open(ResultListPath + '//' + ndf, 'w') as ficRes1:
+        DataBrevets = dict()  # this is the list of patents, same variable name as description and patent data in the following
         # this may cause problem sometime
         DataBrevets['brevets'] = lstBrevets
         DataBrevets['number'] = nbTrouves
@@ -175,7 +176,8 @@ if not ficOk and GatherPatent:
 listeLabel = []
 for brevet in lstBrevets:
     if u'document-id' in brevet.keys() and "invalid result" not in str(brevet):
-        ndb =brevet[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$'] #nameOfPatent for file system save (abstract, claims...)
+        # nameOfPatent for file system save (abstract, claims...)
+        ndb = brevet[u'document-id'][u'country']['$'] + brevet[u'document-id'][u'doc-number']['$']
         listeLabel.append(ndb)
 print "Found almost", len(lstBrevets), " patents. Saving list"
 print "Within ", len(set(listeLabel)), " unique patents"
@@ -187,7 +189,7 @@ if GatherBibli and GatherBiblio:
     DataBrevets = dict()
     DataBrevets['brevets'] = []
     if ndf in os.listdir(ResultBiblioPath):
-        with open(ResultBiblioPath+'//'+ndf, 'r') as fic:
+        with open(ResultBiblioPath + '//' + ndf, 'r') as fic:
             while 1:
                 try:
                     DataBrevets['brevets'].append(cPickle.load(fic))
@@ -198,7 +200,9 @@ if GatherBibli and GatherBiblio:
                 print len(DataBrevets['brevets']), " bibliographic patent data gathered yet? Nothing else to do :-)"
                 GatherBibli = False
                 for brevet in lstBrevets:
-                    ndb =brevet[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$'] #nameOfPatent for file system save (abstract, claims...)
+                    # nameOfPatent for file system save (abstract, claims...)
+                    ndb = brevet[u'document-id'][u'country']['$'] + \
+                        brevet[u'document-id'][u'doc-number']['$']
                     listeLabel.append(ndb)
     else:
         ficOk = False
@@ -234,14 +238,13 @@ if GatherBibli and GatherBiblio:
 #
 #            BiblioPatents = [] # gathering all again, I don t know if of serves the same ordered list of patents
 #            GatherBibli = True
-PatIgnored=0
-
+PatIgnored = 0
 
 
 if GatherBibli and GatherBiblio:
-    registered_client = epo_ops.RegisteredClient(key, secret)
-    #        data = registered_client.family('publication', , 'biblio')
-    registered_client.accept_type = 'application/json'
+    ops_client = epo_ops.Client(key, secret)
+    #        data = ops_client.family('publication', , 'biblio')
+    ops_client.accept_type = 'application/json'
     if "brevets" in DataBrevets.keys():
         YetGathered = list(set([bre['label'] for bre in DataBrevets["brevets"]]))
         print len(YetGathered), " patent bibliographic data gathered."
@@ -270,96 +273,99 @@ if GatherBibli and GatherBiblio:
         # may be current patent has already be gathered in a previous attempt
         # should add a condition here to check in os.listdir()
         if 'invalid result' not in str(brevet) and u'document-id' in brevet.keys():
-            ndb =brevet[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$'] #nameOfPatent for file system save (abstract, claims...)
+            # nameOfPatent for file system save (abstract, claims...)
+            ndb = brevet[u'document-id'][u'country']['$'] + \
+                brevet[u'document-id'][u'doc-number']['$']
             listeLabel.append(ndb)
             if ndb not in YetGathered:
                 try:
-                    BiblioPatents = GatherPatentsData(brevet, registered_client, ResultContentsPath, ResultAbstractPath,  PatIgnored, [])
+                    BiblioPatents = GatherPatentsData(
+                        brevet, ops_client, ResultContentsPath, ResultAbstractPath,  PatIgnored, [])
                 except:
                     print ndb, " ignored... error occured"
                     next
                 if BiblioPatents is None:
                     BiblioPatents = []
-                tempor=[]
+                tempor = []
                 for pat in BiblioPatents:
-                    if "year" not in pat.keys(): # something didn't go well... Forcing
+                    if "year" not in pat.keys():  # something didn't go well... Forcing
                         if 'date' not in pat.keys() and 'prior-Date' not in pat.keys() and 'dateDate' not in pat.keys() and 'prior-dateDate' not in pat.keys():
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
-                            pat['dateDate'] = datetime.date(1,1,1)
-                            pat['prior-dateDate'] = datetime.date(1,1,1)
-                            pat['year'] =  ['1']
+                            pat['dateDate'] = datetime.date(1, 1, 1)
+                            pat['prior-dateDate'] = datetime.date(1, 1, 1)
+                            pat['year'] = ['1']
                         elif 'date' not in pat.keys() and 'prior-Date' not in pat.keys() and 'dateDate' not in pat.keys():
-                            if isinstance(pat['prior-dateDate'], list) and len(pat['prior-dateDate']) ==1:
-                                if pat['prior-dateDate'][0].year>1:
-                                    pat['date'] = [str(pat['prior-dateDate'][0].year) + '-' + str(pat['prior-dateDate'][0].month) + '-' + str(pat['prior-dateDate'][0].day)]
+                            if isinstance(pat['prior-dateDate'], list) and len(pat['prior-dateDate']) == 1:
+                                if pat['prior-dateDate'][0].year > 1:
+                                    pat['date'] = [str(pat['prior-dateDate'][0].year) + '-' + str(
+                                        pat['prior-dateDate'][0].month) + '-' + str(pat['prior-dateDate'][0].day)]
                                     pat['prior-Date'] = pat['date']
                                     pat['dateDate'] = pat['prior-dateDate'][0]
-                                    pat['year'] =  [str(pat['prior-dateDate'][0].year)]
+                                    pat['year'] = [str(pat['prior-dateDate'][0].year)]
                                 else:
                                     pat['date'] = ['1-1-1']
                                     pat['prior-Date'] = [u'1-1-1']
-                                    pat['dateDate'] = datetime.date(1,1,1)
-                                    pat['prior-dateDate'] = datetime.date(1,1,1)
-                                    pat['year'] =  ['1']
-                            else: # booring cases, forcing a little hereafter... many case will be good, others less.... need developper here !
+                                    pat['dateDate'] = datetime.date(1, 1, 1)
+                                    pat['prior-dateDate'] = datetime.date(1, 1, 1)
+                                    pat['year'] = ['1']
+                            else:  # booring cases, forcing a little hereafter... many case will be good, others less.... need developper here !
                                 pat['date'] = ['1-1-1']
                                 pat['prior-Date'] = [u'1-1-1']
-                                pat['dateDate'] = datetime.date(1,1,1)
-                                pat['prior-dateDate'] = datetime.date(1,1,1)
-                                pat['year'] =  ['1']
+                                pat['dateDate'] = datetime.date(1, 1, 1)
+                                pat['prior-dateDate'] = datetime.date(1, 1, 1)
+                                pat['year'] = ['1']
 
                         elif 'dateDate' not in pat.keys():
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
-                            pat['dateDate'] = datetime.date(1,1,1)
-                            pat['prior-dateDate'] = datetime.date(1,1,1)
-                            pat['year'] =  ['1']
+                            pat['dateDate'] = datetime.date(1, 1, 1)
+                            pat['prior-dateDate'] = datetime.date(1, 1, 1)
+                            pat['year'] = ['1']
 
                         else:
                             pat['date'] = ['1-1-1']
                             pat['prior-Date'] = [u'1-1-1']
-                            pat['dateDate'] = datetime.date(1,1,1)
-                            pat['prior-dateDate'] = datetime.date(1,1,1)
-                            pat['year'] =  ['1']
+                            pat['dateDate'] = datetime.date(1, 1, 1)
+                            pat['prior-dateDate'] = datetime.date(1, 1, 1)
+                            pat['year'] = ['1']
 
                     tempor.append(pat)
                 BiblioPatents = tempor
-                if BiblioPatents is not None and BiblioPatents !=[]:
-                    with open(ResultBiblioPath +'//'+ndf, 'a') as ficRes:
+                if BiblioPatents is not None and BiblioPatents != []:
+                    with open(ResultBiblioPath + '//' + ndf, 'a') as ficRes:
                         cPickle.dump(BiblioPatents[0], ficRes)
                         YetGathered.append(BiblioPatents[0]["label"])
                         print len(YetGathered), " patent bibliographic data already gathered."
                 else:
-                    #may should put current ndb in YetGathered...
-                    #print
+                    # may should put current ndb in YetGathered...
+                    # print
                     pass
     #
             else:
-                pass # yet gathered
+                pass  # yet gathered
         else:
-           print "invalid result"
-           if 'label' in brevet.keys():
-               if brevet['label'] not in YetGathered:
-                    with open(ResultBiblioPath +'//'+ndf, 'a') as ficRes:
+            print "invalid result"
+            if 'label' in brevet.keys():
+                if brevet['label'] not in YetGathered:
+                    with open(ResultBiblioPath + '//' + ndf, 'a') as ficRes:
 
                         cPickle.dump(brevet, ficRes)
                         YetGathered.append(brevet["label"])
                         print len(YetGathered), " patent bibliographic data gathered."
-               else:
-                    pass #bad OPS entry
-    with open(ResultBiblioPath +'//Description'+ndf, 'w') as ficRes:
+                else:
+                    pass  # bad OPS entry
+    with open(ResultBiblioPath + '//Description' + ndf, 'w') as ficRes:
         DataBrevets['ficBrevets'] = ndf
         DataBrevets['requete'] = requete
         DataBrevets["YetGathered"] = YetGathered
         DataBrevets.pop("brevets")
         cPickle.dump(DataBrevets, ficRes)
 
-
     NotGathered = [pat for pat in listeLabel if pat not in YetGathered]
     print "Ignored  patents from patent list", PatIgnored
-    print "unconsistent patents: ",len(NotGathered)
-    print "here is the list: ", " DATA\PatentContentHTML\\"+ndf
+    print "unconsistent patents: ", len(NotGathered)
+    print "here is the list: ", " DATA\PatentContentHTML\\" + ndf
 
     print "Export in HTML using FormateExport"
 #os.system("FormateExport.exe "+ndf)

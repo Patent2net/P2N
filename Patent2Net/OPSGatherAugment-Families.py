@@ -169,15 +169,15 @@ if GatherFamilly:
         ListeBrevetAug = []
         Done = []
     if ficOk and GatherFamilly:
-        registered_client = epo_ops.RegisteredClient(key, secret)
-    #        data = registered_client.family('publication', , 'biblio')
-        registered_client.accept_type = 'application/json'
+        ops_client = epo_ops.Client(key, secret)
+    #        data = ops_client.family('publication', , 'biblio')
+        ops_client.accept_type = 'application/json'
         DejaVu = []
         YetIn = []
         for Brev in ListeBrevet:
 
             if Brev is not None and Brev != '':
-                temp = GetFamilly(registered_client, Brev, ResultContentsPath)
+                temp = GetFamilly(ops_client, Brev, ResultContentsPath)
                 print "... loading ", Brev['label']
                 temp = CleanNones(temp)
                 if temp is not None:
