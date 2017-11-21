@@ -47,7 +47,11 @@ if IsEnableScript:
         'IPCR7', "Inventor-Country", "Applicant-Country", "equivalents", "CPC", u'references', u'Citations', u'CitedBy']
 
 
-        print "\n> Hi! This is CountryCartography formatter. "
+        label = 'a single patent'
+        if prefix == 'Families':
+            label = 'the whole patent family'
+        print "\n> Hi! This is CountryCartography formatter for {}. ".format(label)
+
         if 'Description'+ndf in os.listdir(ListBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
             LstBrevet = LoadBiblioFile(ListBiblioPath, ndf)
             with open(ListBiblioPath +'//Description'+ndf, 'r') as ficRes:

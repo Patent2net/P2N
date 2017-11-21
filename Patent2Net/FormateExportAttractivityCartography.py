@@ -42,7 +42,10 @@ if IsEnableScript:
     for prefix in prefixes:
         ndf = prefix + configFile.ndf
 
-        print "\n> Hi! This is CountryAttractivity (applicants, inventors) formatter. "
+        label = 'a single patent'
+        if prefix == 'Families':
+            label = 'the whole patent family'
+        print "\n> Hi! This is CountryAttractivity (applicants, inventors) formatter for {}. ".format(label)
 
         try:
             os.makedirs(ResultPathContent)
