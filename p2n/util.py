@@ -54,4 +54,4 @@ def run_script(script, configfile, directory='Patent2Net'):
             logger.warning('Terminating script {}'.format(script))
             process.terminate()
             process.wait()
-            return returncode
+            return process.returncode

@@ -22,7 +22,7 @@ Configure
 *********
 Patent2Net needs your personal credentials for accessing the OPS API.
 You have to provide them once as they are stored into the file
-"cles-repo.txt" in the current working directory.
+"cles-epo.txt" in the current working directory.
 
 Initialize OPS credentials::
 
