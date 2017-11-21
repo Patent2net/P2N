@@ -36,7 +36,8 @@ from P2N_Lib import Initialize, PatentSearch,  GatherPatentsData, LoadBiblioFile
 #from P2N_Lib import Update
 #from P2N_Lib import EcritContenu, coupeEnMots
 from P2N_Config import LoadConfig
-#
+from p2n.config import OPSCredentials
+
 import epo_ops
 import os
 import sys
@@ -48,11 +49,8 @@ global secret
 
 # put your credential from epo client in this file...
 # chargement clés de client
-fic = open('..//cles-epo.txt', 'r')
-key, secret = fic.read().split(',')
-key, secret = key.strip(), secret.strip()
-fic.close()
-
+c = OPSCredentials(credentials_file='../cles-epo.txt')
+key, secret = c.read()
 
 DureeBrevet = 20
 SchemeVersion = '20140101'  # for the url to the classification scheme
