@@ -12,6 +12,7 @@ Next version should consider EP and WO patents
 import json
 import os
 import cPickle
+import shutil
 #from bs4.dammit import EntitySubstitutions
 from P2N_Lib import LoadBiblioFile, RenderTemplate
 from P2N_Config import LoadConfig
@@ -122,7 +123,5 @@ if IsEnableScript:
         # in same working directory... other solution is to start an http server
         # http://stackoverflow.com/questions/17077931/d3-samples-in-a-microsoft-stack
 
-        with open(ResultPathContent+'//' + prefix + 'Countries.json', "w") as fic:
-            with open('countries.json', 'r') as fic2:
-                tempo = fic2.read()
-                fic.write(tempo)
+        # Clone required resources into result directory
+        shutil.copy('countries.json', ResultPathContent+'//'+"countries.json")
