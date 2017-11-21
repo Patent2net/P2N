@@ -21,3 +21,9 @@ class OPSCredentials:
         line = ','.join([oauth_key, oauth_secret])
         fic.write(line)
         fic.close()
+
+def label_from_prefix(prefix):
+    label = 'a single patent'
+    if prefix == 'Families':
+        label = 'the whole patent family'
+    return label

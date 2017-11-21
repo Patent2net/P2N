@@ -8,7 +8,7 @@ import subprocess
 logger = logging.getLogger(__name__)
 
 def setup_logging(level=logging.INFO):
-    log_format = '%(asctime)-15s [%(name)-20s] %(levelname)-7s: %(message)s'
+    log_format = '%(asctime)-15s [%(name)-25s] %(levelname)-7s: %(message)s'
     logging.basicConfig(
         format=log_format,
         stream=sys.stderr,
@@ -34,7 +34,7 @@ def run_script(script, configfile, directory='Patent2Net'):
     logger.info('Running command "{}"'.format(command))
 
     # Run process
-    process = subprocess.Popen(command, shell=True, bufsize=1, stderr=subprocess.PIPE, cwd=directory)
+    process = subprocess.Popen(command, shell=True, bufsize=1, cwd=directory)
 
     # Poll process for new output until finished
     while True:
@@ -45,8 +45,7 @@ def run_script(script, configfile, directory='Patent2Net'):
             if outcome is not None:
                 returncode = process.returncode
                 if returncode != 0:
-                    stderr = process.stderr.read()
-                    logger.error('Command "{command}" failed with return code {returncode}\n{stderr}'.format(**locals()))
+                    logger.error('Command "{command}" failed with return code {returncode}'.format(**locals()))
                 return returncode
 
             time.sleep(1)

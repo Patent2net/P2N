@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
-<title>Country cover for {{request}}</title>
+<title>Patent issuing country for {{request}}</title>
 <script charset="utf-8" src="../../Patent2Net/media/js/d3.js"></script>
 <script charset="utf-8" src="../../Patent2Net/media/js/topojson.js"></script>
 <script charset="utf-8" src="../../Patent2Net/media/js/d3plus.js"></script>
@@ -26,8 +26,8 @@
 
 <script>
 
-d3.json('{{ficJson}}', function(error, data) {
   if (error) return console.warn(error);
+d3.json('{{jsonFile}}', function(error, data) {
 
 var visualization  = d3plus.viz()
 .container("#viz")
