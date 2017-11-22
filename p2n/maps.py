@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
 import logging
+from p2n.util import memoize
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +54,7 @@ def d3plus_data(document_list, field):
 
     return mapdata
 
+@memoize
 def read_name_country_map(filename='NameCountryMap.csv'):
     NomPays = dict()
     NomTopoJSON = dict()

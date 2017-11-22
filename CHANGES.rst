@@ -12,6 +12,7 @@ development
 - Use utility function for accessing cles-epo.txt
 - Upgrade to python-epo-ops-client==2.3.1, fixing access to OPS API 3.2
 - Make p2n.maps.d3plus_data obtain single field attribute
+- Memoize outcome of p2n.maps.read_name_country_map
 
 2016-11-01 2.0.0
 ================

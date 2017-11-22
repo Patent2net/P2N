@@ -3,6 +3,7 @@
 import sys
 import time
 import logging
+import functools
 import subprocess
 
 logger = logging.getLogger(__name__)
@@ -55,3 +56,18 @@ def run_script(script, configfile, directory='Patent2Net'):
             process.terminate()
             process.wait()
             return process.returncode
+
+def memoize(obj):
+    """
+    https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize
+    """
+    cache = obj.cache = {}
+
+    @functools.wraps(obj)
+    def memoizer(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = obj(*args, **kwargs)
+        return cache[key]
+
+    return memoizer
