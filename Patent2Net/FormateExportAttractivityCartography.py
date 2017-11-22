@@ -75,7 +75,10 @@ def generate_map(storage_path, storage_name, output_path):
     logger.info("Mapping {count} patents. Excepting EP and WO.".format(count=len(result['brevets'])))
 
     # Compute map data
-    mapdata_all = p2n.maps.d3plus_data(result['brevets'], ['Applicant-Country', 'Inventor-Country'])
+    mapdata_all = {
+        'Applicant-Country': p2n.maps.d3plus_data(result['brevets'], 'Applicant-Country'),
+        'Inventor-Country': p2n.maps.d3plus_data(result['brevets'], 'Inventor-Country'),
+    }
 
     # Create output path
     if not os.path.isdir(output_path):

@@ -81,8 +81,7 @@ def generate_map(storage_path, storage_name, output_path):
     logger.info("Mapping {count} patents. Excepting EP and WO.".format(count=len(result['brevets'])))
 
     # Compute map data
-    mapdata_all = p2n.maps.d3plus_data(result['brevets'], ['country'])
-    mapdata = mapdata_all['country']
+    mapdata = p2n.maps.d3plus_data(result['brevets'], 'country')
 
     # Render map
     jsonfile = '{storage_name}CountryMap.json'.format(**locals())

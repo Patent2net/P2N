@@ -4,60 +4,54 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def d3plus_data(document_list, fields):
+def d3plus_data(document_list, field):
 
     NomPays, NomTopoJSON = read_name_country_map()
 
-    results = {}
+    cptPay = dict()
+    for document in document_list:
 
-    for field in fields:
+        if document[field] == '': continue
+        country = document[field]
 
-        cptPay = dict()
-        for document in document_list:
+        if isinstance(country, list):
+            for country in country:
+                if country in NomPays.keys(): #aptent country in name (ouf)
+                    if cptPay.has_key(NomPays[country]): #has it been found yet ?
+                        cptPay[NomPays[country]] += 1 #so add one
+                    else: #set it intead to one
+                        cptPay[NomPays[country]] = 1
+                elif country == 'SU':
+                    if cptPay.has_key('RU'): #has it been found yet ?
+                        cptPay[NomPays['RU']] += 1 #so add one
+                    else: #set it intead to one
+                        cptPay[NomPays['RU']] = 1
+                else:
+                    msg = 'Skipping country "{country}" for drawing on map, origin was "{label}".'.format(country=country, label=document['label'])
+                    logger.info(msg)
 
-            if document[field] == '': continue
-            country = document[field]
+        elif country in NomPays.keys(): #patent country in name (saved :-)
+            if cptPay.has_key(NomPays[country]): #has it been found yet ?
+                cptPay[NomPays[country]] += 1 #so add one
+            else: #set it intead to one
+                cptPay[NomPays[country]] = 1
 
-            if isinstance(country, list):
-                for country in country:
-                    if country in NomPays.keys(): #aptent country in name (ouf)
-                        if cptPay.has_key(NomPays[country]): #has it been found yet ?
-                            cptPay[NomPays[country]] += 1 #so add one
-                        else: #set it intead to one
-                            cptPay[NomPays[country]] = 1
-                    elif country == 'SU':
-                        if cptPay.has_key('RU'): #has it been found yet ?
-                            cptPay[NomPays['RU']] += 1 #so add one
-                        else: #set it intead to one
-                            cptPay[NomPays['RU']] = 1
-                    else:
-                        msg = 'Skipping country "{country}" for drawing on map, origin was "{label}".'.format(country=country, label=document['label'])
-                        logger.info(msg)
+        else:
+            msg = 'Skipping country "{country}" for drawing on map, origin was "{label}".'.format(country=country, label=document['label'])
+            logger.info(msg)
 
-            elif country in NomPays.keys(): #patent country in name (saved :-)
-                if cptPay.has_key(NomPays[country]): #has it been found yet ?
-                    cptPay[NomPays[country]] += 1 #so add one
-                else: #set it intead to one
-                    cptPay[NomPays[country]] = 1
+    mapdata = dict()
+    for k in cptPay.keys():
+        tempo = dict()
+        tempo["value"] = cptPay[k]
+        tempo["name"] = k
+        tempo["country"] = NomTopoJSON[k]
+        if "data" in mapdata.keys():
+            mapdata["data"].append(tempo)
+        else:
+            mapdata["data"]=[tempo]
 
-            else:
-                msg = 'Skipping country "{country}" for drawing on map, origin was "{label}".'.format(country=country, label=document['label'])
-                logger.info(msg)
-
-        dico = dict()
-        for k in cptPay.keys():
-            tempo = dict()
-            tempo["value"] = cptPay[k]
-            tempo["name"] = k
-            tempo["country"] = NomTopoJSON[k]
-            if "data" in dico.keys():
-                dico["data"].append(tempo)
-            else:
-                dico["data"]=[tempo]
-
-        results[field] = dico
-
-    return results
+    return mapdata
 
 def read_name_country_map(filename='NameCountryMap.csv'):
     NomPays = dict()
