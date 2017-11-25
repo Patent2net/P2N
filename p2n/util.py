@@ -71,3 +71,9 @@ def memoize(obj):
         return cache[key]
 
     return memoizer
+
+def to_list(obj):
+    """Convert an object to a list if it is not already one"""
+    if not isinstance(obj, (list, tuple)):
+        obj = [obj, ]
+    return obj

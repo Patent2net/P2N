@@ -7,6 +7,7 @@ README = open(os.path.join(here, 'README.md')).read()
 requires = [
     'pyparsing==2.1.10',
     'python-epo-ops-client==2.3.1',
+    'dogpile.cache==0.6.4',
     'requests==2.13.0',
     'networkx==1.11',
     'pydot==1.2.3',
@@ -15,9 +16,11 @@ requires = [
     'numpy==1.12.0',
     'matplotlib==2.0.0',
     'python-louvain==0.5',
-    'jinja2',
+    'jinja2==2.10',
     'lxml==3.8.0',
     'docopt==0.6.2',
+    'jsonpointer==1.12',
+    'attrs==17.3.0',
 ]
 
 test_requires = [

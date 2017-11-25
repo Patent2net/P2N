@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
 import logging
+import pkg_resources
 from p2n.util import memoize
 
 logger = logging.getLogger(__name__)
@@ -54,16 +55,33 @@ def d3plus_data(document_list, field):
 
     return mapdata
 
+
 @memoize
-def read_name_country_map(filename='NameCountryMap.csv'):
+def read_name_country_map(filename=None):
+
+    if not filename:
+        filename = pkg_resources.resource_filename('p2n.resources', "NameCountryMap.csv")
+
     NomPays = dict()
     NomTopoJSON = dict()
+
     with open(filename, 'r') as fic:
-        #2 means using short name...
-        for lig in fic.readlines():
-            li = lig.strip().split(';')
-            NomPays[li[2].upper()] = li[1]
-            NomTopoJSON[li[1]] = li[0]
-            NomPays[li[1]] = li[2].upper() #using same dict for reverse mapping
+
+        for line in fic.readlines():
+
+            # Read line
+            row = line.decode('utf-8').strip().split(';')
+
+            # Decode row
+            longcode = row[0]
+            longname = row[1]
+            countrycode = row[2].upper()
+
+            # Assign to mapping dictionaries
+            NomPays[countrycode] = longname
+            NomTopoJSON[longname] = longcode
+
+            # Using same dict for reverse mapping
+            NomPays[longname] = countrycode
 
     return NomPays, NomTopoJSON
