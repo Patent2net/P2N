@@ -68,168 +68,29 @@ IsEnableScript = configFile.GatherImages
 # should set a working dir one upon a time... done it is temporPath
 ResultBiblioPath = configFile.ResultBiblioPath
 ResultPathContent = configFile.ResultContentsPath
+ResultPathImages = configFile.ResultPathImages
 temporPath = configFile.temporPath
 ResultAbstractPath = configFile.ResultAbstractPath
 
 
-# à ce niveau de script, la liste des brevets est chargée avec des données
-# biblio qui vont être complétées
-#import time, pprint
-
-cptNotFound = 0
-
-
-def dictCleaner(dico):  # same in OpsGatherAugmentFamilies
-    for clef in dico.keys():
-        if isinstance(dico[clef], list) and len(dico[clef]) == 1:
-            dico[clef] = dico[clef][0]
-        elif isinstance(dico[clef], list) and len(dico[clef]) == 0:
-            dico[clef] = ''
-        elif isinstance(dico[clef], list) and len(dico[clef]) > 1:
-            if '' in dico[clef]:
-                for nb in range(dico[clef].count('')):
-                    dico[clef].remove('')
-        else:
-            pass
-    return dico
-
-
 if IsEnableScript:
-    GatherContent = True
-    #not fun
     ops_client = epo_ops.Client(key, secret)
-    #        data = ops_client.family('publication', , 'biblio')
     ops_client.accept_type = 'application/json'
 
-    for ndf in [fic2 for fic2 in os.listdir(ResultBiblioPath) if fic2.count('Description') == 0]:
-        if ndf.startswith('Families'):
-            typeSrc = 'Families'
+    biblio_file = LoadBiblioFile(ResultBiblioPath, ndf)
+    patents = biblio_file['brevets']
+
+    for patent in patents:
+        path = '{}//{}.tiff'.format(ResultPathImages,  patent['label'])
+        if os.path.exists(path):
+            print "Image for {} already gathered".format(patent['label'])
         else:
-            typeSrc = ''
-        # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-        if 'Description' + ndf or 'Description' + ndf.lower() in os.listdir(ResultBiblioPath):
-            ficBrevet = LoadBiblioFile(ResultBiblioPath, ndf)
-
-        else:  # Retrocompatibility
-            print 'gather your data again. sorry'
-            sys.exit()
-
-        if ficBrevet.has_key('brevets'):
-            lstBrevet = ficBrevet['brevets']
-    #        if data.has_key('requete'):
-    #            DataBrevet['requete'] = data["requete"]
-            print "Found ", typeSrc, ' file and', len(lstBrevet), " patents! Gathering contents"
-        else:
-            print 'gather your data again'
-            sys.exit()
-
-        BiblioPatents = []
-        # making the directory saving patents
-
-        RepDir = ResultPathContent
-        try:
-            for directory in ['Abstract', 'Claims', u'Description']:
-                if directory not in os.listdir(RepDir):
-                    os.makedirs(RepDir + "//" + directory)
-                if 'Families' + directory not in os.listdir(RepDir):
-                    os.makedirs(RepDir + "//Families" + directory)
-        except:
-            pass
-        #os.chdir(ndf.replace('.dump', ''))
-        desc, clm, ft, abstract = 0, 0, 0, 0
-        Langues = set()
-
-        if GatherContent:
-            Nombre = dict()
-            for brevet in lstBrevet:
-                brevet = dictCleaner(brevet)
-                # [u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$']brevet['publication-ref'][u'document-id'][0][u'kind']['$'])
-                ndb = brevet[u'label']
-        # check for already gathered patents
-                pays = brevet['country']
-                if isinstance(ndb, list):
-                    print ndb, "using first one..."
-                    ndb = ndb[0]
-                    for key in ['label', 'country', 'kind']:
-                        # hum some problem (again) in cleaning data within the family gatherer... 22/12/15
-                        brevet[key] = list(set(brevet[key]))
-                if isinstance(pays, list):
-                    pays = pays[0]
-                for content in [typeSrc + 'Abstract', typeSrc + 'Claims', typeSrc + 'Description']:
-
-                    if content not in Nombre.keys():
-                        Nombre[content] = 0
-                    try:
-                        lstfic = os.listdir(ResultPathContent + '//' + content)
-                    except:
-                        lstfic = []
-                    endP = content.replace(typeSrc, "").lower()
-                    if endP == 'abstract':
-                        endP = 'biblio'
-                    fichier = [fics[3:] for fics in lstfic]   # content already gathered
-                    if ndb + '.txt' not in fichier:  # hack here as chinese patents seems not be in claims or description endpoint
-                        #, u'fulltext'
-                        # , brevet[u'document-id'][u'kind']['$']))
-                        temp = ('publication', Epodoc(pays + ndb[2:]))
-                        try:
-                            data = ops_client.published_data(
-                                *temp, endpoint=endP)  # ops_client.published_data()
-                            if data.ok and content.replace(typeSrc, "").lower() in str(data.json()):
-                                CheckDocDB = False
-                            else:
-                                CheckDocDB = True
-                        except:
-                            CheckDocDB = True
-                        if CheckDocDB:
-                            if isinstance(brevet[u'kind'], list):
-                                tempoData = []
-                                for cc in brevet[u'kind']:
-                                    # hope all comes from same country
-                                    temp = ('publication', Docdb(ndb[2:], pays, cc))
-                                    try:
-                                        tempoData.append(
-                                            ops_client.published_data(*temp, endpoint=endP))
-                                    except:
-                                        data = None
-                                        pass
-                                for dat in tempoData:
-                                    if dat is not None and dat.ok:  # doing the same for all content. This may result in redundancy
-                                        contenu = content.replace(typeSrc, "").lower()
-
-                                        patentCont = dat.json()
-                                        Langs = MakeIram2(
-                                            brevet, ndb + '.txt', patentCont, RepDir + '//' + typeSrc + contenu + '//', contenu)
-                                        if endP == 'biblio':
-                                            for contenu in ['claims', 'description']:
-                                                Langs = MakeIram2(
-                                                    brevet, ndb + '.txt', patentCont, RepDir + '//' + typeSrc + contenu + '//', contenu)
-                            else:
-                                temp = ('publication', Docdb(
-                                    brevet[u'label'][2:], brevet[u'country'], brevet[u'kind']))
-                                try:
-                                    data = ops_client.published_data(*temp, endpoint=endP)
-                                except:
-                                    data = None
-                                    pass
-                            # OPS limitation ?
-                            # OPS includes character-coded full text only for EP, WO, AT, CH, CA, GB and ES.
-                            # http://forums.epo.org/open-patent-services-and-publication-server-web-service/topic3728.html
-
-                        if data is not None and data.ok:
-                            contenu = content.replace(typeSrc, "").lower()
-
-                            patentCont = data.json()
-                            Langs = MakeIram2(brevet, ndb + '.txt', patentCont,
-                                              RepDir + '//' + typeSrc + contenu + '//', contenu)
-                            if endP == 'biblio':
-                                for contenu in ['claims', 'description']:
-                                    Langs = MakeIram2(brevet, ndb + '.txt', patentCont,
-                                                      RepDir + '//' + typeSrc + contenu + '//', contenu)
-                                    # Lang is unused. Trying to gather in biblio endpoint, just in case....
-
-                                # Next line is for setting analyses variables for Iramuteq....
-
-        else:
-            print "no gather parameter set. Finishing."
-
-        # print ft, " fulltext gathered. See ", ndf.replace('.dump', '')+'/fulltext/ directory for files'
+            try:
+                ans = ops_client.published_data(reference_type='publication',
+                                                input=Epodoc(patent['label']), endpoint='images')
+                j = ans.json()
+                base_u = j['ops:world-patent-data']['ops:document-inquiry']['ops:inquiry-result']['ops:document-instance'][0]['@link']
+                resp = ops_client.image(base_u)
+                file(path, 'w').write(resp.content)
+            except Exception as err:
+                print "image for {} error".format(patent['label']), err

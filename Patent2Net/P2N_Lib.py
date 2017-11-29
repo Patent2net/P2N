@@ -1856,8 +1856,7 @@ def UniClean(ch):
             return string
         else:
             print "what kind of thing is that ch", ch
-    else:
-        return u'empty'
+    return u'empty'
 
 
 def quote(string):
