@@ -27,7 +27,7 @@ test_requires = [
 ]
 
 setup(name='patent2net',
-  version='3.0.0-dev0',
+  version='3.0.0-dev1',
   description='Patent2Net is a testbed for working on statistical analysis and representations of sets of patents.',
   long_description=README,
   license="CeCILL-2.1",
