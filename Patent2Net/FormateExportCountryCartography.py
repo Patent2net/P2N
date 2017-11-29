@@ -22,6 +22,7 @@ from P2N_Lib import RenderTemplate
 logger_name = os.path.basename(__file__).replace('FormateExport', '').replace('.py', '')
 logger = logging.getLogger(logger_name)
 
+
 def run():
 
     # Bootstrap logging
@@ -63,6 +64,7 @@ def run():
         # Clone required resources into result directory
         shutil.copy('countries.json', os.path.join(output_path, "countries.json"))
 
+
 def generate_map(storage_path, storage_name, output_path):
 
     # Read patent data from storage
@@ -81,7 +83,7 @@ def generate_map(storage_path, storage_name, output_path):
     logger.info("Mapping {count} patents. Excepting EP and WO.".format(count=len(result['brevets'])))
 
     # Compute map data
-    mapdata = p2n.maps.d3plus_data(result['brevets'], 'country')
+    mapdata = p2n.maps.d3plus_data_brevets(result['brevets'], 'country')
 
     # Render map
     jsonfile = '{storage_name}CountryMap.json'.format(**locals())
@@ -96,6 +98,7 @@ def generate_map(storage_path, storage_name, output_path):
         request=result["requete"],
         jsonFile=jsonfile,
     )
+
 
 if __name__ == '__main__':
     run()

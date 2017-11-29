@@ -22,6 +22,7 @@ from P2N_Lib import RenderTemplate
 logger_name = os.path.basename(__file__).replace('FormateExport', '').replace('.py', '')
 logger = logging.getLogger(logger_name)
 
+
 def run():
 
     # Bootstrap logging
@@ -52,7 +53,7 @@ def run():
             # Compute storage slot
             storage_name = prefix + configFile.ndf
 
-            # Generate map
+            # Read data from storage, generate map and save JSON and HTML to filesystem
             generate_map(storage_path, storage_name, output_path)
 
 
@@ -62,6 +63,7 @@ def run():
 
         # Clone required resources into result directory
         shutil.copy('countries.json', os.path.join(output_path, "countries.json"))
+
 
 def generate_map(storage_path, storage_name, output_path):
 
@@ -76,8 +78,8 @@ def generate_map(storage_path, storage_name, output_path):
 
     # Compute map data
     mapdata_all = {
-        'Applicant-Country': p2n.maps.d3plus_data(result['brevets'], 'Applicant-Country'),
-        'Inventor-Country': p2n.maps.d3plus_data(result['brevets'], 'Inventor-Country'),
+        'Applicant-Country': p2n.maps.d3plus_data_brevets(result['brevets'], 'Applicant-Country'),
+        'Inventor-Country': p2n.maps.d3plus_data_brevets(result['brevets'], 'Inventor-Country'),
     }
 
     # Create output path
@@ -102,6 +104,7 @@ def generate_map(storage_path, storage_name, output_path):
             request=result["requete"],
             jsonFile=jsonfile,
         )
+
 
 if __name__ == '__main__':
     run()

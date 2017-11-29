@@ -78,7 +78,7 @@ def run():
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
-                                            e.g. "country", "Applicant-Country", "Inventor-Country"
+                                            e.g. "country", "applicants", "inventors", "designated_states"
 
     Examples:
 
@@ -90,8 +90,8 @@ def run():
 
       # Generate data for world maps using d3plus/geo_map (JSON)
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
-      p2n adhoc worldmap --expression='TA=lentille' --country-field='Applicant-Country'
-      p2n adhoc worldmap --expression='TA=lentille' --country-field='Inventor-Country'
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
 
     """
 
@@ -136,18 +136,17 @@ def adhoc_interface(options):
     # Display results for given query expression in Patent2Net format, e.g. run::
     # p2n adhoc dump --expression='TA=lentille'
     if options['dump']:
-        results = patent2net.gather(options['expression'], with_family=options['with-family']).all()
-        print(json.dumps(results))
+        print(json.dumps(results.brevets))
 
     if options['list']:
-        documents = patent2net.gather(options['expression'], with_family=options['with-family']).documents
+        documents = results.documents
         publication_numbers = [document.publication_number for document in documents]
         print(json.dumps(publication_numbers, indent=4))
 
     # Generate world map over given field, e.g. run::
     # p2n adhoc worldmap --expression='TA=lentille' --country-field='Applicant-Country'
     if options['worldmap']:
-        mapdata = patent2net.gather(options['expression'], with_family=options['with-family']).worldmap(options['country-field'])
+        mapdata = results.worldmap(options['country-field'])
         print(json.dumps(mapdata))
 
 

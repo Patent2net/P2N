@@ -80,12 +80,15 @@ Ad hoc mode
 ::
 
     p2n adhoc dump --expression='TA=lentille'
+    p2n adhoc list --expression='TA=lentille'
+    p2n adhoc list --expression='TA=lentille' --with-family
 
 ::
 
     p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
-    p2n adhoc worldmap --expression='TA=lentille' --country-field='Applicant-Country'
-    p2n adhoc worldmap --expression='TA=lentille' --country-field='Inventor-Country'
+    p2n adhoc worldmap --expression='TA=lentille' --country-field='country' --with-family
+    p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
+    p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
 
 
 

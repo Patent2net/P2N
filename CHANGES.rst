@@ -14,6 +14,7 @@ development
 - Make p2n.maps.d3plus_data obtain single field attribute
 - Memoize outcome of p2n.maps.read_name_country_map
 - Introduce ad-hoc mode
+- Worldmap generation in ad-hoc mode is now based on native OPSExchangeDocument data model
 
 2016-11-01 2.0.0
 ================

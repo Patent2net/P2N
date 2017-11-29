@@ -69,7 +69,13 @@ class Patent2Net:
         self.documents = documents_expanded
 
     def documents_to_brevets(self):
+        """
+        Convert list of OPSExchangeDocument objects to list
+        of dictionaries in legacy Patent2Net Brevet format.
+        This can be used to feed the data into the classic P2N scripts.
+        """
 
+        self.brevets = []
         for ops_exchange_document in self.documents:
 
             # Create model instance of Patent2NetBrevet from OPSExchangeDocument
@@ -81,10 +87,10 @@ class Patent2Net:
             # Append to list of results
             self.brevets.append(p2n_brevet)
 
-    def all(self):
-        return self.brevets
-
     def worldmap(self, country_field):
+        """
+        Generate data suitable for feeding into d3plus/geo_map.
+        """
 
         # Generate map data
 
@@ -92,7 +98,10 @@ class Patent2Net:
         # this should actually count the number of unique items (name/country).
         # Currently, it counts just all countries, so the deviation is even greater
         # when running with "--with-family".
+        #mapdata = p2n.maps.d3plus_data_brevets(self.brevets, country_field)
 
-        mapdata = p2n.maps.d3plus_data(self.brevets, country_field)
+        # DONE: Now operates on the native OPS data model and
+        # properly aggregates unique applicant/inventor names.
+        mapdata = p2n.maps.d3plus_data_documents(self.documents, country_field)
 
         return mapdata
