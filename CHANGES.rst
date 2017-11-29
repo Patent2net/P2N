@@ -17,6 +17,7 @@ development
 - Worldmap generation in ad-hoc mode is now based on native OPSExchangeDocument data model
 - Enrich OPS bibliographic data by register information
 - Add worldmap generation for designated states in ad-hoc mode
+- Add automatic release task
 
 2016-11-01 2.0.0
 ================
