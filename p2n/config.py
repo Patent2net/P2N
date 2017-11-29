@@ -22,6 +22,7 @@ class OPSCredentials:
         fic.write(line)
         fic.close()
 
+
 def label_from_prefix(prefix):
     label = 'a single patent'
     if prefix == 'Families':

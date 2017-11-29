@@ -29,9 +29,9 @@ def run():
       p2n carrot [--config=requete.cql]
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
-      p2n adhoc dump --expression=<expression> [--with-family]
+      p2n adhoc dump --expression=<expression> [--with-family] [--with-register]
       p2n adhoc list --expression=<expression> [--with-family]
-      p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family]
+      p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
       p2n --version
       p2n (-h | --help)
 
@@ -92,6 +92,7 @@ def run():
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
 
     """
 
@@ -132,6 +133,12 @@ def adhoc_interface(options):
 
     # Create Patent2Net instance
     patent2net = Patent2Net(key, secret)
+
+    # Gather data
+    results = patent2net.gather(
+        options['expression'],
+        with_family=options['with-family'],
+        with_register=options['with-register'])
 
     # Display results for given query expression in Patent2Net format, e.g. run::
     # p2n adhoc dump --expression='TA=lentille'

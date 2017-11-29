@@ -15,6 +15,8 @@ development
 - Memoize outcome of p2n.maps.read_name_country_map
 - Introduce ad-hoc mode
 - Worldmap generation in ad-hoc mode is now based on native OPSExchangeDocument data model
+- Enrich OPS bibliographic data by register information
+- Add worldmap generation for designated states in ad-hoc mode
 
 2016-11-01 2.0.0
 ================

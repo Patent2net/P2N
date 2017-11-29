@@ -49,6 +49,8 @@ class Patent2NetBrevet(object):
     references = attr.ib(default=0)
     representative = attr.ib(default=0)
 
+    designated_states = attr.ib(default=attr.Factory(list))
+
     @classmethod
     def from_ops_exchange_document(cls, document):
 
@@ -64,6 +66,9 @@ class Patent2NetBrevet(object):
 
         brevet.Applicant_Country = [item['country'] for item in document.applicants]
         brevet.Inventor_Country = [item['country'] for item in document.inventors]
+
+        if document.register:
+            brevet.designated_states = document.register.designated_states
 
         return brevet
 

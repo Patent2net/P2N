@@ -90,6 +90,9 @@ Ad hoc mode
     p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
     p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
 
+::
+
+    p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
 
 
 Full output of "p2n --help"
