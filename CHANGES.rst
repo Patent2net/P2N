@@ -5,6 +5,9 @@ Patent2Net CHANGES
 
 development
 ===========
+
+2017-11-30 3.0.0-dev1
+=====================
 - Minor fixes re. argument processing
 - Improve robustness re. case-sensitivity at map resource acquisition (countries.json)
 - Add setup.py, convenience step runner and documentation
