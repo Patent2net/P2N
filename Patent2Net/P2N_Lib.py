@@ -1748,7 +1748,7 @@ def UniClean(ch):
     #            return string
     #        except:
     if ch is not None:
-        if isinstance(ch, list) and len(ch) > 1:
+        if isinstance(ch, list):
             return [UniClean(cont) for cont in ch]
         elif isinstance(ch, list) and len(ch) == 1:
             return [UniClean(ch[0])]

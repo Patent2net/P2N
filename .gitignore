@@ -22,3 +22,6 @@ specs/
 DATA/
 _Compile*
 Patent2Net/_Compile*
+/.idea
+/.venv*
+*.egg-info

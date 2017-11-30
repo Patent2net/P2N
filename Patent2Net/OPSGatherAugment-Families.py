@@ -27,6 +27,7 @@ import cPickle
 from P2N_Lib import Update, GetFamilly, flatten
 from P2N_Lib import LoadBiblioFile
 from P2N_Config import LoadConfig
+from p2n.config import OPSCredentials
 
 import epo_ops
 import os
@@ -37,11 +38,8 @@ global key
 global secret
 
 # put your credential from epo client in this file...
-
-fic = open('..//cles-epo.txt', 'r')
-key, secret = fic.read().split(',')
-key, secret = key.strip(), secret.strip()
-fic.close()
+c = OPSCredentials(credentials_file='../cles-epo.txt')
+key, secret = c.read()
 
 os.environ['REQUESTS_CA_BUNDLE'] = 'cacert.pem'
 DureeBrevet = 20
