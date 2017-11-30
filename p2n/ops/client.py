@@ -3,6 +3,7 @@
 import logging
 import epo_ops
 from epo_ops.models import Epodoc
+from p2n.ops.model import OPSBiblioSearchResponse
 
 logger = logging.getLogger(__name__)
 
@@ -29,18 +30,57 @@ class OPSClient:
             self.api_key, self.api_secret,
             accept_type='json', middlewares=middlewares)
 
-    def search(self, expression):
+    def search(self, expression, offset=0, limit=100):
         """
-        Run data search and request bibliographic data for all results
+        Run data search and request bibliographic data for all results in given range.
+        Obtains CQL expression, offset and limit parameters.
+        Returns decoded data structure from JSON response.
         """
-        logger.info('Submitting search for expression "{}"'.format(expression))
-        response = self.client.published_data_search(expression, constituents=['biblio'])
+
+        range_begin = offset + 1
+        range_end = offset + limit
+
+        logger.info('Submitting search for expression "{expression}". offset={offset}, limit={limit}'.format(**locals()))
+        response = self.client.published_data_search(
+            expression, range_begin=range_begin, range_end=range_end, constituents=['biblio'])
         data = response.json()
         return data
 
-    def crawl(self, expression):
-        # TODO
-        pass
+    def crawl(self, expression, chunksize=100):
+        """
+        Run data search and request bibliographic data for
+        all results by issuing multiple requests to OPS.
+        Obtains CQL expression and chunksize parameters.
+        Returns decoded data structure from JSON response.
+        """
+
+        # Fetch first chunk (1-100) from upstream
+        data = self.search(expression, offset=0, limit=chunksize)
+
+        # We will use a OPSBiblioSearchResponse for aggregating results across multiple requests.
+        # Let's start with the data received from the very first request (chunk #1).
+        biblio_response = OPSBiblioSearchResponse(data)
+
+        # Extract total count of results
+        total_count = biblio_response.total_result_count
+        logger.info('Total count: %s', total_count)
+
+        # The first 2000 hits are accessible from OPS
+        total_count = min(total_count, 2000)
+
+        # Let's start where the very first request left off
+        offset_second_chunk = chunksize
+
+        # Request more results with {chunksize} documents each
+        for offset in range(offset_second_chunk, total_count, chunksize):
+
+            # Request chunk
+            chunk = self.search(expression, offset=offset, limit=chunksize)
+
+            # Merge chunk into main list of results
+            biblio_response.merge_results(chunk)
+
+        return biblio_response.data
 
     def family(self, document_number):
         """

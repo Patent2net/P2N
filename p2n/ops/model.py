@@ -16,18 +16,54 @@ class OPSBiblioSearchResponse:
     search results to a list of OPSExchangeDocument objects.
     """
 
+    # Some JSON pointers for accessing the innards of "ops:biblio-search" responses
+    pointer_results = JsonPointer('/ops:world-patent-data/ops:biblio-search/ops:search-result/exchange-documents')
+    pointer_total_count = JsonPointer('/ops:world-patent-data/ops:biblio-search/@total-result-count')
+    pointer_range = JsonPointer('/ops:world-patent-data/ops:biblio-search/ops:range')
+
     def __init__(self, data):
         self.data = data
         self.results = []
         self.read()
 
+    @property
+    def total_result_count(self):
+        """
+        Extract total result count from response.
+        """
+        return int(self.pointer_total_count.resolve(self.data))
+
     def read(self):
-        pointer_results = JsonPointer('/ops:world-patent-data/ops:biblio-search/ops:search-result/exchange-documents')
-        exchange_documents = to_list(pointer_results.resolve(self.data))
+        """
+        Read list of result documents from response and create
+        list of OPSExchangeDocument objects inside ``self.results``.
+        """
+        exchange_documents = to_list(self.pointer_results.resolve(self.data))
         for exchange_document in exchange_documents:
             item = OPSExchangeDocument()
             item.read(exchange_document)
             self.results.append(item)
+
+    def merge_results(self, chunk):
+        """
+        Merge results from another response chunk into the main list of results.
+        This is used for crawling across all results from a search response
+        when fetching chunks of 100 result documents each, as this is the
+        maximum page size with the OPS API.
+        """
+
+        # Merge result documents of chunk into main list of results
+        main_results = to_list(self.pointer_results.resolve(self.data))
+        chunk_results = to_list(self.pointer_results.resolve(chunk))
+        main_results += chunk_results
+
+        # Amend result data
+        self.pointer_results.set(self.data, main_results, inplace=True)
+
+        # Amend metadata
+        new_total_count = str(len(main_results))
+        self.pointer_total_count.set(self.data, new_total_count)
+        self.pointer_range.set(self.data, {'@begin': '1', '@end': new_total_count})
 
 
 class OPSFamilyResponse:

@@ -5,6 +5,8 @@ Patent2Net CHANGES
 
 development
 ===========
+- Add crawling behavior to new data acquisition subsystem
+  to collect all results from OPS published data search
 
 2017-11-30 3.0.0-dev1
 =====================

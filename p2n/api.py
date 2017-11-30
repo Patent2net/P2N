@@ -36,7 +36,7 @@ class Patent2Net:
         """
 
         # Submit search expression
-        data = self.ops_client.search(expression)
+        data = self.ops_client.crawl(expression)
 
         # Debugging
         #print(json.dumps(data))
