@@ -11,6 +11,7 @@ Setup
 
     git clone https://github.com/Patent2net/P2N.git
     cd P2N
+    git checkout develop
 
     virtualenv --no-site-packages .venv27
     source .venv27/bin/activate
