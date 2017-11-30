@@ -43,12 +43,18 @@ class OPSClient:
         pass
 
     def family(self, document_number):
+        """
+        Request family information for single document with number in epodoc format.
+        """
         logger.info('Requesting family information for document "{}"'.format(document_number))
         response = self.client.family('publication', Epodoc(document_number), 'biblio')
         data = response.json()
         return data
 
     def register(self, document_number):
+        """
+        Request register information for single document with number in epodoc format.
+        """
         logger.info('Requesting register information for document "{}"'.format(document_number))
         response = self.client.register('publication', Epodoc(document_number))
         data = response.json()

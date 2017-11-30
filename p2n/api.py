@@ -79,13 +79,16 @@ class Patent2Net:
             # Use publication number as key for uniqueness constraint
             document_number = ops_exchange_document.publication_number
 
-            #
+            # Start bookkeeping with the root document
             document_numbers.append(document_number)
             documents_expanded.append(ops_exchange_document)
 
+            # Request family information for root document
             data = self.ops_client.family(document_number)
             response = OPSFamilyResponse(data)
 
+            # Iterate all family members of the root document
+            # and add them to the list of expanded documents
             for family_member in response.results:
 
                 # Skip family members which are the same as the document itself
@@ -96,10 +99,12 @@ class Patent2Net:
                 if family_member.publication_number in document_numbers:
                     continue
 
-                # Record expanded document
+                # Record number and document of family member
                 document_numbers.append(family_member.publication_number)
                 documents_expanded.append(family_member)
 
+        # Switch the current list of result documents over to the list
+        # of documents expanded by their respective family members
         self.documents = documents_expanded
 
     def enrich_register(self):
@@ -125,7 +130,7 @@ class Patent2Net:
                 response = OPSRegisterResponse(data)
                 if response.results:
 
-                    # Is there more than one register document sometimes?
+                    # TODO: Is there more than one register document sometimes?
                     register_document = response.results[0]
 
                     # Propagate register information into OPSExchangeDocument object
@@ -163,8 +168,9 @@ class Patent2Net:
 
         # FIXME: For "Applicant-Country" and "Inventor-Country",
         # this should actually count the number of unique items (name/country).
-        # Currently, it counts just all countries, so the deviation is even greater
-        # when running with "--with-family".
+        # Currently, it just counts *all* countries, so the deviation is even greater
+        # when running with "--with-family" as a larger number of duplicate entries
+        # will get counted more often.
         #mapdata = p2n.maps.d3plus_data_brevets(self.brevets, country_field)
 
         # DONE: Now operates on the native OPS data model and
