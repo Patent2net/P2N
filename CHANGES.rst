@@ -5,6 +5,9 @@ Patent2Net CHANGES
 
 development
 ===========
+
+2017-12-01 3.0.0-dev2
+=====================
 - Add crawling behavior to new data acquisition subsystem
   to collect all results from OPS published data search
 - Start project documentation based on Sphinx
