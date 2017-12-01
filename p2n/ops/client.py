@@ -40,7 +40,7 @@ class OPSClient:
         range_begin = offset + 1
         range_end = offset + limit
 
-        logger.info('Submitting search for expression "{expression}". offset={offset}, limit={limit}'.format(**locals()))
+        logger.info('Searching with expression "{expression}". offset={offset}, limit={limit}'.format(**locals()))
         response = self.client.published_data_search(
             expression, range_begin=range_begin, range_end=range_end, constituents=['biblio'])
         data = response.json()
@@ -66,6 +66,8 @@ class OPSClient:
         logger.info('Total count: %s', total_count)
 
         # The first 2000 hits are accessible from OPS
+        if total_count > 2000:
+            logger.warn('The OPS interface will only return the first 2000 hits')
         total_count = min(total_count, 2000)
 
         # Let's start where the very first request left off

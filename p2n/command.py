@@ -77,6 +77,8 @@ def run():
 
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
+      --with-register                       Also acquire register information for each result hit.
+                                            Required for "--country-field=designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
                                             e.g. "country", "applicants", "inventors", "designated_states"
 
@@ -87,6 +89,9 @@ def run():
 
       # Run query and output results (JSON)
       p2n adhoc dump --expression='TA=lentille'
+
+      # Run query and output list of publication numbers, including family members (JSON)
+      p2n adhoc list --expression='TA=lentille' --with-family
 
       # Generate data for world maps using d3plus/geo_map (JSON)
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
