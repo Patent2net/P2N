@@ -6,6 +6,10 @@ Patent2Net CHANGES
 development
 ===========
 
+2017-12-01 3.0.0-dev4
+=====================
+- Fix setup.py
+
 2017-12-01 3.0.0-dev3
 =====================
 - Improve logging and error handling for register data acquisition
