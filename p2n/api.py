@@ -121,10 +121,15 @@ class Patent2Net:
         # Iterate all result documents
         for document in self.documents:
             document_number = document.publication_number
-            try:
 
-                # Fetch register information from OPS
-                data = self.ops_client.register(document_number)
+            # Fetch register information from OPS
+            data = self.ops_client.register(document_number)
+
+            if not data:
+                logger.debug('No register information for document "{}"'.format(document_number))
+                continue
+
+            try:
 
                 # Read register information response
                 response = OPSRegisterResponse(data)
@@ -138,7 +143,7 @@ class Patent2Net:
                     document.designated_states = register_document.designated_states
 
             except:
-                logger.debug('No register information for document "{}"'.format(document_number))
+                logger.warning('Could not decode register information for document "{}"'.format(document_number))
 
     def documents_to_brevets(self):
         """

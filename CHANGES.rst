@@ -6,6 +6,10 @@ Patent2Net CHANGES
 development
 ===========
 
+2017-12-01 3.0.0-dev3
+=====================
+- Improve logging and error handling for register data acquisition
+
 2017-12-01 3.0.0-dev2
 =====================
 - Add crawling behavior to new data acquisition subsystem

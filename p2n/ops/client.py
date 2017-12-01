@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
 import logging
+import requests
 import epo_ops
 from epo_ops.models import Epodoc
 from p2n.ops.model import OPSBiblioSearchResponse
@@ -98,6 +99,16 @@ class OPSClient:
         Request register information for single document with number in epodoc format.
         """
         logger.info('Requesting register information for document "{}"'.format(document_number))
-        response = self.client.register('publication', Epodoc(document_number))
-        data = response.json()
+        try:
+            response = self.client.register('publication', Epodoc(document_number))
+        except requests.HTTPError as ex:
+            response = ex.response
+
+        logger.info('Register information for document "{}" response status: {}'.format(document_number, response.status_code))
+
+        try:
+            data = response.json()
+        except ValueError:
+            data = None
+
         return data
