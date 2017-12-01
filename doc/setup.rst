@@ -13,21 +13,19 @@ Install from source
 - Source releases are available from GitHub: https://github.com/Patent2net/P2N/releases
 - Install a specific version using ``pip``::
 
-    pip install 'https://github.com/Patent2net/P2N/archive/3.0.0-dev1.tar.gz'
+    pip install 'https://github.com/Patent2net/P2N/archive/3.0.0-dev2.tar.gz'
 
 
 Install binary package
 ======================
-- Binary releases are available here: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install
+- | Binary releases are available at
+  | http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:download_install
 
 
 
 ********
 Appendix
 ********
-
-.. note:: These sections might be deprecated.
-
 
 Install Patent2Net on Linux
 ===========================
@@ -37,7 +35,7 @@ If you're using Ubuntu or Debian distributions, make sure to have these prerequi
 
 Install pygraphviz on Mac OS X::
 
-    pip install --install-option="--include-path=/opt/local/include" --install-option="--library-path=/opt/local/lib" 'pygraphviz==1.3.1'
+    pip install --install-option="--include-path=/opt/local/include" --install-option="--library-path=/opt/local/lib" "pygraphviz==1.3.1"
 
 
 Install Patent2Net on Windows

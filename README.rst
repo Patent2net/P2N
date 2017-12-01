@@ -37,21 +37,25 @@ Contributions are always welcome!
 
 Project information
 ===================
-The source code of the »Patent2Net« toolkit is available under an open source license.
+The source code of the »Patent2Net« toolkit is available under an open source license,
+see also `Patent2Net on GitHub`_.
 The project is elaborated and maintained by an `international team <Patent2Net Community_>`_
 of university professors and researchers on a free basis.
+The software is provided "AS IS", see also `Patent2Net Disclaimer`_.
 
-For further details, please visit:
+.. _Patent2Net on GitHub: https://github.com/Patent2net/P2N/tree/develop
+.. _Patent2Net Disclaimer: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:disclaimer
+.. _Patent2Net Community: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:community
 
-- `Patent2Net on GitHub <https://github.com/Patent2net/P2N/tree/develop>`_
+
+*************
+Documentation
+*************
 - `Patent2Net Wiki`_
 - `Patent2Net Documentation`_
-- `Patent2Net Disclaimer`_
 
 .. _Patent2Net Wiki: http://patent2netv2.vlab4u.info/dokuwiki/
-.. _Patent2Net Disclaimer: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:disclaimer
 .. _Patent2Net Documentation: https://docs.ip-tools.org/patent2net/
-.. _Patent2Net Community: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=about_p2n:community
 
 
 ****
