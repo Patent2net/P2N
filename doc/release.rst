@@ -8,7 +8,7 @@ Prerequisites
 =============
 Run once to prepare the sandbox environment for release tasks::
 
-    pip install bumpversion
+    make setup-release
 
 Cut a new release
 =================

@@ -6,12 +6,16 @@ webserver:
 # Common
 # ------
 $(eval venvpath     := .venv27)
+$(eval pip          := $(venvpath)/bin/pip)
 $(eval bumpversion  := $(venvpath)/bin/bumpversion)
 
 
 # -------
 # Release
 # -------
+
+setup-release:
+	$(pip) install --requirement requirements-release.txt
 
 bumpversion:
 	$(bumpversion) $(bump)
@@ -35,3 +39,4 @@ docs-html: docs-virtualenv
 	$(eval venvpath := ".venv_sphinx")
 	touch doc/index.rst
 	export SPHINXBUILD="`pwd`/$(venvpath)/bin/sphinx-build"; cd doc; make html
+
