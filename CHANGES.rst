@@ -6,6 +6,10 @@ Patent2Net CHANGES
 development
 ===========
 
+2017-12-01 3.0.0-dev5
+=====================
+- Attempt to add missing NameCountryMap.csv by providing MANIFEST.in file
+
 2017-12-01 3.0.0-dev4
 =====================
 - Fix setup.py
