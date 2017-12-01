@@ -13,7 +13,7 @@ Install from source
 - Source releases are available from GitHub: https://github.com/Patent2net/P2N/releases
 - Install a specific version using ``pip``::
 
-    pip install 'https://github.com/Patent2net/P2N/archive/3.0.0-dev2.tar.gz'
+    pip install 'https://github.com/Patent2net/P2N/archive/3.0.0-dev4.tar.gz'
 
 
 Install binary package
