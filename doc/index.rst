@@ -3,13 +3,38 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Patent2Net's documentation!
-======================================
+#####################
+Welcome to Patent2Net
+#####################
+
+.. include:: README.rst
+
+
+
+***************
+Getting started
+***************
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 1
 
+    setup
+    configure
+    usage
+
+
+***********
+Development
+***********
+
+.. toctree::
+    :maxdepth: 1
+
+    Changelog <CHANGES>
+    contributing
+    documentation
+    release
+    todo
 
 
 Indices and tables

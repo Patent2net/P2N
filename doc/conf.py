@@ -196,3 +196,12 @@ epub_exclude_files = ['search.html']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 #intersphinx_mapping = {'https://docs.python.org/': None}
+
+# Apply custom CSS stylesheet
+def setup(app):
+    # https://github.com/snide/sphinx_rtd_theme/issues/117#issuecomment-41571653
+
+    # Application
+    #app.add_javascript("custom.js")
+    app.add_stylesheet("css/patent2net-documentation.css")
+

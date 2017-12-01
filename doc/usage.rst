@@ -1,43 +1,37 @@
-##################
-Patent2Net sandbox
-##################
+#####
+Usage
+#####
+
+.. contents::
+   :local:
+   :depth: 1
+
+----
+
+*****************
+Classic interface
+*****************
+
+Create a .cql file
+==================
+Copy one of the \*.cql files from the ``/RequestsSets`` directory as ``requete.cql``
+to the root directory and adapt this file to your needs.
+
+Run suite of scripts
+====================
+Use the ``/Patent2Net/ProcessPy.bat`` or the ``/Patent2Net/Process.sh`` file and enjoy!
+Please also have a look at the `query howto`_ about how to formulate a query expression.
+
+.. _query howto: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:patent_search
+
+----
 
 
-
-*****
-Setup
-*****
-::
-
-    git clone https://github.com/Patent2net/P2N.git
-    cd P2N
-    git checkout develop
-
-    virtualenv --no-site-packages .venv27
-    source .venv27/bin/activate
-
-    python setup.py develop
-
-
-
-*********
-Configure
-*********
-Patent2Net needs your personal credentials for accessing the OPS API.
-You have to provide them once as they are stored into the file
-``cles-epo.txt`` in the current working directory.
-
-There is a convenience command for initializing Patent2Net with your OPS credentials::
-
-    p2n ops init --key=ScirfedyifJiashwOckNoupNecpainLo --secret=degTefyekDevgew1
-
-.. note:: The Patent2Net scripts expect to find the file ``cles-epo.txt`` in the projects' root folder.
-
-
-
-********
-Synopsis
-********
+****************
+Modern interface
+****************
+The modern interface allows to specify a ``requete.cql`` file on the command line
+or by using the environment variable ``P2N_CONFIG``.
 
 
 Acquire data from OPS
@@ -55,7 +49,7 @@ then, just run::
     # Acquire patent information from OPS
     p2n acquire
 
-    # Acquire family data also
+    # Also acquire family information for each hit
     p2n acquire --with-family
 
 
@@ -75,29 +69,43 @@ E.g., run::
     # p2n {maps,networks,tables,bibfile,iramuteq,freeplane,carrot}
     # see full list below or run ``p2n --help``
 
+----
 
-Ad hoc mode
-===========
-::
 
-    p2n adhoc dump --expression='TA=lentille'
+****************
+Ad-hoc interface
+****************
+The ad-hoc interface allows to specify the query expression on the command line
+and uses a different acquisition machinery under the hood.
+Through caching, multiple invocations will still be fast.
+
+Display list of publication numbers for given query expression::
+
     p2n adhoc list --expression='TA=lentille'
     p2n adhoc list --expression='TA=lentille' --with-family
 
-::
+Display bibliographic data for given query expression in Patent2NetBrevet format::
+
+    p2n adhoc dump --expression='TA=lentille'
+
+Generate data for world maps using d3plus/geo_map (JSON)::
 
     p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
     p2n adhoc worldmap --expression='TA=lentille' --country-field='country' --with-family
     p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
     p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
-
-::
-
     p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
 
 
-Full output of "p2n --help"
-===========================
+----
+
+
+********
+Synopsis
+********
+
+Full output of "``p2n --help``"
+===============================
 ::
 
     $ p2n --help
@@ -112,9 +120,11 @@ Full output of "p2n --help"
       p2n iramuteq [--config=requete.cql]
       p2n freeplane [--config=requete.cql]
       p2n carrot [--config=requete.cql]
+      p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
-      p2n adhoc dump --expression=<expression>
-      p2n adhoc worldmap --expression=<expression> --country-field=<country-field>
+      p2n adhoc dump --expression=<expression> [--with-family] [--with-register]
+      p2n adhoc list --expression=<expression> [--with-family]
+      p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
       p2n --version
       p2n (-h | --help)
 
@@ -132,6 +142,7 @@ Full output of "p2n --help"
       p2n iramuteq                          Fetch more data and export it to suitable format for using in Iramuteq
       p2n freeplane                         Build mind map for Freeplane
       p2n carrot                            Export data to XML suitable for using in Carrot
+      p2n interface                         Build main Patent2Net html interface
       p2n run                               Run data acquisition and all formatters
 
     Options:
@@ -154,12 +165,15 @@ Full output of "p2n --help"
     -----------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
       p2n adhoc dump                        Display results for given query expression in Patent2Net format (JSON)
+      p2n adhoc list                        Display list of publication numbers for given query expression
       p2n adhoc worldmap                    Generate world map for given query expression over given field
 
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
+      --with-register                       Also acquire register information for each result hit.
+                                            Required for "--country-field=designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
-                                            e.g. "country", "Applicant-Country", "Inventor-Country"
+                                            e.g. "country", "applicants", "inventors", "designated_states"
 
     Examples:
 
@@ -169,25 +183,11 @@ Full output of "p2n --help"
       # Run query and output results (JSON)
       p2n adhoc dump --expression='TA=lentille'
 
+      # Run query and output list of publication numbers, including family members (JSON)
+      p2n adhoc list --expression='TA=lentille' --with-family
+
       # Generate data for world maps using d3plus/geo_map (JSON)
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
-      p2n adhoc worldmap --expression='TA=lentille' --country-field='Applicant-Country'
-      p2n adhoc worldmap --expression='TA=lentille' --country-field='Inventor-Country'
-
-
-
-****************
-Misc information
-****************
-
-Install pygraphviz on Mac OS X::
-
-    pip install --install-option="--include-path=/opt/local/include" --install-option="--library-path=/opt/local/lib" 'pygraphviz==1.3.1'
-
-Optional::
-
-    # Run minimal web server
-    make webserver
-
-    # Go to http://localhost:8001/DATA/
-
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
