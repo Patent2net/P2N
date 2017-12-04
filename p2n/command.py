@@ -29,7 +29,7 @@ def run():
       p2n carrot [--config=requete.cql]
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
-      p2n adhoc dump --expression=<expression> [--with-family] [--with-register]
+      p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n adhoc list --expression=<expression> [--with-family]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
       p2n --version
@@ -77,6 +77,8 @@ def run():
 
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
+      --format=<format>                     Control output format for "p2n adhoc dump",
+                                            Choose from "ops" or "brevet" [default: ops].
       --with-register                       Also acquire register information for each result hit.
                                             Required for "--country-field=designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
@@ -87,10 +89,12 @@ def run():
       # Initialize Patent2Net with OPS OAuth credentials
       p2n ops init --key=ScirfedyifJiashwOckNoupNecpainLo --secret=degTefyekDevgew1
 
-      # Run query and output results (JSON)
+      # Run query and output results in OpsExchangeDocument format (JSON)
       p2n adhoc dump --expression='TA=lentille'
 
-      # Run query and output list of publication numbers, including family members (JSON)
+      # Run query and output results in Patent2NetBrevet format (JSON)
+      p2n adhoc dump --expression='TA=lentille' --format=brevet
+
       p2n adhoc list --expression='TA=lentille' --with-family
 
       # Generate data for world maps using d3plus/geo_map (JSON)
@@ -145,10 +149,18 @@ def adhoc_interface(options):
         with_family=options['with-family'],
         with_register=options['with-register'])
 
-    # Display results for given query expression in Patent2Net format, e.g. run::
+    # Display results for given query expression, e.g. run::
     # p2n adhoc dump --expression='TA=lentille'
     if options['dump']:
-        print(json.dumps(results.brevets))
+        if options['format'] == 'ops':
+            payload = [result.as_dict() for result in results.documents]
+        elif options['format'] == 'brevet':
+            payload = results.brevets
+        else:
+            logger.error('Unknown format "{}" for dumping.'.format(options['format']))
+            sys.exit(1)
+
+        print(json.dumps(payload))
 
     if options['list']:
         documents = results.documents
@@ -181,7 +193,7 @@ def classic_interface(options):
         configfile = os.environ.get('P2N_CONFIG')
 
     if not configfile:
-        logger.error('No configuration file given. Either use --config commandline argument or P2N_CONFIG environment variable')
+        logger.error('No configuration file given. Either use --config commandline argument or P2N_CONFIG environment variable.')
         sys.exit(1)
 
 

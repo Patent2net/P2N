@@ -3,6 +3,7 @@
 import re
 import json
 import logging
+from copy import deepcopy
 from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
 from p2n.util import to_list
@@ -145,12 +146,15 @@ class OPSExchangeDocument:
         self.register = None
         self.designated_states = []
 
+    def as_dict(self):
+        return deepcopy(self.__dict__)
+
     def to_json(self, pretty=False):
         """Convert document to JSON format"""
         if pretty:
-            return json.dumps(self.__dict__, indent=4)
+            return json.dumps(self.as_dict(), indent=4)
         else:
-            return json.dumps(self.__dict__)
+            return json.dumps(self.as_dict())
 
     @staticmethod
     def decode_document_number_date(docref, id_type):

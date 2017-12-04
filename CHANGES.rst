@@ -5,6 +5,7 @@ Patent2Net CHANGES
 
 development
 ===========
+- Make ``p2n adhoc dump`` output results either in "OpsExchangeDocument" or "Patent2NetBrevet" format
 
 2017-12-01 3.0.0-dev5
 =====================
