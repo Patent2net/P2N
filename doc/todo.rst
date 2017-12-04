@@ -2,10 +2,12 @@
 Todo list and ideas
 ###################
 
+******
+Agenda
+******
 
-************
 Improvements
-************
+============
 Although Patent2Net is fully operational, works fine and is enough to begin using Patent Information, a lot can be done to improve analysis:
 
 * Correct the issues (continuous process, of course)
@@ -17,9 +19,8 @@ Although Patent2Net is fully operational, works fine and is enough to begin usin
 * Use the list of standardised applicant names from EPO to normalize nets and tables. See: [CSV datafile] (http://documents.epo.org/projects/babylon/rawdata.nsf/0/71DE2EB24A084A19C1257F3B0032BA98/)
 
 
-***************
-New capabilites
-***************
+New capabilities
+================
 Add some new capabilities to Patent2Net, i.e.:
 
 * Within the Patent Universe, build a drawings gallery with hyperlink to the Espacenet patent (Andre is working on)
@@ -28,9 +29,8 @@ Add some new capabilities to Patent2Net, i.e.:
 * Build a small database to display results of a specific (Familly) Patent Universe. Database could be [PouchDB] (https://pouchdb.com/) or equivalent
 
 
-***********************************
 New ways for gathering and analysis
-***********************************
+===================================
 Provide some new ways of gathering and analysis of patent information, i.e.:
 
 * Within the Familly Patent Universe, provide a new range of analysis, considering a familly as a unique entity (invention)
@@ -39,4 +39,9 @@ Provide some new ways of gathering and analysis of patent information, i.e.:
 * Gather research reports when avalaible and provide analysis chains
 
 
-New contributions and ideas are welcome.
+New contributions and ideas are always welcome.
+
+
+*****
+Tasks
+*****

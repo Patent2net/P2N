@@ -8,6 +8,26 @@ Usage
 
 ----
 
+************
+Introduction
+************
+For using Patent2Net, you should be reasonably familiar with the CQL query language
+used for submitting queries to the Open Patent Services API.
+
+Please follow up with these resources to learn something about CQL:
+
+- `CQL query howto`_ by the Patent2Net project
+- The `OPS Reference Guide`_, see pages 56 ff. and pages 130 ff.
+- The `Contextual Query Language Specification`_
+
+.. _CQL query howto: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:patent_search
+.. _OPS Reference Guide: http://documents.epo.org/projects/babylon/eponet.nsf/0/F3ECDCC915C9BCD8C1258060003AA712/$FILE/ops_v3.2_documentation%20_version_1.3.4_en.pdf
+.. _Contextual Query Language Specification: https://www.loc.gov/standards/sru/cql/
+
+
+----
+
+
 *****************
 Classic interface
 *****************
@@ -20,9 +40,7 @@ to the root directory and adapt this file to your needs.
 Run suite of scripts
 ====================
 Use the ``/Patent2Net/ProcessPy.bat`` or the ``/Patent2Net/Process.sh`` file and enjoy!
-Please also have a look at the `query howto`_ about how to formulate a query expression.
 
-.. _query howto: http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=user_manual:patent_search
 
 ----
 
@@ -122,8 +140,8 @@ Full output of "``p2n --help``"
       p2n carrot [--config=requete.cql]
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
-      p2n adhoc dump --expression=<expression> [--with-family] [--with-register]
-      p2n adhoc list --expression=<expression> [--with-family]
+      p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
+      p2n adhoc list --expression=<expression> [--with-family] [--field=<field>]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
       p2n --version
       p2n (-h | --help)
@@ -170,6 +188,9 @@ Full output of "``p2n --help``"
 
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
+      --format=<format>                     Control output format for "p2n adhoc dump",
+                                            Choose from "ops" or "brevet" [default: ops].
+      --field=<field>                       Which field name to use with "p2n adhoc list" [default: document_number].
       --with-register                       Also acquire register information for each result hit.
                                             Required for "--country-field=designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
@@ -180,11 +201,17 @@ Full output of "``p2n --help``"
       # Initialize Patent2Net with OPS OAuth credentials
       p2n ops init --key=ScirfedyifJiashwOckNoupNecpainLo --secret=degTefyekDevgew1
 
-      # Run query and output results (JSON)
+      # Run query and output results in OpsExchangeDocument format (JSON)
       p2n adhoc dump --expression='TA=lentille'
 
-      # Run query and output list of publication numbers, including family members (JSON)
+      # Run query and output results in Patent2NetBrevet format (JSON)
+      p2n adhoc dump --expression='TA=lentille' --format=brevet
+
+      # Run query and output list of document numbers, including family members (JSON)
       p2n adhoc list --expression='TA=lentille' --with-family
+
+      # Run query and output list of application numbers in epodoc format
+      p2n adhoc list --expression='TA=lentille' --field='application_number_epodoc'
 
       # Generate data for world maps using d3plus/geo_map (JSON)
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
