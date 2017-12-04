@@ -30,7 +30,7 @@ def run():
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
-      p2n adhoc list --expression=<expression> [--with-family]
+      p2n adhoc list --expression=<expression> [--with-family] [--field=<field>]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
       p2n --version
       p2n (-h | --help)
@@ -79,6 +79,7 @@ def run():
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
       --format=<format>                     Control output format for "p2n adhoc dump",
                                             Choose from "ops" or "brevet" [default: ops].
+      --field=<field>                       Which field name to use with "p2n adhoc list" [default: document_number].
       --with-register                       Also acquire register information for each result hit.
                                             Required for "--country-field=designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
@@ -95,7 +96,11 @@ def run():
       # Run query and output results in Patent2NetBrevet format (JSON)
       p2n adhoc dump --expression='TA=lentille' --format=brevet
 
+      # Run query and output list of document numbers, including family members (JSON)
       p2n adhoc list --expression='TA=lentille' --with-family
+
+      # Run query and output list of application numbers in epodoc format
+      p2n adhoc list --expression='TA=lentille' --field='application_number_epodoc'
 
       # Generate data for world maps using d3plus/geo_map (JSON)
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
@@ -164,7 +169,7 @@ def adhoc_interface(options):
 
     if options['list']:
         documents = results.documents
-        publication_numbers = [document.publication_number for document in documents]
+        publication_numbers = [getattr(document, options['field']) for document in documents]
         print(json.dumps(publication_numbers, indent=4))
 
     # Generate world map over given field, e.g. run::

@@ -56,8 +56,8 @@ class Patent2NetBrevet(object):
 
         brevet = cls()
 
-        brevet.label = document.publication_number
-        brevet.country = document.publication_number[:2]
+        brevet.label = document.publication_number_epodoc
+        brevet.country = document.country
 
         brevet.applicant = [item['name'] for item in document.applicants]
         brevet.inventor = [item['name'] for item in document.inventors]

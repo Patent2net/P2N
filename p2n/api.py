@@ -76,8 +76,8 @@ class Patent2Net:
         # Iterate all result documents
         for ops_exchange_document in self.documents:
 
-            # Use publication number as key for uniqueness constraint
-            document_number = ops_exchange_document.publication_number
+            # Use publication number without kindcode as key for uniqueness constraint
+            document_number = ops_exchange_document.publication_number_epodoc
 
             # Start bookkeeping with the root document
             document_numbers.append(document_number)
@@ -91,16 +91,19 @@ class Patent2Net:
             # and add them to the list of expanded documents
             for family_member in response.results:
 
+                # Read publication number of family member without kindcode
+                family_member_number = family_member.publication_number_epodoc
+
                 # Skip family members which are the same as the document itself
-                if family_member.publication_number == document_number:
+                if family_member_number == document_number:
                     continue
 
                 # Skip duplicates. Currently uses first-come, first-serve policy.
-                if family_member.publication_number in document_numbers:
+                if family_member_number in document_numbers:
                     continue
 
                 # Record number and document of family member
-                document_numbers.append(family_member.publication_number)
+                document_numbers.append(family_member_number)
                 documents_expanded.append(family_member)
 
         # Switch the current list of result documents over to the list
@@ -120,7 +123,7 @@ class Patent2Net:
 
         # Iterate all result documents
         for document in self.documents:
-            document_number = document.publication_number
+            document_number = document.publication_number_epodoc
 
             # Fetch register information from OPS
             data = self.ops_client.register(document_number)

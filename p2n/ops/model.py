@@ -133,10 +133,16 @@ class OPSExchangeDocument:
 
         # Bibliographic data
         self.application_date = None
-        self.application_number = None
+        self.application_number_docdb = None
+        self.application_number_epodoc = None
+
         self.publication_date = None
-        self.publication_number = None
+        self.publication_number_docdb = None
+        self.publication_number_epodoc = None
+
         self.country = None
+        self.document_number = None
+        self.family_id = None
         self.title = {}
         self.abstract = None
         self.applicants = []
@@ -170,6 +176,7 @@ class OPSExchangeDocument:
                 else:
                     doc_number = document_id['country']['$'] + document_id['doc-number']['$'] + document_id['kind']['$']
                 date = document_id.get('date', {}).get('$')
+                date = date and '-'.join([date[:4], date[4:6], date[6:8]])
                 return doc_number, date
         return None, None
 
@@ -213,6 +220,7 @@ class OPSExchangeDocument:
         parties = []
         for party in partylist:
 
+            # Use only "epodoc" party members, as they contain the origin country
             if party['@data-format'] != 'epodoc':
                 continue
 
@@ -229,6 +237,10 @@ class OPSExchangeDocument:
         """
 
         pointer_country = JsonPointer('/exchange-document/@country')
+        pointer_docnumber = JsonPointer('/exchange-document/@doc-number')
+        pointer_kind = JsonPointer('/exchange-document/@kind')
+        pointer_family_id = JsonPointer('/exchange-document/@family-id')
+
         pointer_application_reference = JsonPointer('/exchange-document/bibliographic-data/application-reference/document-id')
         pointer_publication_reference = JsonPointer('/exchange-document/bibliographic-data/publication-reference/document-id')
         pointer_invention_title = JsonPointer('/exchange-document/bibliographic-data/invention-title')
@@ -236,13 +248,14 @@ class OPSExchangeDocument:
         pointer_applicant = JsonPointer('/exchange-document/bibliographic-data/parties/applicants/applicant')
         pointer_inventor = JsonPointer('/exchange-document/bibliographic-data/parties/inventors/inventor')
 
+
         pubref = pointer_publication_reference.resolve(data)
-        pubref_number, pubref_date = self.decode_document_number_date(pubref, 'epodoc')
-        pubref_date = pubref_date and '-'.join([pubref_date[:4], pubref_date[4:6], pubref_date[6:8]])
+        self.publication_number_epodoc, self.publication_date = self.decode_document_number_date(pubref, 'epodoc')
+        self.publication_number_docdb, _ = self.decode_document_number_date(pubref, 'docdb')
 
         appref = pointer_application_reference.resolve(data)
-        appref_number, appref_date = self.decode_document_number_date(appref, 'epodoc')
-        appref_date = appref_date and '-'.join([appref_date[:4], appref_date[4:6], appref_date[6:8]])
+        self.application_number_epodoc, self.application_date = self.decode_document_number_date(appref, 'epodoc')
+        self.application_number_docdb, _ = self.decode_document_number_date(pubref, 'docdb')
 
         try:
             titles = to_list(pointer_invention_title.resolve(data))
@@ -269,10 +282,9 @@ class OPSExchangeDocument:
             inventors = []
 
         self.country = pointer_country.resolve(data)
-        self.application_number = appref_number
-        self.application_date = appref_date
-        self.publication_number = pubref_number
-        self.publication_date = pubref_date
+        self.document_number = pointer_country.resolve(data) + pointer_docnumber.resolve(data) + pointer_kind.resolve(data)
+        self.family_id = pointer_family_id.resolve(data)
+
         self.abstract = abstract
         self.title = title
         self.applicants = applicants

@@ -99,14 +99,14 @@ def d3plus_data_documents(document_list, field):
 
         # For running with --country-field='country'
         if not isinstance(value, list):
-            value = [{'country': value, 'name': document.publication_number}]
+            value = [{'country': value, 'name': document.publication_number_epodoc}]
 
         # For running with --country-field='applicants|inventors|designated_states'
         for item in value:
 
             # For running with --country-field='designated_states'
             if type(item) in types.StringTypes:
-                item = {'country': item, 'name': document.publication_number}
+                item = {'country': item, 'name': document.publication_number_epodoc}
 
             # Skip duplicates
             if item in unique_items: continue
