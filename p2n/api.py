@@ -2,6 +2,7 @@
 # (c) 2017 The Patent2Net Developers
 import logging
 import p2n.maps
+import p2n.tables
 import p2n.ops.client
 from p2n.model import Patent2NetBrevet
 from p2n.ops.client import OPSClient
@@ -186,3 +187,11 @@ class Patent2Net:
         mapdata = p2n.maps.d3plus_data_documents(self.documents, country_field)
 
         return mapdata
+
+    def pivot(self):
+        """
+        Generate data suitable for feeding into PivotTable.js.
+        """
+
+        pivotdata = p2n.tables.pivottables_data_brevets(self.brevets)
+        return pivotdata

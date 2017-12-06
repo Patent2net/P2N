@@ -8,6 +8,7 @@ development
 - Make ``p2n adhoc dump`` output results either in "OpsExchangeDocument" or "Patent2NetBrevet" format
 - Make ``p2n adhoc list`` output arbitrary fields of "OpsExchangeDocument" (projection)
 - Improve documentation regarding CQL query language and updated command line parameters
+- Introduce ad-hoc mode for generating data suitable for PivotTable.js
 
 
 2017-12-01 3.0.0-dev5

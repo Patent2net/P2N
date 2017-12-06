@@ -133,18 +133,24 @@ class OPSExchangeDocument:
 
         # Bibliographic data
         self.application_date = None
+        self.application_year = None
         self.application_number_docdb = None
         self.application_number_epodoc = None
 
         self.publication_date = None
+        self.publication_year = None
         self.publication_number_docdb = None
         self.publication_number_epodoc = None
 
         self.country = None
+        self.kind = None
         self.document_number = None
         self.family_id = None
+
         self.title = {}
-        self.abstract = None
+        self.abstract = {}
+
+        self.classifications = {}
         self.applicants = []
         self.inventors = []
 
@@ -228,8 +234,23 @@ class OPSExchangeDocument:
             matches = re.match('(?P<name>.+?) \[(?P<country>.+?)\]', epodoc_name)
             if matches:
                 parties.append(matches.groupdict())
+            else:
+                parties.append({'country': None, 'name': epodoc_name})
 
         return parties
+
+
+    @staticmethod
+    def decode_classifications_ipcr(data):
+
+        pointer_ipcr = JsonPointer('/exchange-document/bibliographic-data/classifications-ipcr/classification-ipcr')
+
+        entries = to_list(pointer_ipcr.resolve(data))
+
+        entries = map(lambda entry: entry['text']['$'], entries)
+        entries = map(lambda entry: entry[:15].replace(' ', ''), entries)
+
+        return entries
 
     def read(self, data):
         """
@@ -252,10 +273,12 @@ class OPSExchangeDocument:
         pubref = pointer_publication_reference.resolve(data)
         self.publication_number_epodoc, self.publication_date = self.decode_document_number_date(pubref, 'epodoc')
         self.publication_number_docdb, _ = self.decode_document_number_date(pubref, 'docdb')
+        self.publication_year = self.publication_date[:4]
 
         appref = pointer_application_reference.resolve(data)
         self.application_number_epodoc, self.application_date = self.decode_document_number_date(appref, 'epodoc')
         self.application_number_docdb, _ = self.decode_document_number_date(pubref, 'docdb')
+        self.application_year = self.application_date[:4]
 
         try:
             titles = to_list(pointer_invention_title.resolve(data))
@@ -282,11 +305,14 @@ class OPSExchangeDocument:
             inventors = []
 
         self.country = pointer_country.resolve(data)
-        self.document_number = pointer_country.resolve(data) + pointer_docnumber.resolve(data) + pointer_kind.resolve(data)
+        self.kind = pointer_kind.resolve(data)
+        self.document_number = self.country + pointer_docnumber.resolve(data) + self.kind
         self.family_id = pointer_family_id.resolve(data)
 
         self.abstract = abstract
         self.title = title
+
+        self.classifications['IPCR'] = self.decode_classifications_ipcr(data)
         self.applicants = applicants
         self.inventors = inventors
 

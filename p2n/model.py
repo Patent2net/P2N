@@ -56,16 +56,33 @@ class Patent2NetBrevet(object):
 
         brevet = cls()
 
-        brevet.label = document.publication_number_epodoc
         brevet.country = document.country
+        brevet.kind = document.kind
+        brevet.label = document.publication_number_epodoc
+
+        brevet.date = document.publication_date
+        brevet.year = document.publication_year
 
         brevet.applicant = [item['name'] for item in document.applicants]
         brevet.inventor = [item['name'] for item in document.inventors]
         brevet.applicant_nice = NiceName(brevet.applicant)
         brevet.inventor_nice = NiceName(brevet.inventor)
 
-        brevet.Applicant_Country = [item['country'] for item in document.applicants]
-        brevet.Inventor_Country = [item['country'] for item in document.inventors]
+        if document.classifications and document.classifications['IPCR']:
+            ipcr_classes = document.classifications['IPCR']
+            brevet.classification = ipcr_classes
+
+            brevet.IPCR1 = list(set([ipcr[0] for ipcr in ipcr_classes]))
+            brevet.IPCR3 = list(set([ipcr[:3] for ipcr in ipcr_classes]))
+            brevet.IPCR4 = list(set([ipcr[:4] for ipcr in ipcr_classes]))
+            brevet.IPCR7 = list(set([ipcr.split('/')[0] for ipcr in ipcr_classes]))
+
+
+        if document.applicants:
+            brevet.Applicant_Country = document.applicants[0]['country']
+
+        if document.inventors:
+            brevet.Inventor_Country = document.inventors[0]['country']
 
         if document.register:
             brevet.designated_states = document.register.designated_states

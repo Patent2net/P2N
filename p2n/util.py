@@ -4,6 +4,7 @@ import sys
 import time
 import logging
 import functools
+import itertools
 import subprocess
 
 logger = logging.getLogger(__name__)
@@ -77,3 +78,33 @@ def to_list(obj):
     if not isinstance(obj, (list, tuple)):
         obj = [obj, ]
     return obj
+
+def filterdict(dct, keys=None):
+    """Filter dictionaries using specified keys"""
+    keys = keys or []
+    dct = {key: value for (key, value) in dct.iteritems() if key in keys}
+    return dct
+
+def dictproduct(dct):
+    """
+    Compute combinations from dictionary with list values
+    by calculating the cartesian product.
+    """
+    # https://stackoverflow.com/questions/3873654/combinations-from-dictionary-with-list-values-using-python/41870264#41870264
+
+    # Bring dictionary into a form suitable for computing the cartesian product
+    for key, value in dct.iteritems():
+
+        # Use empty string for empty values
+        if value is None or value == []:
+            value = ''
+
+        # Let's make everything a list
+        value = to_list(value)
+
+        dct[key] = value
+
+    # Yield dictionaries making up all combinations of multiple values
+    # reduced to dictionaries containing single scalar values only.
+    for t in itertools.product(*dct.itervalues()):
+        yield dict(zip(dct.iterkeys(), t))

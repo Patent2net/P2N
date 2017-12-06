@@ -32,6 +32,7 @@ def run():
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n adhoc list --expression=<expression> [--with-family] [--field=<field>]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
+      p2n adhoc pivot --expression=<expression> [--format=<format>] [--with-family]
       p2n --version
       p2n (-h | --help)
 
@@ -173,11 +174,15 @@ def adhoc_interface(options):
         print(json.dumps(publication_numbers, indent=4))
 
     # Generate world map over given field, e.g. run::
-    # p2n adhoc worldmap --expression='TA=lentille' --country-field='Applicant-Country'
+    # p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
     if options['worldmap']:
         mapdata = results.worldmap(options['country-field'])
         print(json.dumps(mapdata))
 
+    # Generate data for PivotTable.js
+    if options['pivot']:
+        mapdata = results.pivot()
+        print(json.dumps(mapdata))
 
 def classic_interface(options):
     """
