@@ -64,7 +64,7 @@ class OPSClient:
 
         # Extract total count of results
         total_count = biblio_response.total_result_count
-        logger.info('Total count: %s', total_count)
+        logger.info('Result count: %s', total_count)
 
         # The first 2000 hits are accessible from OPS
         if total_count > 2000:
@@ -103,8 +103,6 @@ class OPSClient:
             response = self.client.register('publication', Epodoc(document_number))
         except requests.HTTPError as ex:
             response = ex.response
-
-        logger.info('Register information for document "{}" response status: {}'.format(document_number, response.status_code))
 
         try:
             data = response.json()
