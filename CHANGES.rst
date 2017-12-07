@@ -10,6 +10,7 @@ development
 - Improve documentation regarding CQL query language and updated command line parameters
 - Introduce ad-hoc mode for generating JSON data suitable for feeding into PivotTable.js
 - Fix ``p2n adhoc dump`` with ``--with-register``
+- Improve decoding raw JSON data into "OpsExchangeDocument" object instances
 
 
 2017-12-01 3.0.0-dev5

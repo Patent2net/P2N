@@ -3,6 +3,7 @@
 import attr
 from collections import OrderedDict
 from Patent2Net.P2N_Lib import NiceName
+from p2n.util import attr_object_as_dict
 
 
 @attr.s
@@ -68,7 +69,7 @@ class Patent2NetBrevet(object):
         brevet.applicant_nice = NiceName(brevet.applicant)
         brevet.inventor_nice = NiceName(brevet.inventor)
 
-        if document.classifications and document.classifications['IPCR']:
+        if 'IPCR' in document.classifications:
             ipcr_classes = document.classifications['IPCR']
             brevet.classification = ipcr_classes
 
@@ -77,6 +78,8 @@ class Patent2NetBrevet(object):
             brevet.IPCR4 = list(set([ipcr[:4] for ipcr in ipcr_classes]))
             brevet.IPCR7 = list(set([ipcr.split('/')[0] for ipcr in ipcr_classes]))
 
+        if 'CPC' in document.classifications:
+            brevet.CPC = document.classifications['CPC']
 
         if document.applicants:
             brevet.Applicant_Country = document.applicants[0]['country']
@@ -86,6 +89,9 @@ class Patent2NetBrevet(object):
 
         if document.register:
             brevet.designated_states = document.register.designated_states
+
+        if document.title:
+            brevet.title = document.title.values()[0]
 
         return brevet
 
@@ -148,14 +154,11 @@ class Patent2NetBrevet(object):
         }
         """
 
-        fields = attr.fields(Patent2NetBrevet)
-        fieldnames = [field.name for field in fields]
-        #print 'fieldnames:', fieldnames
+        temp = attr_object_as_dict(self)
 
         result = OrderedDict()
-        for key in fieldnames:
+        for key, value in temp.iteritems():
 
-            value = getattr(self, key)
             key = key.replace('family_length', 'family lenght')
             key = key.replace('_', '-')
 

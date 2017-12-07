@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
 import sys
+import attr
 import time
 import logging
 import functools
 import itertools
 import subprocess
+from copy import deepcopy
+from collections import OrderedDict
 from json.encoder import JSONEncoder
 
 logger = logging.getLogger(__name__)
@@ -117,3 +120,16 @@ class JsonObjectEncoder(JSONEncoder):
     def default(self, o):
         return o.__dict__
 
+def attr_object_as_dict(obj):
+    """
+    Return dictionary from attr.s'ified object
+    """
+    fields = attr.fields(obj.__class__)
+    fieldnames = [field.name for field in fields]
+
+    result = OrderedDict()
+    for key in fieldnames:
+        value = getattr(obj, key)
+        result[key] = deepcopy(value)
+
+    return result
