@@ -45,3 +45,9 @@ New contributions and ideas are always welcome.
 *****
 Tasks
 *****
+- [x] Write about "jq"
+- [o] Write documentation about data model
+- [o] Complete implementation of ``Patent2NetBrevet.from_ops_exchange_document`` re. citations, equivalents and more
+- [o] Install Webhook on GitHub for automatic documentation building
+- [o] Upload pre-release versions to PyPI
+- [o] Resolve doc.designated_states vs. doc.register.designated_states duplication by providing a dotted name resolver for nested objects

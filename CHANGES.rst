@@ -11,6 +11,7 @@ development
 - Introduce ad-hoc mode for generating JSON data suitable for feeding into PivotTable.js
 - Fix ``p2n adhoc dump`` with ``--with-register``
 - Improve decoding raw JSON data into "OpsExchangeDocument" object instances
+- Improve documentation
 
 
 2017-12-01 3.0.0-dev5

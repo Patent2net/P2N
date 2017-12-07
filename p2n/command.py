@@ -75,6 +75,7 @@ def run():
       p2n adhoc dump                        Display results for given query expression in Patent2Net format (JSON)
       p2n adhoc list                        Display list of publication numbers for given query expression
       p2n adhoc worldmap                    Generate world map for given query expression over given field
+      p2n adhoc pivot                       Generate data for pivot table
 
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
@@ -108,6 +109,9 @@ def run():
       p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
+
+      # Generate data suitable for PivotTable.js (JSON)
+      p2n adhoc pivot --expression='TA=lentille' --with-family
 
     """
 
