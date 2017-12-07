@@ -77,7 +77,7 @@ class OPSClient:
         # Request more results with {chunksize} documents each
         for offset in range(offset_second_chunk, total_count, chunksize):
 
-            # Request chunk
+            # Request next chunk
             chunk = self.search(expression, offset=offset, limit=chunksize)
 
             # Merge chunk into main list of results

@@ -46,6 +46,7 @@ New contributions and ideas are always welcome.
 Tasks
 *****
 - [x] Write about "jq"
+- [o] Refactor maps.py and tables.py to ``p2n.formatters`` namespace
 - [o] Write documentation about data model
 - [o] Complete implementation of ``Patent2NetBrevet.from_ops_exchange_document`` re. citations, equivalents and more
 - [o] Install Webhook on GitHub for automatic documentation building

@@ -162,7 +162,7 @@ def read_name_country_map(filename=None):
     for being able to map them against each other.
 
     ``countrycode_map`` maps short country codes to full country names and back,
-    ``topojson_map`` maps short country codes to longer topojson country codes and back.
+    ``topojson_map`` maps short country codes and full country names to longer topojson country codes.
     """
 
     if not filename:
