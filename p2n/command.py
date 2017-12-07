@@ -8,7 +8,7 @@ import logging
 from p2n import __version__
 from p2n.api import Patent2Net
 from p2n.config import OPSCredentials
-from p2n.util import boot_logging, normalize_docopt_options, run_script
+from p2n.util import boot_logging, normalize_docopt_options, run_script, JsonObjectEncoder
 
 logger = logging.getLogger(__name__)
 
@@ -166,7 +166,7 @@ def adhoc_interface(options):
             logger.error('Unknown format "{}" for dumping.'.format(options['format']))
             sys.exit(1)
 
-        print(json.dumps(payload))
+        print(json.dumps(payload, cls=JsonObjectEncoder))
 
     if options['list']:
         documents = results.documents

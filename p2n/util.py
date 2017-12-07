@@ -6,6 +6,7 @@ import logging
 import functools
 import itertools
 import subprocess
+from json.encoder import JSONEncoder
 
 logger = logging.getLogger(__name__)
 
@@ -108,3 +109,11 @@ def dictproduct(dct):
     # reduced to dictionaries containing single scalar values only.
     for t in itertools.product(*dct.itervalues()):
         yield dict(zip(dct.iterkeys(), t))
+
+class JsonObjectEncoder(JSONEncoder):
+    """
+    Make possible to serialize nested object compositions
+    """
+    def default(self, o):
+        return o.__dict__
+
