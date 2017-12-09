@@ -45,10 +45,18 @@ New contributions and ideas are always welcome.
 *****
 Tasks
 *****
+
+Version 3.0.0
+=============
+- [x] Introduce and stabilize new data model and ad-hoc mode
 - [x] Write about "jq"
-- [o] Refactor maps.py and tables.py to ``p2n.formatters`` namespace
+- [x] Remove attr_object_as_dict in favor of attr.as_dict
+- [x] Resolve doc.designated_states vs. doc.register.designated_states duplication by providing a dotted name resolver for nested objects
+- [x] Refactor maps.py and tables.py to ``p2n.formatter`` namespace
 - [o] Write documentation about data model
 - [o] Complete implementation of ``Patent2NetBrevet.from_ops_exchange_document`` re. citations, equivalents and more
+- [o] Complete implementation of ``OPSRegisterDocument``
 - [o] Install Webhook on GitHub for automatic documentation building
 - [o] Upload pre-release versions to PyPI
-- [o] Resolve doc.designated_states vs. doc.register.designated_states duplication by providing a dotted name resolver for nested objects
+- [o] python-epo-ops-client requires to be online because it always attempts to authenticate,
+      could this be deferred to the actual first access to be able to work completely offline?

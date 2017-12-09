@@ -2,7 +2,7 @@
 # (c) 2017 The Patent2Net Developers
 import logging
 import operator
-from p2n.util import filterdict, dictproduct, unique
+from p2n.util import filterdict, dictproduct, unique, object_to_dictionary
 
 logger = logging.getLogger(__name__)
 
@@ -125,7 +125,7 @@ def pivottables_data_documents(document_list):
     for document in document_list:
 
         # Use only designated fields, skip others
-        document = document.transform_dict(rules)
+        document = object_to_dictionary(document, rules)
 
         # Compute cartesian product to satisfy PivotTable.js
         expanded = dictproduct(document)

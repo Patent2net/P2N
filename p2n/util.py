@@ -2,13 +2,17 @@
 # (c) 2017 The Patent2Net Developers
 import sys
 import time
+import types
 import logging
+import operator
 import functools
 import itertools
 import subprocess
 from json.encoder import JSONEncoder
+from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
+
 
 def setup_logging(level=logging.INFO):
     log_format = '%(asctime)-15s [%(name)-25s] %(levelname)-7s: %(message)s'
@@ -110,12 +114,48 @@ def dictproduct(dct):
     for t in itertools.product(*dct.itervalues()):
         yield dict(zip(dct.iterkeys(), t))
 
+
 class JsonObjectEncoder(JSONEncoder):
     """
-    Make possible to serialize nested object compositions
+    Serialize nested object compositions to JSON
     """
     def default(self, o):
         return o.__dict__
 
+
 def unique(data):
     return list(set(data))
+
+
+def object_to_dictionary(obj, rules):
+    """
+    Transform object to dictionary according to set of rules.
+    For an example, see ``p2n.formatter.tables.pivottables_data_documents``.
+
+    TODO: Provide examples of rule format, input and output data.
+    """
+
+    data = OrderedDict()
+
+    for rule in rules:
+        key = value = None
+
+        if isinstance(rule, types.StringType):
+            key = rule
+            try:
+                value = operator.attrgetter(rule)(obj)
+            except AttributeError:
+                pass
+
+        elif isinstance(rule, types.DictionaryType):
+            key = rule['name']
+            value = rule['getter'](obj)
+
+            if 'recipe' in rule:
+                recipe = rule['recipe']
+                value = recipe(value)
+
+        if key:
+            data[key] = value
+
+    return data
