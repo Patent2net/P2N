@@ -18,6 +18,7 @@ development
   for accessing "register.designated_states" when generating worldmap data
 - Add support for PivotTable data generation in ad-hoc mode with OPSExchangeDocument data model
 - Refactor maps.py and tables.py to "p2n.formatter" namespace
+- Improve decoding of "OPSRegisterDocument"
 
 
 2017-12-01 3.0.0-dev5

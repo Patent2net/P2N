@@ -144,8 +144,8 @@ class Patent2Net:
                     # Propagate register information into OPSExchangeDocument object
                     document.register = register_document
 
-            except:
-                logger.warning('Could not decode register information for document "{}"'.format(document_number))
+            except Exception as ex:
+                logger.warning('Could not decode register information for document "{}": {}'.format(document_number, ex))
 
     def documents_to_brevets(self):
         """

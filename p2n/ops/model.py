@@ -5,7 +5,7 @@ import json
 import logging
 from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
-from p2n.ops.decoder import OPSExchangeDocumentDecoder
+from p2n.ops.decoder import OPSExchangeDocumentDecoder, OPSRegisterDocumentDecoder
 from p2n.util import to_list
 
 logger = logging.getLogger(__name__)
@@ -122,8 +122,8 @@ class OPSRegisterResponse:
             try:
                 item.read(register_document)
                 self.results.append(item)
-            except JsonPointerException:
-                logger.warning('Could not read register information from data "{}"'.format(register_document))
+            except JsonPointerException as ex:
+                logger.warning('Could not read register information from data "{}": {}'.format(register_document, ex))
 
 
 @attr.s
@@ -189,7 +189,8 @@ class OPSExchangeDocument(object):
         appref = self.decoder.pointer_application_reference.resolve(data)
         self.application_number_epodoc, self.application_date = self.decoder.document_number_date(appref, 'epodoc')
         self.application_number_docdb, _ = self.decoder.document_number_date(appref, 'docdb')
-        self.application_year = self.application_date[:4]
+        if self.application_date:
+            self.application_year = self.application_date[:4]
 
         self.applicants = self.decoder.applicants(data)
         self.inventors = self.decoder.inventors(data)
@@ -207,31 +208,41 @@ class OPSExchangeDocument(object):
         self.classifications.update(self.decoder.classifications_more(data))
 
 
-class OPSRegisterDocument:
+@attr.s
+class OPSRegisterDocument(object):
     """
     Implement the data model of OPS register documents.
     """
 
-    def __init__(self):
-        self.designated_states = []
+    status = attr.ib(default=None)
+    filing_language = attr.ib(default=None)
+
+    designated_states = attr.ib(default=attr.Factory(list))
+    applicants = attr.ib(default=attr.Factory(list))
+    inventors = attr.ib(default=attr.Factory(list))
+    agents = attr.ib(default=attr.Factory(list))
+
+    # dates-rights-effective
+    # TODO: Merge "opposition-data" and "ep-patent-statuses"
+    actions = attr.ib(default=attr.Factory(list))
+
+    # TODO
+    # application-reference, publication-reference, priority-claims
+    # references-cited
+    # search-reports-information
+    # ep-patent-statuses
+
+    # Infrastructure
+    decoder = OPSRegisterDocumentDecoder
 
     def read(self, data):
 
-        designated_states_reference = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:designation-of-states')
-        self.designated_states = self.decode_designated_states(designated_states_reference.resolve(data))
+        #pprint(data)
 
-    @staticmethod
-    def decode_designated_states(data):
-        """
-        Decode designated states from register document.
-        """
-
-        countries_reference = JsonPointer('/reg:designation-pct/reg:regional/reg:country')
-        countries_raw = to_list(countries_reference.resolve(data))
-
-        states = []
-        for country_raw in countries_raw:
-            country = country_raw['$']
-            states.append(country)
-
-        return states
+        self.status = self.decoder.status(data)
+        self.filing_language = self.decoder.filing_language(data)
+        self.designated_states = self.decoder.designated_states(data)
+        self.applicants = self.decoder.applicants(data)
+        self.inventors = self.decoder.inventors(data)
+        self.agents = self.decoder.agents(data)
+        self.actions = self.decoder.actions(data)
