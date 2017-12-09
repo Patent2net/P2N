@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
 import logging
-import p2n.maps
-import p2n.tables
 import p2n.ops.client
+import p2n.formatter.maps
+import p2n.formatter.tables
 from p2n.model import Patent2NetBrevet
 from p2n.ops.client import OPSClient
 from p2n.ops.model import OPSBiblioSearchResponse, OPSFamilyResponse, OPSRegisterResponse
@@ -178,24 +178,25 @@ class Patent2Net:
         # Currently, it just counts *all* countries, so the deviation is even greater
         # when running with "--with-family" as a larger number of duplicate entries
         # will get counted more often.
-        #mapdata = p2n.maps.d3plus_data_brevets(self.brevets, country_field)
+        #mapdata = p2n.formatter.maps.d3plus_data_brevets(self.brevets, country_field)
 
         # DONE: Now operates on the native OPS data model and
         # properly aggregates unique applicant/inventor names.
-        mapdata = p2n.maps.d3plus_data_documents(self.documents, country_field)
+        mapdata = p2n.formatter.maps.d3plus_data_documents(self.documents, country_field)
 
         return mapdata
 
     def pivot(self, format='ops'):
         """
-        Generate data suitable for feeding into PivotTable.js.
+        Generate data suitable for feeding into PivotTable.js, either from
+        Patent2NetBrevet or from OPSExchangeDocument data model.
         """
 
         if format == 'ops':
-            pivotdata = p2n.tables.pivottables_data_documents(self.documents)
+            pivotdata = p2n.formatter.tables.pivottables_data_documents(self.documents)
 
         elif format == 'brevet':
-            pivotdata = p2n.tables.pivottables_data_brevets(self.brevets)
+            pivotdata = p2n.formatter.tables.pivottables_data_brevets(self.brevets)
 
         else:
             raise ValueError('Unknown format for pivot data "{}"'.format(format))

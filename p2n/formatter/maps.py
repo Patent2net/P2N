@@ -16,6 +16,9 @@ def d3plus_data_brevets(document_list, field):
     Obtains a list of document dictionaries in the legacy Patent2Net brevet format and
     a field name designating which dictionary key to use for the country information,
     e.g. "country", "Applicant-Country" or "Inventor-Country".
+
+    This code was taken from the "FormateExportAttractivityCartography.py" and
+    "FormateExportCountryCartography.py" files.
     """
 
     NomPays, NomTopoJSON = read_name_country_map()

@@ -12,8 +12,8 @@ import sys
 import json
 import shutil
 import logging
-import p2n.maps
 import p2n.storage
+import p2n.formatter.maps
 from p2n.config import label_from_prefix
 from p2n.util import boot_logging
 from P2N_Config import LoadConfig
@@ -83,7 +83,7 @@ def generate_map(storage_path, storage_name, output_path):
     logger.info("Mapping {count} patents. Excepting EP and WO.".format(count=len(result['brevets'])))
 
     # Compute map data
-    mapdata = p2n.maps.d3plus_data_brevets(result['brevets'], 'country')
+    mapdata = p2n.formatter.maps.d3plus_data_brevets(result['brevets'], 'country')
 
     # Render map
     jsonfile = '{storage_name}CountryMap.json'.format(**locals())
