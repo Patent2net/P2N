@@ -3,9 +3,10 @@
 import attr
 import json
 import logging
+from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
 from p2n.ops.decoder import OPSExchangeDocumentDecoder
-from p2n.util import to_list, attr_object_as_dict
+from p2n.util import to_list
 
 logger = logging.getLogger(__name__)
 
@@ -165,7 +166,7 @@ class OPSExchangeDocument(object):
 
 
     def as_dict(self):
-        return attr_object_as_dict(self)
+        return attr.asdict(self, dict_factory=OrderedDict)
 
     def to_json(self, pretty=False):
         """Convert document to JSON format"""

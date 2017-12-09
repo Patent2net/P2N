@@ -3,7 +3,6 @@
 import attr
 from collections import OrderedDict
 from Patent2Net.P2N_Lib import NiceName
-from p2n.util import attr_object_as_dict
 
 
 @attr.s
@@ -154,10 +153,10 @@ class Patent2NetBrevet(object):
         }
         """
 
-        temp = attr_object_as_dict(self)
+        data = attr.asdict(self, dict_factory=OrderedDict)
 
         result = OrderedDict()
-        for key, value in temp.iteritems():
+        for key, value in data.iteritems():
 
             key = key.replace('family_length', 'family lenght')
             key = key.replace('_', '-')

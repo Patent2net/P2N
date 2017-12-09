@@ -12,6 +12,7 @@ development
 - Fix ``p2n adhoc dump`` with ``--with-register``
 - Improve decoding raw JSON data into "OpsExchangeDocument" object instances
 - Improve documentation
+- Remove "attr_object_as_dict" in favor of "attr.asdict"
 
 
 2017-12-01 3.0.0-dev5
