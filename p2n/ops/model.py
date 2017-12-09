@@ -158,7 +158,6 @@ class OPSExchangeDocument(object):
 
     # Register information
     register = attr.ib(default=None)
-    designated_states = attr.ib(default=attr.Factory(list))
 
 
     # Infrastructure

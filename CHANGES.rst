@@ -13,6 +13,8 @@ development
 - Improve decoding raw JSON data into "OpsExchangeDocument" object instances
 - Improve documentation
 - Remove "attr_object_as_dict" in favor of "attr.asdict"
+- Remove redundant "designated_states" field by using dotted name resolver
+  for accessing "register.designated_states" when generating worldmap data
 
 
 2017-12-01 3.0.0-dev5

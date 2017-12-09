@@ -116,10 +116,9 @@ class Patent2Net:
         Acquire register information for each ``OPSExchangeDocument``
         object instance in ``self.documents``.
 
-        It will enrich the ``OPSExchangeDocument`` instance by adding more attributes:
-
-        - ``register``: Reference to an instance of ``OPSRegisterDocument``
-        - ``designated_states``: List of country codes of designated states
+        It will enrich the ``OPSExchangeDocument`` instance by adding
+        the attribute ``register``, which is a reference to an instance
+        of ``OPSRegisterDocument``.
         """
 
         # Iterate all result documents
@@ -144,7 +143,6 @@ class Patent2Net:
 
                     # Propagate register information into OPSExchangeDocument object
                     document.register = register_document
-                    document.designated_states = register_document.designated_states
 
             except:
                 logger.warning('Could not decode register information for document "{}"'.format(document_number))

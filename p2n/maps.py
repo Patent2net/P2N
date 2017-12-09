@@ -2,6 +2,7 @@
 # (c) 2017 The Patent2Net Developers
 import types
 import logging
+import operator
 import pkg_resources
 from p2n.util import memoize
 
@@ -71,7 +72,7 @@ def d3plus_data_documents(document_list, field):
 
     Obtains a list of document objects of type OPSExchangeDocument and
     a field name designating which object attribute to use for the country information,
-    e.g. "country", "applicants", "inventors" or "designated_states".
+    e.g. "country", "applicants", "inventors" or "register.designated_states".
 
     This also accounts for item uniqueness as e.g. you don't want to count the same inventors
     twice or more across family members. However, here is still room for improvement regarding
@@ -91,8 +92,12 @@ def d3plus_data_documents(document_list, field):
     unique_items = []
     for document in document_list:
 
-        # Get value from document attribute
-        value = getattr(document, field)
+        # Get value from document attribute, even accepts dotted notation
+        # to access nested structures like "register.designated_states".
+        try:
+            value = operator.attrgetter(field)(document)
+        except AttributeError:
+            continue
 
         # Skip empty values
         if not value: continue
@@ -101,10 +106,10 @@ def d3plus_data_documents(document_list, field):
         if not isinstance(value, list):
             value = [{'country': value, 'name': document.publication_number_epodoc}]
 
-        # For running with --country-field='applicants|inventors|designated_states'
+        # For running with --country-field='applicants|inventors|register.designated_states'
         for item in value:
 
-            # For running with --country-field='designated_states'
+            # For running with --country-field='register.designated_states'
             if type(item) in types.StringTypes:
                 item = {'country': item, 'name': document.publication_number_epodoc}
 

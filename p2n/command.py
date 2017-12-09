@@ -83,9 +83,9 @@ def run():
                                             Choose from "ops" or "brevet" [default: ops].
       --field=<field>                       Which field name to use with "p2n adhoc list" [default: document_number].
       --with-register                       Also acquire register information for each result hit.
-                                            Required for "--country-field=designated_states".
+                                            Required for "--country-field=register.designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
-                                            e.g. "country", "applicants", "inventors", "designated_states"
+                                            e.g. "country", "applicants", "inventors", "register.designated_states"
 
     Examples:
 
@@ -108,7 +108,7 @@ def run():
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
-      p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='register.designated_states' --with-register
 
       # Generate data suitable for PivotTable.js (JSON)
       p2n adhoc pivot --expression='TA=lentille' --with-family

@@ -119,9 +119,9 @@ Output::
 
 Reformatting
 ============
-Display list of document numbers with their designated states::
+Display list of document numbers featuring register information, along with their designated states::
 
-    p2n adhoc dump --expression='TA=lentille' --with-family --with-register --format=ops | jq '.[] | {number: .document_number, states: .designated_states}'
+    p2n adhoc dump --expression='TA=lentille' --with-family --with-register --format=ops | jq '.[] | select(.register) | {number: .document_number, states: .register.designated_states}'
 
 ::
 
