@@ -2,7 +2,9 @@
 # (c) 2017 The Patent2Net Developers
 import attr
 import json
+import types
 import logging
+import operator
 from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
 from p2n.ops.decoder import OPSExchangeDocumentDecoder
@@ -206,6 +208,36 @@ class OPSExchangeDocument(object):
         self.classifications['IPCR'] = self.decoder.classifications_ipcr(data)
         self.classifications.update(self.decoder.classifications_more(data))
 
+    def transform_dict(self, rules):
+        """
+        Transform object to dictionary according to set of rules.
+        For an example, see ``p2n.tables.pivottables_data_documents``.
+        """
+
+        data = OrderedDict()
+
+        for rule in rules:
+            key = value = None
+
+            if isinstance(rule, types.StringType):
+                key = rule
+                try:
+                    value = operator.attrgetter(rule)(self)
+                except AttributeError:
+                    pass
+
+            elif isinstance(rule, types.DictionaryType):
+                key = rule['name']
+                value = rule['getter'](self)
+
+                if 'recipe' in rule:
+                    recipe = rule['recipe']
+                    value = recipe(value)
+
+            if key:
+                data[key] = value
+
+        return data
 
 class OPSRegisterDocument:
     """

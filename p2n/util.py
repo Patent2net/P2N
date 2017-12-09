@@ -97,7 +97,7 @@ def dictproduct(dct):
     for key, value in dct.iteritems():
 
         # Use empty string for empty values
-        if value is None or value == []:
+        if value is None or value == [] or value == [None]:
             value = ''
 
         # Let's make everything a list
@@ -116,3 +116,6 @@ class JsonObjectEncoder(JSONEncoder):
     """
     def default(self, o):
         return o.__dict__
+
+def unique(data):
+    return list(set(data))

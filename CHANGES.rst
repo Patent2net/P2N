@@ -8,13 +8,15 @@ development
 - Make ``p2n adhoc dump`` output results either in "OpsExchangeDocument" or "Patent2NetBrevet" format
 - Make ``p2n adhoc list`` output arbitrary fields of "OpsExchangeDocument" (projection)
 - Improve documentation regarding CQL query language and updated command line parameters
-- Introduce ad-hoc mode for generating JSON data suitable for feeding into PivotTable.js
+- Introduce ad-hoc mode for generating JSON data suitable for
+  feeding into PivotTable.js with Patent2NetBrevet data model
 - Fix ``p2n adhoc dump`` with ``--with-register``
 - Improve decoding raw JSON data into "OpsExchangeDocument" object instances
 - Improve documentation
 - Remove "attr_object_as_dict" in favor of "attr.asdict"
 - Remove redundant "designated_states" field by using dotted name resolver
   for accessing "register.designated_states" when generating worldmap data
+- Add support for PivotTable data generation in ad-hoc mode with OPSExchangeDocument data model
 
 
 2017-12-01 3.0.0-dev5
@@ -47,7 +49,7 @@ development
 - Make p2n.maps.d3plus_data obtain single field attribute
 - Memoize outcome of p2n.maps.read_name_country_map
 - Introduce ad-hoc mode
-- Worldmap generation in ad-hoc mode is now based on native OPSExchangeDocument data model
+- Worldmap generation in ad-hoc mode is now based on OPSExchangeDocument data model
 - Enrich OPS bibliographic data by register information
 - Add worldmap generation for designated states in ad-hoc mode
 - Add automatic release task

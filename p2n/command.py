@@ -32,7 +32,7 @@ def run():
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n adhoc list --expression=<expression> [--with-family] [--field=<field>]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
-      p2n adhoc pivot --expression=<expression> [--format=<format>] [--with-family]
+      p2n adhoc pivot --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n --version
       p2n (-h | --help)
 
@@ -185,7 +185,7 @@ def adhoc_interface(options):
 
     # Generate data for PivotTable.js
     if options['pivot']:
-        mapdata = results.pivot()
+        mapdata = results.pivot(options['format'])
         print(json.dumps(mapdata))
 
 def classic_interface(options):

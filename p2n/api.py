@@ -186,10 +186,18 @@ class Patent2Net:
 
         return mapdata
 
-    def pivot(self):
+    def pivot(self, format='ops'):
         """
         Generate data suitable for feeding into PivotTable.js.
         """
 
-        pivotdata = p2n.tables.pivottables_data_brevets(self.brevets)
+        if format == 'ops':
+            pivotdata = p2n.tables.pivottables_data_documents(self.documents)
+
+        elif format == 'brevet':
+            pivotdata = p2n.tables.pivottables_data_brevets(self.brevets)
+
+        else:
+            raise ValueError('Unknown format for pivot data "{}"'.format(format))
+
         return pivotdata
