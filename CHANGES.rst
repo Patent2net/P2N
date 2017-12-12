@@ -21,7 +21,8 @@ development
 - Improve decoding of "OPSRegisterDocument"
 - Improve error logging when decoding register information
 - Decode historical data from register information
-- Allow dotted attribute/field access for "p2n adhoc list"
+- Allow dotted attribute/field access for ``p2n adhoc list``
+- Add advanced example about using ``jq`` to filter and reformat register information with ``p2n adhoc dump``
 
 
 2017-12-01 3.0.0-dev5

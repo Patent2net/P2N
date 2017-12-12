@@ -117,11 +117,12 @@ Output::
     "CN101808594A"
 
 
-Reformatting
-============
-Display list of document numbers featuring register information, along with their designated states::
+Reformatting I
+==============
+Display list of document numbers with their designated states from register information::
 
-    p2n adhoc dump --expression='TA=lentille' --with-family --with-register --format=ops | jq '.[] | select(.register) | {number: .document_number, states: .register.designated_states}'
+    function jq_register_designated_states { jq '.[] | select(.register) | {number: .document_number, states: .register.designated_states}'; }
+    p2n adhoc dump --expression='TA=lentille' --with-family --with-register --format=ops | jq_register_designated_states
 
 ::
 
@@ -148,4 +149,77 @@ Display list of document numbers featuring register information, along with thei
     }
 
     [...]
+
+
+Reformatting II
+===============
+Display list of publication numbers with register status and action information::
+
+    function jq_register_status { jq '.[] | select(.register) | {status: .register.status, pubnumber: .publication_number_docdb, pubdate: .publication_date, actions: .register.actions}'; }
+    p2n adhoc dump --expression='pa=grohe and pd=2015' --with-family --with-register | jq_register_status
+
+::
+
+    {
+      "status": "No opposition filed within time limit",
+      "pubnumber": "EP2964797A1",
+      "pubdate": "2016-01-13",
+      "actions": [
+        {
+          "date": "2016-09-22",
+          "name": "first-examination-report-despatched"
+        },
+        {
+          "date": "2015-08-06",
+          "name": "request-for-examination"
+        }
+      ]
+    }
+    {
+      "status": "The patent has been granted",
+      "pubnumber": "EP2964798A1",
+      "pubdate": "2016-01-13",
+      "actions": [
+        {
+          "date": "2016-06-10",
+          "name": "first-examination-report-despatched"
+        },
+        {
+          "date": "2015-08-06",
+          "name": "request-for-examination"
+        }
+      ]
+    }
+    {
+      "status": "The application is deemed to be withdrawn",
+      "pubnumber": "WO2014106529A1",
+      "pubdate": "2014-07-10",
+      "actions": []
+    }
+    {
+      "status": "Examination is in progress",
+      "pubnumber": "WO2014072031A1",
+      "pubdate": "2014-05-15",
+      "actions": [
+        {
+          "date": "2017-10-30",
+          "name": "first-examination-report-despatched"
+        },
+        {
+          "date": "2015-01-15",
+          "name": "request-for-examination"
+        }
+      ]
+    }
+    {
+      "status": "Request for examination was made",
+      "pubnumber": "WO2014037092A1",
+      "pubdate": "2014-03-13",
+      "actions": [
+        {
+          "date": "2015-01-15",
+          "name": "request-for-examination"
+        }
+      ]
+    }
 
