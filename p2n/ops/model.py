@@ -98,7 +98,7 @@ class OPSFamilyResponse:
                 self.results.append(item)
             except JsonPointerException as ex:
                 if "member 'exchange-document' not found" in ex.message:
-                    logger.warning('No bibliographic data for family member "{}"'.format(publication_number))
+                    logger.debug('No bibliographic data for family member "{}"'.format(publication_number))
                 else:
                     raise
 
@@ -184,7 +184,8 @@ class OPSExchangeDocument(object):
         pubref = self.decoder.pointer_publication_reference.resolve(data)
         self.publication_number_epodoc, self.publication_date = self.decoder.document_number_date(pubref, 'epodoc')
         self.publication_number_docdb, _ = self.decoder.document_number_date(pubref, 'docdb')
-        self.publication_year = self.publication_date[:4]
+        if self.publication_date:
+            self.publication_year = self.publication_date[:4]
 
         appref = self.decoder.pointer_application_reference.resolve(data)
         self.application_number_epodoc, self.application_date = self.decoder.document_number_date(appref, 'epodoc')
@@ -217,6 +218,10 @@ class OPSRegisterDocument(object):
     status = attr.ib(default=None)
     filing_language = attr.ib(default=None)
 
+    # Dictionary holding lists of historic entries for
+    # designated_states, applicants, inventors and agents.
+    history = attr.ib(default=attr.Factory(OrderedDict))
+
     designated_states = attr.ib(default=attr.Factory(list))
     applicants = attr.ib(default=attr.Factory(list))
     inventors = attr.ib(default=attr.Factory(list))
@@ -241,8 +246,23 @@ class OPSRegisterDocument(object):
 
         self.status = self.decoder.status(data)
         self.filing_language = self.decoder.filing_language(data)
-        self.designated_states = self.decoder.designated_states(data)
-        self.applicants = self.decoder.applicants(data)
-        self.inventors = self.decoder.inventors(data)
-        self.agents = self.decoder.agents(data)
         self.actions = self.decoder.actions(data)
+
+        self.history['designated_states'] = self.decoder.designated_states(data)
+        self.history['applicants'] = self.decoder.applicants(data)
+        self.history['inventors'] = self.decoder.inventors(data)
+        self.history['agents'] = self.decoder.agents(data)
+
+        self.history_to_recent()
+
+    def history_to_recent(self):
+        """
+        Iterate each history item in ``self.history`` and - as each is actually a list of historic
+        entries - use the first entry (the most recent one) as representative/current one.
+
+        Put its ``items`` value directly into an instance attribute like
+        self.{designated_states,applicants,inventors,agents}.
+        """
+        for key, value in self.history.items():
+            if isinstance(value, list) and value and 'items' in value[0]:
+                setattr(self, key, value[0]['items'])

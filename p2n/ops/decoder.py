@@ -287,6 +287,20 @@ class OPSRegisterDocumentDecoder:
 
 
     @classmethod
+    def actions(cls, data):
+        try:
+            actions = []
+            for key, value in cls.pointer_actions.resolve(data).iteritems():
+                entry = {
+                    'name': key.replace('reg:', ''),
+                    'date': OPSExchangeDocumentDecoder.decode_date(value['reg:date']['$']),
+                    }
+                actions.append(entry)
+            return actions
+        except JsonPointerException:
+            return []
+
+    @classmethod
     def designated_states(cls, data):
         """
         Decode designated states from register document.
@@ -294,25 +308,65 @@ class OPSRegisterDocumentDecoder:
         # TODO: Multiple designated states entries. e.g. EP16202765P
         """
 
-        entries = cls.pointer_designated_states.resolve(data)
+        try:
+            nodes = to_list(cls.pointer_designated_states.resolve(data))
+        except JsonPointerException:
+            return []
 
-        countries_reference = JsonPointer('/reg:designation-pct/reg:regional/reg:country')
-        countries_raw = to_list(countries_reference.resolve(entries))
+        return cls.read_history(nodes, 'reg:designation-pct', cls.countries)
 
-        states = []
-        for country_raw in countries_raw:
-            country = country_raw['$']
-            states.append(country)
+    @classmethod
+    def countries(cls, entry):
+        """
+        Decode list of countries (designated states).
+        """
 
-        return states
+        countries_pointer = JsonPointer('/reg:regional/reg:country')
+        countries_raw = to_list(countries_pointer.resolve(entry[0]))
+        countries = [country_raw['$'] for country_raw in countries_raw]
+        return countries
 
+    @classmethod
+    def applicants(cls, data):
+        """
+        Decode list of applicants
+        """
+        try:
+            nodes = to_list(cls.pointer_applicants.resolve(data))
+        except JsonPointerException:
+            return []
+
+        return cls.read_history(nodes, 'reg:applicant', cls.parties)
+
+    @classmethod
+    def inventors(cls, data):
+        """
+        Decode list of inventors
+        """
+        try:
+            nodes = to_list(cls.pointer_inventors.resolve(data))
+        except JsonPointerException:
+            return []
+
+        return cls.read_history(nodes, 'reg:inventor', cls.parties)
+
+    @classmethod
+    def agents(cls, data):
+        """
+        Decode list of agents
+        """
+        try:
+            nodes = to_list(cls.pointer_agents.resolve(data))
+        except JsonPointerException:
+            return []
+
+        return cls.read_history(nodes, 'reg:agent', cls.parties)
 
     @classmethod
     def parties(cls, partylist):
         """
-        Decode list of applicants or inventors.
+        Decode list of applicants, inventors or agents.
         """
-        #print 'partylist:', partylist
         entries = []
         for party in partylist:
 
@@ -321,15 +375,28 @@ class OPSRegisterDocumentDecoder:
             entry = OrderedDict()
             entry['name'] = addressbook['reg:name']['$']
             entry['country'] = addressbook['reg:address']['reg:country']['$']
-            entry['city'] = addressbook['reg:address']['reg:address-2']['$']
-            entry['address'] = addressbook['reg:address']['reg:address-1']['$']
+            address = []
+            for index in range(1, 7):
+                fieldname = 'address-{}'.format(index)
+                fieldname_ops = 'reg:{}'.format(fieldname)
+                try:
+                    value = addressbook['reg:address'][fieldname_ops]['$']
+                    address.append(value)
+                except KeyError:
+                    pass
+
+            entry['address'] = address
 
             entries.append(entry)
 
         return entries
 
+
     @classmethod
-    def parties_history(cls, nodes, node_name):
+    def read_history(cls, nodes, node_name, item_decoder):
+        """
+        Generically decode arbitrary lists based on the @change-date / @change-gazette-num scheme
+        """
 
         # Collect entries over time
         history = []
@@ -337,7 +404,7 @@ class OPSRegisterDocumentDecoder:
             entry = OrderedDict()
             entry['change_date'] = OPSExchangeDocumentDecoder.decode_date(node['@change-date'])
             entry['change_gazette'] = node['@change-gazette-num']
-            entry['items'] = cls.parties(to_list(node[node_name]))
+            entry['items'] = item_decoder(to_list(node[node_name]))
             history.append(entry)
 
         # Deduplicate entries. Sometimes, duplicate entries are in the history list,
@@ -361,44 +428,3 @@ class OPSRegisterDocumentDecoder:
                 real.append(entry)
 
         return real
-
-    @classmethod
-    def applicants(cls, data):
-        try:
-            nodes = to_list(cls.pointer_applicants.resolve(data))
-        except JsonPointerException:
-            return []
-
-        return cls.parties_history(nodes, 'reg:applicant')
-
-    @classmethod
-    def inventors(cls, data):
-        try:
-            nodes = to_list(cls.pointer_inventors.resolve(data))
-        except JsonPointerException:
-            return []
-
-        return cls.parties_history(nodes, 'reg:inventor')
-
-    @classmethod
-    def agents(cls, data):
-        try:
-            nodes = to_list(cls.pointer_agents.resolve(data))
-        except JsonPointerException:
-            return []
-
-        return cls.parties_history(nodes, 'reg:agent')
-
-    @classmethod
-    def actions(cls, data):
-        try:
-            actions = []
-            for key, value in cls.pointer_actions.resolve(data).iteritems():
-                entry = {
-                    'name': key.replace('reg:', ''),
-                    'date': OPSExchangeDocumentDecoder.decode_date(value['reg:date']['$']),
-                }
-                actions.append(entry)
-            return actions
-        except JsonPointerException:
-            return []
