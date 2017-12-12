@@ -6,7 +6,7 @@ import logging
 from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
 from p2n.ops.decoder import OPSExchangeDocumentDecoder, OPSRegisterDocumentDecoder
-from p2n.util import to_list
+from p2n.util import to_list, exception_traceback
 
 logger = logging.getLogger(__name__)
 
@@ -123,7 +123,7 @@ class OPSRegisterResponse:
                 item.read(register_document)
                 self.results.append(item)
             except JsonPointerException as ex:
-                logger.warning('Could not read register information from data "{}": {}'.format(register_document, ex))
+                logger.warning('Could not read register information from data "{}": {}\n{}'.format(register_document, ex, exception_traceback()))
 
 
 @attr.s

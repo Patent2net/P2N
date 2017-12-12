@@ -281,7 +281,7 @@ class OPSRegisterDocumentDecoder:
     @classmethod
     def filing_language(cls, data):
         """
-        Decode register status.
+        Decode filing language.
         """
         return cls.pointer_filing_language.resolve(data)
 

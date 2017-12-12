@@ -174,8 +174,8 @@ def adhoc_interface(options):
 
     if options['list']:
         documents = results.documents
-        publication_numbers = [getattr(document, options['field']) for document in documents]
-        print(json.dumps(publication_numbers, indent=4))
+        values = [getattr(document, options['field']) for document in documents]
+        print(json.dumps(values, indent=4))
 
     # Generate world map over given field, e.g. run::
     # p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'

@@ -7,6 +7,7 @@ import p2n.formatter.tables
 from p2n.model import Patent2NetBrevet
 from p2n.ops.client import OPSClient
 from p2n.ops.model import OPSBiblioSearchResponse, OPSFamilyResponse, OPSRegisterResponse
+from p2n.util import exception_traceback
 
 logger = logging.getLogger(__name__)
 
@@ -145,7 +146,7 @@ class Patent2Net:
                     document.register = register_document
 
             except Exception as ex:
-                logger.warning('Could not decode register information for document "{}": {}'.format(document_number, ex))
+                logger.warning('Could not decode register information for document "{}": {}\n{}'.format(document_number, ex, exception_traceback()))
 
     def documents_to_brevets(self):
         """

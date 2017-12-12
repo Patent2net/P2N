@@ -19,6 +19,7 @@ development
 - Add support for PivotTable data generation in ad-hoc mode with OPSExchangeDocument data model
 - Refactor maps.py and tables.py to "p2n.formatter" namespace
 - Improve decoding of "OPSRegisterDocument"
+- Improve error logging when decoding register information
 
 
 2017-12-01 3.0.0-dev5
