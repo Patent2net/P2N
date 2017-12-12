@@ -91,6 +91,7 @@ class Patent2Net:
 
             # Iterate all family members of the root document
             # and add them to the list of expanded documents
+            family_numbers = []
             for family_member in response.results:
 
                 # Read publication number of family member without kindcode
@@ -105,8 +106,11 @@ class Patent2Net:
                     continue
 
                 # Record number and document of family member
+                family_numbers.append(family_member_number)
                 document_numbers.append(family_member_number)
                 documents_expanded.append(family_member)
+
+            #logger.info('Family members: {}'.format(family_numbers))
 
         # Switch the current list of result documents over to the list
         # of documents expanded by their respective family members

@@ -51,6 +51,10 @@ Display list of application numbers in epodoc format::
 
       p2n adhoc list --expression='TA=lentille' --field='application_number_epodoc'
 
+Display list of ``register.status`` values::
+
+    p2n adhoc list --expression='TA=lentille' --with-family --with-register --field='register.status'
+
 .. note:: You can use all fields available in the OPSExchangeDocument data model.
 
 

@@ -21,6 +21,7 @@ development
 - Improve decoding of "OPSRegisterDocument"
 - Improve error logging when decoding register information
 - Decode historical data from register information
+- Allow dotted attribute/field access for "p2n adhoc list"
 
 
 2017-12-01 3.0.0-dev5

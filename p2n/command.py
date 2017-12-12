@@ -5,6 +5,7 @@ import sys
 import json
 import docopt
 import logging
+import operator
 from p2n import __version__
 from p2n.api import Patent2Net
 from p2n.config import OPSCredentials
@@ -30,7 +31,7 @@ def run():
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
-      p2n adhoc list --expression=<expression> [--with-family] [--field=<field>]
+      p2n adhoc list --expression=<expression> [--with-family] [--field=<field>] [--with-register]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
       p2n adhoc pivot --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n --version
@@ -159,7 +160,7 @@ def adhoc_interface(options):
         with_family=options['with-family'],
         with_register=options['with-register'])
 
-    # Display results for given query expression, e.g. run::
+    # Display full results for given query expression, e.g. run::
     # p2n adhoc dump --expression='TA=lentille'
     if options['dump']:
         if options['format'] == 'ops':
@@ -172,10 +173,18 @@ def adhoc_interface(options):
 
         print(json.dumps(payload, cls=JsonObjectEncoder))
 
+    # Display list of single field for given query expression, e.g. run::
+    # p2n adhoc list --expression='TA=lentille'
     if options['list']:
         documents = results.documents
-        values = [getattr(document, options['field']) for document in documents]
-        print(json.dumps(values, indent=4))
+        output = []
+        for document in documents:
+            try:
+                values = [operator.attrgetter(options['field'])(document)]
+                output += values
+            except AttributeError:
+                pass
+        print(json.dumps(output, indent=4))
 
     # Generate world map over given field, e.g. run::
     # p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
