@@ -28,6 +28,7 @@ def run():
       p2n iramuteq [--config=requete.cql]
       p2n freeplane [--config=requete.cql]
       p2n carrot [--config=requete.cql]
+      p2n images [--config=requete.cql]
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
@@ -51,6 +52,7 @@ def run():
       p2n iramuteq                          Fetch more data and export it to suitable format for using in Iramuteq
       p2n freeplane                         Build mind map for Freeplane
       p2n carrot                            Export data to XML suitable for using in Carrot
+      p2n images                            Fetch images
       p2n interface                         Build main Patent2Net html interface
       p2n run                               Run data acquisition and all formatters
 
@@ -67,6 +69,9 @@ def run():
 
       # Build all world maps
       p2n maps
+
+      # Run data acquisition and all targets
+      p2n run
 
 
     -----------
@@ -272,3 +277,5 @@ def classic_interface(options):
         run_script('OPSGatherContentsV2-Iramuteq.py', configfile)
         run_script('FusionIramuteq2.py', configfile)
 
+    if options['images'] or options['run']:
+        run_script('OPSGatherContentsV2-Images.py', configfile)

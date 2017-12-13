@@ -108,6 +108,7 @@ Output of "``p2n --help``"
       p2n iramuteq                          Fetch more data and export it to suitable format for using in Iramuteq
       p2n freeplane                         Build mind map for Freeplane
       p2n carrot                            Export data to XML suitable for using in Carrot
+      p2n images                            Fetch images
       p2n interface                         Build main Patent2Net html interface
       p2n run                               Run data acquisition and all formatters
 
@@ -124,4 +125,7 @@ Output of "``p2n --help``"
 
       # Build all world maps
       p2n maps
+
+      # Run data acquisition and all targets
+      p2n run
 

@@ -23,6 +23,7 @@ development
 - Decode historical data from register information
 - Allow dotted attribute/field access for ``p2n adhoc list``
 - Add advanced example about using ``jq`` to filter and reformat register information with ``p2n adhoc dump``
+- Add convenience command ``p2n images`` for image data acquisition
 
 
 2017-12-01 3.0.0-dev5
