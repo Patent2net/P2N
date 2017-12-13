@@ -26,6 +26,7 @@ development
 - Add convenience command ``p2n images`` for image data acquisition
 - Properly display OPS error responses to the user, e.g. when
   submitting an invalid expression like ``--expression='foo=bar'``
+- Add command ``p2n adhoc search`` for displaying search results only in raw OPS format
 
 
 2017-12-01 3.0.0-dev5

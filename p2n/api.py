@@ -20,6 +20,7 @@ class Patent2Net:
 
         self.ops_client = OPSClient(self.ops_key, self.ops_secret)
 
+        self.response_data = None
         self.documents = []
         self.brevets = []
 
@@ -38,13 +39,13 @@ class Patent2Net:
         """
 
         # Submit search expression
-        data = self.ops_client.crawl(expression)
+        self.response_data = self.ops_client.crawl(expression)
 
         # Debugging
         #print(json.dumps(data))
 
         # Decode response
-        response = OPSBiblioSearchResponse(data)
+        response = OPSBiblioSearchResponse(self.response_data)
 
         # A list of ``OPSExchangeDocument`` object instances
         self.documents = response.results

@@ -31,6 +31,7 @@ def run():
       p2n images [--config=requete.cql]
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
+      p2n adhoc search --expression=<expression>
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n adhoc list --expression=<expression> [--with-family] [--field=<field>] [--with-register]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
@@ -78,8 +79,9 @@ def run():
     Ad hoc mode
     -----------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
-      p2n adhoc dump                        Display results for given query expression in Patent2Net format (JSON)
-      p2n adhoc list                        Display list of publication numbers for given query expression
+      p2n adhoc search                      Display full results for given query expression in raw OPS format (JSON)
+      p2n adhoc dump                        Display full results for given query expression in OpsExchangeDocument or Patent2NetBrevet format (JSON)
+      p2n adhoc list                        Display list of values from single field for given query expression
       p2n adhoc worldmap                    Generate world map for given query expression over given field
       p2n adhoc pivot                       Generate data for pivot table
 
@@ -165,7 +167,13 @@ def adhoc_interface(options):
         with_family=options['with-family'],
         with_register=options['with-register'])
 
-    # Display full results for given query expression, e.g. run::
+    # Display full results for given query expression in raw OPS format (JSON), e.g. run::
+    # p2n adhoc search --expression='TA=lentille'
+    if options['search']:
+        payload = patent2net.response_data
+        print(json.dumps(payload, cls=JsonObjectEncoder))
+
+    # Display full results for given query expression in OpsExchangeDocument or Patent2NetBrevet format (JSON), e.g. run::
     # p2n adhoc dump --expression='TA=lentille'
     if options['dump']:
         if options['format'] == 'ops':
@@ -178,7 +186,7 @@ def adhoc_interface(options):
 
         print(json.dumps(payload, cls=JsonObjectEncoder))
 
-    # Display list of single field for given query expression, e.g. run::
+    # Display list of values from single field for given query expression, e.g. run::
     # p2n adhoc list --expression='TA=lentille'
     if options['list']:
         documents = results.documents
