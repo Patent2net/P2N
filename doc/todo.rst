@@ -61,6 +61,8 @@ Completed
 
 Todo
 ----
+- [o] OPS Register: Always sort event-like data in ascending order?
+      Right now, sort order is mixed as of "history items" vs. "actions" vs. "{publication,application}_reference".
 - [o] Write documentation about data model
 - [o] Complete implementation of ``Patent2NetBrevet.from_ops_exchange_document`` re. citations, equivalents and more
 - [o] Complete implementation of ``OPSRegisterDocument``

@@ -359,7 +359,10 @@ class OPSRegisterDocumentDecoder:
             entry['name'] = item['$']
             entry['date'] = entry['change_date'] = OPSExchangeDocumentDecoder.decode_date(item.get('@change-date'))
             entry['status_code'] = item.get('@status-code')
-            actions.append(entry)
+
+            # Skip some status changes without "date" information as these won't be sortable
+            if entry['date']:
+                actions.append(entry)
 
 
         # Sort all entries by date in ascending order
