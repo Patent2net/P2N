@@ -2,6 +2,7 @@
 # (c) 2017 The Patent2Net Developers
 import re
 import logging
+import operator
 from copy import deepcopy
 from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
@@ -213,60 +214,36 @@ class OPSRegisterDocumentDecoder:
     Functions for decoding data from raw JSON OPS register documents.
     """
 
+    # Biblio container
+    pointer_bibliographic_data = JsonPointer('/reg:register-document/reg:bibliographic-data')
+
+    # Discrete values
     pointer_status = JsonPointer('/reg:register-document/@status')
+    pointer_filing_language = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:language-of-filing/$')
+
+    # Historic data
+    pointer_publication_reference = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:publication-reference')
+    pointer_application_reference = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:application-reference')
     pointer_designated_states = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:designation-of-states')
     pointer_applicants = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:parties/reg:applicants')
     pointer_inventors = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:parties/reg:inventors')
     pointer_agents = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:parties/reg:agents')
-    pointer_actions = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:dates-rights-effective')
-    pointer_filing_language = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:language-of-filing/$')
+    pointer_term_of_grant = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:term-of-grant')
+    pointer_licensee_data = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:licensee-data')
+
+    pointer_related_documents = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:related-documents/reg:division/reg:relation')
+    pointer_bio_deposit = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:bio-deposit')
+
+    # Actions
+    pointer_dates_rights_effective = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:dates-rights-effective')
+    pointer_opposition_data = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:opposition-data')
+    pointer_ep_patent_statuses = JsonPointer('/reg:register-document/reg:ep-patent-statuses/reg:ep-patent-status')
 
     """
     TODO:
 
-    # EP88402018P
-    u'reg:dates-rights-effective': {u'reg:first-examination-report-despatched': {u'reg:date': {u'$': u'19901213'}},
-                                    u'reg:request-for-examination': {u'@change-gazette-num': u'1989/41',
-                                                                     u'reg:date': {u'$': u'19890628'}}},
-
-    # EP86400204P
-    u'reg:opposition-data': {u'@change-date': u'19890321',
-                             u'@change-gazette-num': u'1989/19',
-                             u'reg:opposition-not-filed': {u'reg:date': {u'$': u'19890221'}}},
-
-    # EP06823909P
-    u'reg:date-application-deemed-withdrawn': {u'@change-gazette-num': u'2009/11',
-                                               u'reg:date': {u'$': u'20080909'}},
-
-    # EP10806019P
-    u'reg:date-application-withdrawn-by-applicant': {u'@change-gazette-num': u'2012/35'},
-
-
-    # EP08836401P
-    u'reg:term-of-grant': [{u'@change-date': u'20140718',
-                            u'@change-gazette-num': u'2014/34',
-                            u'reg:lapsed-in-country': [{u'reg:country': {u'$': u'HU'},
-                                                        u'reg:date': {u'$': u'20080709'}},
-                                                       {u'reg:country': {u'$': u'AT'},
-                                                        u'reg:date': {u'$': u'20120418'}},
-
-    # EP16202765P
-    u'reg:related-documents': {u'reg:division': {u'reg:relation': {u'reg:child-doc': {u'reg:document-id': {u'reg:country': {u'$': u''},
-           u'reg:doc-number': {u'$': u''}}},
-
-
     # EP14879896P
     u'reg:office-specific-bib-data':
-
-
-    # EP14879896P
-    u'reg:ep-patent-statuses': {u'reg:ep-patent-status': [{u'$': u'The application is deemed to be withdrawn',
-       u'@change-date': u'20170714',
-       u'@status-code': u'10'},
-      {u'$': u'The international publication has been made',
-       u'@change-date': u'20161115',
-       u'@status-code': u'17'}]}}}
-
 
     """
 
@@ -288,17 +265,173 @@ class OPSRegisterDocumentDecoder:
 
     @classmethod
     def actions(cls, data):
+        """
+        Decode action information from different places
+        scattered around the OPS Exchange Document:
+
+        - dates-rights-effective
+        - opposition-data
+        - date-application-deemed-withdrawn
+        - date-application-withdrawn-by-applicant
+        - ep-patent-statuses
+        """
+
+        # Information from all actions
+        actions = []
+
+
+        """
+        # ap=EP88402018
+        u'reg:dates-rights-effective': {u'reg:first-examination-report-despatched': {u'reg:date': {u'$': u'19901213'}},
+                                        u'reg:request-for-examination': {u'@change-gazette-num': u'1989/41',
+                                                                         u'reg:date': {u'$': u'19890628'}}},
+        """
         try:
-            actions = []
-            for key, value in cls.pointer_actions.resolve(data).iteritems():
-                entry = {
-                    'name': key.replace('reg:', ''),
-                    'date': OPSExchangeDocumentDecoder.decode_date(value['reg:date']['$']),
-                    }
+            for name, item in cls.pointer_dates_rights_effective.resolve(data).items():
+                entry = cls.decode_action('dates-rights-effective', name, item)
                 actions.append(entry)
-            return actions
+        except JsonPointerException:
+            pass
+
+
+        """
+        # ap=EP86400204
+        u'reg:opposition-data': {u'@change-date': u'19890321',
+                                 u'@change-gazette-num': u'1989/19',
+                                 u'reg:opposition-not-filed': {u'reg:date': {u'$': u'19890221'}}},
+        """
+        try:
+            opposition_data = cls.pointer_opposition_data.resolve(data)
+
+            # Transform entry into baseline format like "reg:dates-rights-effective"
+            change_fields = ['@change-date', '@change-gazette-num']
+            change_data = {}
+            for change_field in change_fields:
+                change_data[change_field] = opposition_data[change_field]
+                del opposition_data[change_field]
+
+            for name, item in opposition_data.items():
+                for key, value in change_data.items():
+                    item.setdefault(key, value)
+                entry = cls.decode_action('opposition-data', name, item)
+                actions.append(entry)
+
+        except JsonPointerException:
+            pass
+
+
+        """
+        # TA=lentille
+        u'reg:date-application-deemed-withdrawn': {u'@change-gazette-num': u'2009/11',
+                                                   u'reg:date': {u'$': u'20080909'}},
+
+        # TA=lentille
+        u'reg:date-application-withdrawn-by-applicant': {u'@change-gazette-num': u'2012/35'},
+        """
+        deemed_withdrawn_nodes = ['reg:date-application-deemed-withdrawn', 'reg:date-application-withdrawn-by-applicant']
+        bibliographic_data = cls.pointer_bibliographic_data.resolve(data)
+        for nodename in deemed_withdrawn_nodes:
+            #print 'nodename:', nodename
+            #print 'bibdate:', bibliographic_data
+            if nodename in bibliographic_data:
+                kind = 'withdrawn-dates'
+                name = nodename.replace('reg:', '')
+                item = bibliographic_data[nodename]
+                entry = cls.decode_action(kind, name, item)
+                actions.append(entry)
+
+        """
+        # EP2699357, id=EP12715599P
+        u'reg:ep-patent-statuses': {u'reg:ep-patent-status': [{u'$': u'No opposition filed within time limit',
+                                                               u'@change-date': u'20171208',
+                                                               u'@status-code': u'7'},
+                                                              {u'$': u'The patent has been granted',
+                                                               u'@change-date': u'20161230',
+                                                               u'@status-code': u'8'},
+                                                              {u'$': u'Grant of patent is intended',
+                                                               u'@change-date': u'20161223',
+                                                               u'@status-code': u'12'}]}}}
+        """
+        ep_patent_statuses = to_list(cls.pointer_ep_patent_statuses.resolve(data))
+        for item in ep_patent_statuses:
+            entry = OrderedDict()
+            entry['kind'] = 'status'
+            entry['name'] = item['$']
+            entry['date'] = entry['change_date'] = OPSExchangeDocumentDecoder.decode_date(item.get('@change-date'))
+            entry['status_code'] = item.get('@status-code')
+            actions.append(entry)
+
+
+        # Sort all entries by date in ascending order
+        actions = sorted(actions, key=operator.itemgetter('date'))
+
+        return actions
+
+    @staticmethod
+    def decode_action(kind, name, item):
+        entry = OrderedDict()
+        entry['kind'] = kind
+        entry['name'] = name.replace('reg:', '')
+        entry['date'] = 'reg:date' in item and OPSExchangeDocumentDecoder.decode_date(item['reg:date']['$']) or None
+        entry['change_date'] = OPSExchangeDocumentDecoder.decode_date(item.get('@change-date'))
+        entry['change_gazette'] = item.get('@change-gazette-num')
+
+        if not entry['date']:
+            entry['date'] = entry['change_date']
+
+        return entry
+
+    @classmethod
+    def application_reference(cls, data):
+        """
+        Decode publication reference from register document.
+        """
+
+        try:
+            nodes = to_list(cls.pointer_application_reference.resolve(data))
         except JsonPointerException:
             return []
+
+        history = cls.read_history(nodes, 'reg:document-id', cls.decode_document_reference)
+        history = list(reversed(sorted(history, key=operator.itemgetter('change_date'))))
+
+        return history
+
+    @classmethod
+    def publication_reference(cls, data):
+        """
+        Decode publication reference from register document.
+
+        u'reg:publication-reference': [{u'@change-gazette-num': u'2014/30',
+                                        u'reg:document-id': {u'@lang': u'de',
+                                                             u'reg:country': {u'$': u'WO'},
+                                                             u'reg:date': {u'$': u'20140724'},
+                                                             u'reg:doc-number': {u'$': u'2014111240'},
+                                                             u'reg:kind': {u'$': u'A1'}}},
+                                       {u'@change-gazette-num': u'2015/48',
+                                        u'reg:document-id': {u'@lang': u'de',
+                                                             u'reg:country': {u'$': u'EP'},
+                                                             u'reg:date': {u'$': u'20151125'},
+                                                             u'reg:doc-number': {u'$': u'2946041'},
+                                                             u'reg:kind': {u'$': u'A1'}}}],
+        """
+
+        try:
+            nodes = to_list(cls.pointer_publication_reference.resolve(data))
+        except JsonPointerException:
+            return []
+
+        history = cls.read_history(nodes, 'reg:document-id', cls.decode_document_reference)
+        history = list(reversed(sorted(history, key=operator.itemgetter('change_date'))))
+
+        return history
+
+    @staticmethod
+    def decode_document_reference(item):
+        entry = OrderedDict()
+        entry['date'] = 'reg:date' in item and OPSExchangeDocumentDecoder.decode_date(item['reg:date']['$']) or None
+        entry['number'] = item['reg:country']['$'] + item['reg:doc-number']['$'] + item.get('reg:kind', {}).get('$', '')
+        return entry
 
     @classmethod
     def designated_states(cls, data):
@@ -313,18 +446,14 @@ class OPSRegisterDocumentDecoder:
         except JsonPointerException:
             return []
 
-        return cls.read_history(nodes, 'reg:designation-pct', cls.countries)
+        return cls.read_history(nodes, 'reg:designation-pct', cls.countries_designated)
 
     @classmethod
-    def countries(cls, entry):
+    def countries_designated(cls, node):
         """
         Decode list of countries (designated states).
         """
-
-        countries_pointer = JsonPointer('/reg:regional/reg:country')
-        countries_raw = to_list(countries_pointer.resolve(entry[0]))
-        countries = [country_raw['$'] for country_raw in countries_raw]
-        return countries
+        return cls.decode_countries(node, '/reg:regional/reg:country')
 
     @classmethod
     def applicants(cls, data):
@@ -363,14 +492,55 @@ class OPSRegisterDocumentDecoder:
         return cls.read_history(nodes, 'reg:agent', cls.parties)
 
     @classmethod
-    def parties(cls, partylist):
+    def countries_lapsed(cls, data):
+        """
+        Decode list of multiple "lapsed-in-country" entries
+
+        # ap=EP08836401
+        u'reg:term-of-grant': [{u'@change-date': u'20140718',
+                                u'@change-gazette-num': u'2014/34',
+                                u'reg:lapsed-in-country': [{u'reg:country': {u'$': u'HU'},
+                                                            u'reg:date': {u'$': u'20080709'}},
+                                                           {u'reg:country': {u'$': u'AT'},
+                                                            u'reg:date': {u'$': u'20120418'}},
+        """
+        try:
+            nodes = to_list(cls.pointer_term_of_grant.resolve(data))
+        except JsonPointerException:
+            return []
+
+        return cls.read_history(nodes, 'reg:lapsed-in-country', cls.lapsed_in_country)
+
+    @classmethod
+    def lapsed_in_country(cls, node):
+        """
+        Decode list of "lapsed-in-country" entries.
+        """
+
+        entries = to_list(node)
+
+        data = []
+        for entry in entries:
+            item = {
+                'country': entry['reg:country']['$'],
+                'date': OPSExchangeDocumentDecoder.decode_date(entry['reg:date']['$']),
+            }
+            data.append(item)
+
+        return data
+
+    @classmethod
+    def parties(cls, node):
         """
         Decode list of applicants, inventors or agents.
+
         """
         entries = []
-        for party in partylist:
+        for party in to_list(node):
 
             addressbook = party['reg:addressbook']
+
+            # TODO: u'reg:nationality', u'reg:residence'
 
             entry = OrderedDict()
             entry['name'] = addressbook['reg:name']['$']
@@ -402,9 +572,12 @@ class OPSRegisterDocumentDecoder:
         history = []
         for node in nodes:
             entry = OrderedDict()
-            entry['change_date'] = OPSExchangeDocumentDecoder.decode_date(node['@change-date'])
-            entry['change_gazette'] = node['@change-gazette-num']
-            entry['items'] = item_decoder(to_list(node[node_name]))
+            entry['data'] = node_name in node and item_decoder(node[node_name]) or {}
+            if '@change-date' in node:
+                entry['change_date'] = OPSExchangeDocumentDecoder.decode_date(node['@change-date'])
+            elif 'date' in entry['data']:
+                entry['change_date'] = entry['data']['date']
+            entry['change_gazette'] = node.get('@change-gazette-num', 'N/P')
             history.append(entry)
 
         # Deduplicate entries. Sometimes, duplicate entries are in the history list,
@@ -428,3 +601,113 @@ class OPSRegisterDocumentDecoder:
                 real.append(entry)
 
         return real
+
+
+    @classmethod
+    def related_documents(cls, data):
+        """
+        u'reg:related-documents': {u'reg:division': {u'reg:relation':
+            {u'reg:child-doc':
+                {u'reg:document-id': {u'reg:country': {u'$': u''}, u'reg:doc-number': {u'$': u''}}},
+
+            u'reg:parent-doc':
+                {u'reg:document-id': [
+
+                    {u'@document-id-type': u'application number',
+                    u'reg:country': {u'$': u'EP'},
+                    u'reg:doc-number': {u'$': u'20110776418'},
+                    u'reg:kind': {u'$': u'D'}},
+
+                    {u'@document-id-type': u'publication number',
+                    u'reg:country': {u'$': u'EP'},
+                    u'reg:doc-number': {u'$': u'20110776418'},
+                    u'reg:kind': {u'$': u'D'}},
+        """
+
+        try:
+            container = cls.pointer_related_documents.resolve(data)
+        except JsonPointerException:
+            return {}
+
+        result = {}
+        for relation, document in container.items():
+            relation = relation.replace('reg:', '').replace('-doc', '')
+            result.setdefault(relation, {})
+            for document_id in to_list(document['reg:document-id']):
+                if '@document-id-type' not in document_id:
+                    continue
+                key = document_id['@document-id-type'].replace(' number', '')
+                doc_number = document_id['reg:country']['$'] + document_id['reg:doc-number']['$'] + document_id['reg:kind']['$']
+                result[relation][key] = doc_number
+
+        return result
+
+    @classmethod
+    def licensee_data(cls, data):
+        """
+        # EP2683490, id=EP12704680P
+        u'reg:licensee-data': {u'@change-date': u'20141219',
+                               u'@change-gazette-num': u'2015/04',
+                               u'reg:licensee': {u'@designation': u'as-indicated',
+                                                 u'@sequence': u'01',
+                                                 u'@type-license': u'right-in-rem',
+                                                 u'reg:date': {u'$': u'20141212'},
+                                                 u'reg:effective-in': {u'reg:country': [{u'$': u'AL'},
+                                                                                        {u'$': u'AT'},
+                                                                                        {u'$': u'BE'},
+
+
+        """
+        try:
+            nodes = to_list(cls.pointer_licensee_data.resolve(data))
+        except JsonPointerException:
+            return []
+
+        return cls.read_history(nodes, 'reg:licensee', cls.licensee_item)
+
+    @classmethod
+    def licensee_item(cls, node):
+        item = OrderedDict()
+        item['sequence'] = node['@sequence']
+        item['designation'] = node['@designation']
+        item['type'] = node['@type-license']
+        item['date'] = OPSExchangeDocumentDecoder.decode_date(node['reg:date']['$'])
+        item['countries_effective'] = cls.countries_effective(node)
+        return item
+
+    @classmethod
+    def countries_effective(cls, node):
+        """
+        Decode list of countries (designated states).
+        """
+        return cls.decode_countries(node, '/reg:effective-in/reg:country')
+
+    @staticmethod
+    def decode_countries(node, pointer):
+        countries_pointer = JsonPointer(pointer)
+        countries_raw = to_list(countries_pointer.resolve(node))
+        countries = [country_raw['$'] for country_raw in countries_raw]
+        return countries
+
+
+    @classmethod
+    def bio_deposit(cls, data):
+        """
+        # EP2699357, id=EP12715599P
+        u'reg:bio-deposit': {u'@num': u'',
+                             u'reg:bio-accno': {u'$': u''},
+                             u'reg:depositary': {u'$': u''},
+                             u'reg:dtext': {u'$': u'one or more deposits'}},
+
+        """
+        try:
+            node = cls.pointer_bio_deposit.resolve(data)
+        except JsonPointerException:
+            return {}
+
+        data = OrderedDict()
+        data['text'] = node['reg:dtext']['$']
+        data['depositary'] = node['reg:depositary']['$']
+        data['accno'] = node['reg:bio-accno']['$']
+        data['num'] = node['@num']
+        return data

@@ -13,10 +13,10 @@ development
 - Fix ``p2n adhoc dump`` with ``--with-register``
 - Improve decoding raw JSON data into "OpsExchangeDocument" object instances
 - Improve documentation
-- Remove "attr_object_as_dict" in favor of "attr.asdict"
+- Remove custom helper "attr_object_as_dict" in favor of vanilla "attr.asdict"
 - Remove redundant "designated_states" field by using dotted name resolver
   for accessing "register.designated_states" when generating worldmap data
-- Add support for PivotTable data generation in ad-hoc mode with OPSExchangeDocument data model
+- Add support for PivotTable data generation in ad-hoc mode with "OPSExchangeDocument" data model
 - Refactor maps.py and tables.py to "p2n.formatter" namespace
 - Improve decoding of "OPSRegisterDocument"
 - Improve error logging when decoding register information
@@ -27,6 +27,7 @@ development
 - Properly display OPS error responses to the user, e.g. when
   submitting an invalid expression like ``--expression='foo=bar'``
 - Add command ``p2n adhoc search`` for displaying search results only in raw OPS format
+- Complete the data model for OPS Exchange Document
 
 
 2017-12-01 3.0.0-dev5

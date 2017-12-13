@@ -218,27 +218,42 @@ class OPSRegisterDocument(object):
     status = attr.ib(default=None)
     filing_language = attr.ib(default=None)
 
+    # dates-rights-effective, opposition-data and ep-patent-statuses
+    actions = attr.ib(default=attr.Factory(list))
+
     # Dictionary holding lists of historic entries for
     # designated_states, applicants, inventors and agents.
     history = attr.ib(default=attr.Factory(OrderedDict))
 
+    # Entries holding historic data
+    application_reference = attr.ib(default=attr.Factory(list))
+    publication_reference = attr.ib(default=attr.Factory(list))
     designated_states = attr.ib(default=attr.Factory(list))
     applicants = attr.ib(default=attr.Factory(list))
     inventors = attr.ib(default=attr.Factory(list))
     agents = attr.ib(default=attr.Factory(list))
+    countries_lapsed = attr.ib(default=attr.Factory(list))
+    licensee_data = attr.ib(default=attr.Factory(dict))
 
-    # dates-rights-effective
-    # TODO: Merge "opposition-data" and "ep-patent-statuses"
-    actions = attr.ib(default=attr.Factory(list))
+    # References to other documents
+    related_documents = attr.ib(default=attr.Factory(dict))
+
+    # Inventions which involve the use of or concern biological material
+    # for which depositing information is available.
+    # See also "Notice from the European Patent Office dated 7 July 2010":
+    # http://www.epo.org/law-practice/legal-texts/official-journal/2016/etc/se4/p230.html
+    bio_deposit = attr.ib(default=attr.Factory(OrderedDict))
+
 
     # TODO
     # application-reference, publication-reference, priority-claims
     # references-cited
     # search-reports-information
-    # ep-patent-statuses
+
 
     # Infrastructure
     decoder = OPSRegisterDocumentDecoder
+
 
     def read(self, data):
 
@@ -248,12 +263,18 @@ class OPSRegisterDocument(object):
         self.filing_language = self.decoder.filing_language(data)
         self.actions = self.decoder.actions(data)
 
+        self.history['publication_reference'] = self.decoder.publication_reference(data)
+        self.history['application_reference'] = self.decoder.application_reference(data)
         self.history['designated_states'] = self.decoder.designated_states(data)
         self.history['applicants'] = self.decoder.applicants(data)
         self.history['inventors'] = self.decoder.inventors(data)
         self.history['agents'] = self.decoder.agents(data)
-
+        self.history['countries_lapsed'] = self.decoder.countries_lapsed(data)
+        self.history['licensee_data'] = self.decoder.licensee_data(data)
         self.history_to_recent()
+
+        self.related_documents = self.decoder.related_documents(data)
+        self.bio_deposit = self.decoder.bio_deposit(data)
 
     def history_to_recent(self):
         """
@@ -264,5 +285,5 @@ class OPSRegisterDocument(object):
         self.{designated_states,applicants,inventors,agents}.
         """
         for key, value in self.history.items():
-            if isinstance(value, list) and value and 'items' in value[0]:
-                setattr(self, key, value[0]['items'])
+            if isinstance(value, list) and value and 'data' in value[0]:
+                setattr(self, key, value[0]['data'])
