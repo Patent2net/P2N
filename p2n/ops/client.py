@@ -42,8 +42,13 @@ class OPSClient:
         range_end = offset + limit
 
         logger.info('Searching with expression "{expression}". offset={offset}, limit={limit}'.format(**locals()))
-        response = self.client.published_data_search(
-            expression, range_begin=range_begin, range_end=range_end, constituents=['biblio'])
+        try:
+            response = self.client.published_data_search(
+                expression, range_begin=range_begin, range_end=range_end, constituents=['biblio'])
+        except requests.exceptions.HTTPError as ex:
+            logger.error('OPS request error "{}". The response is:\n{}'.format(ex, ex.response.content))
+            raise SearchError(ex)
+
         data = response.json()
         return data
 
@@ -110,3 +115,7 @@ class OPSClient:
             data = None
 
         return data
+
+
+class SearchError(Exception):
+    pass

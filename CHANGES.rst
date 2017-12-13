@@ -24,6 +24,8 @@ development
 - Allow dotted attribute/field access for ``p2n adhoc list``
 - Add advanced example about using ``jq`` to filter and reformat register information with ``p2n adhoc dump``
 - Add convenience command ``p2n images`` for image data acquisition
+- Properly display OPS error responses to the user, e.g. when
+  submitting an invalid expression like ``--expression='foo=bar'``
 
 
 2017-12-01 3.0.0-dev5
