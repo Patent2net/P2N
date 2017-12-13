@@ -48,15 +48,31 @@ Tasks
 
 Version 3.0.0
 =============
+
+Completed
+---------
 - [x] Introduce and stabilize new data model and ad-hoc mode
 - [x] Write about "jq"
 - [x] Remove attr_object_as_dict in favor of attr.as_dict
 - [x] Resolve doc.designated_states vs. doc.register.designated_states duplication by providing a dotted name resolver for nested objects
 - [x] Refactor maps.py and tables.py to ``p2n.formatter`` namespace
+- [x] "p2n adhoc dump --format=raw" mode
+- [x] Display OPS error message when running invalid queries like "p2n adhoc dump --expression='pa=grohe and py=2015'"
+
+Todo
+----
 - [o] Write documentation about data model
 - [o] Complete implementation of ``Patent2NetBrevet.from_ops_exchange_document`` re. citations, equivalents and more
 - [o] Complete implementation of ``OPSRegisterDocument``
 - [o] Install Webhook on GitHub for automatic documentation building
 - [o] Upload pre-release versions to PyPI
-- [o] python-epo-ops-client requires to be online because it always attempts to authenticate,
-      could this be deferred to the actual first access to be able to work completely offline?
+- [o] Currently, python-epo-ops-client requires to be online because it always attempts to authenticate.
+      Could this be deferred to the actual first remote access to be able to work completely offline with a prewarmed cache?
+- [o] Caching improvements
+    - [o] Increase dogpile cache duration to one year
+    - [o] Provide api/command to clear the cache
+    - [o] More fine-grained cache ttl control
+- [o] Use pyjq for providing built-in filtering, with raw or even named filters.
+      https://pypi.python.org/pypi/pyjq
+- [o] Should we compute "register.designated_states - register.countries_lapsed" to determine the actual
+      list of countries the patent is still valid in?
