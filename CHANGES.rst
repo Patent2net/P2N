@@ -8,6 +8,26 @@ development
 - Make ``p2n adhoc dump`` output results either in "OpsExchangeDocument" or "Patent2NetBrevet" format
 - Make ``p2n adhoc list`` output arbitrary fields of "OpsExchangeDocument" (projection)
 - Improve documentation regarding CQL query language and updated command line parameters
+- Introduce ad-hoc mode for generating JSON data suitable for
+  feeding into PivotTable.js with Patent2NetBrevet data model
+- Fix ``p2n adhoc dump`` with ``--with-register``
+- Improve decoding raw JSON data into "OpsExchangeDocument" object instances
+- Improve documentation
+- Remove custom helper "attr_object_as_dict" in favor of vanilla "attr.asdict"
+- Remove redundant "designated_states" field by using dotted name resolver
+  for accessing "register.designated_states" when generating worldmap data
+- Add support for PivotTable data generation in ad-hoc mode with "OPSExchangeDocument" data model
+- Refactor maps.py and tables.py to "p2n.formatter" namespace
+- Improve decoding of "OPSRegisterDocument"
+- Improve error logging when decoding register information
+- Decode historical data from register information
+- Allow dotted attribute/field access for ``p2n adhoc list``
+- Add advanced example about using ``jq`` to filter and reformat register information with ``p2n adhoc dump``
+- Add convenience command ``p2n images`` for image data acquisition
+- Properly display OPS error responses to the user, e.g. when
+  submitting an invalid expression like ``--expression='foo=bar'``
+- Add command ``p2n adhoc search`` for displaying search results only in raw OPS format
+- Complete the data model for OPS Exchange Document
 
 
 2017-12-01 3.0.0-dev5
@@ -40,7 +60,7 @@ development
 - Make p2n.maps.d3plus_data obtain single field attribute
 - Memoize outcome of p2n.maps.read_name_country_map
 - Introduce ad-hoc mode
-- Worldmap generation in ad-hoc mode is now based on native OPSExchangeDocument data model
+- Worldmap generation in ad-hoc mode is now based on OPSExchangeDocument data model
 - Enrich OPS bibliographic data by register information
 - Add worldmap generation for designated states in ad-hoc mode
 - Add automatic release task

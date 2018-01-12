@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
-import re
+import attr
 import json
 import logging
-from copy import deepcopy
 from collections import OrderedDict
 from jsonpointer import JsonPointer, JsonPointerException
-from p2n.util import to_list
+from p2n.ops.decoder import OPSExchangeDocumentDecoder, OPSRegisterDocumentDecoder
+from p2n.util import to_list, exception_traceback
 
 logger = logging.getLogger(__name__)
 
@@ -87,8 +87,8 @@ class OPSFamilyResponse:
             publication_number = 'unknown'
             try:
                 document_id = JsonPointer('/publication-reference/document-id')
-                publication_number, publication_date = OPSExchangeDocument.decode_document_number_date(document_id.resolve(family_member), 'epodoc')
-            except:
+                publication_number, publication_date = OPSExchangeDocumentDecoder.document_number_date(document_id.resolve(family_member), 'epodoc')
+            except JsonPointerException:
                 pass
 
             # Read bibliographic data for family member
@@ -96,8 +96,11 @@ class OPSFamilyResponse:
             try:
                 item.read(family_member)
                 self.results.append(item)
-            except JsonPointerException:
-                logger.warning('No bibliographic data for family member "{}"'.format(publication_number))
+            except JsonPointerException as ex:
+                if "member 'exchange-document' not found" in ex.message:
+                    logger.debug('No bibliographic data for family member "{}"'.format(publication_number))
+                else:
+                    raise
 
 
 class OPSRegisterResponse:
@@ -119,41 +122,50 @@ class OPSRegisterResponse:
             try:
                 item.read(register_document)
                 self.results.append(item)
-            except JsonPointerException:
-                logger.warning('Could not read register information from data "{}"'.format(register_document))
+            except JsonPointerException as ex:
+                logger.warning('Could not read register information from data "{}": {}\n{}'.format(register_document, ex, exception_traceback()))
 
 
-class OPSExchangeDocument:
+@attr.s
+class OPSExchangeDocument(object):
     """
     Implement the data model of OPS exchange documents,
     optionally enriched by register information.
     """
 
-    def __init__(self):
+    # Bibliographic data
+    application_date = attr.ib(default=None)
+    application_year = attr.ib(default=None)
+    application_number_docdb = attr.ib(default=None)
+    application_number_epodoc = attr.ib(default=None)
 
-        # Bibliographic data
-        self.application_date = None
-        self.application_number_docdb = None
-        self.application_number_epodoc = None
+    publication_date = attr.ib(default=None)
+    publication_year = attr.ib(default=None)
+    publication_number_docdb = attr.ib(default=None)
+    publication_number_epodoc = attr.ib(default=None)
 
-        self.publication_date = None
-        self.publication_number_docdb = None
-        self.publication_number_epodoc = None
+    country = attr.ib(default=None)
+    kind = attr.ib(default=None)
+    document_number = attr.ib(default=None)
+    family_id = attr.ib(default=None)
 
-        self.country = None
-        self.document_number = None
-        self.family_id = None
-        self.title = {}
-        self.abstract = None
-        self.applicants = []
-        self.inventors = []
+    title = attr.ib(default=attr.Factory(dict))
+    abstract = attr.ib(default=attr.Factory(dict))
 
-        # Register information
-        self.register = None
-        self.designated_states = []
+    classifications = attr.ib(default=attr.Factory(dict))
+    applicants = attr.ib(default=attr.Factory(list))
+    inventors = attr.ib(default=attr.Factory(list))
+
+    # Register information
+    register = attr.ib(default=None)
+
+
+    # Infrastructure
+    decoder = OPSExchangeDocumentDecoder
+
 
     def as_dict(self):
-        return deepcopy(self.__dict__)
+        return attr.asdict(self, dict_factory=OrderedDict)
 
     def to_json(self, pretty=False):
         """Convert document to JSON format"""
@@ -162,160 +174,116 @@ class OPSExchangeDocument:
         else:
             return json.dumps(self.as_dict())
 
-    @staticmethod
-    def decode_document_number_date(docref, id_type):
-        """
-        Decode document number and filing/grant date from
-        /exchange-document/bibliographic-data/{application|publication}-reference/document-id.
-        """
-        docref_list = to_list(docref)
-        for document_id in docref_list:
-            if document_id['@document-id-type'] == id_type:
-                if id_type == 'epodoc':
-                    doc_number = document_id['doc-number']['$']
-                else:
-                    doc_number = document_id['country']['$'] + document_id['doc-number']['$'] + document_id['kind']['$']
-                date = document_id.get('date', {}).get('$')
-                date = date and '-'.join([date[:4], date[4:6], date[6:8]])
-                return doc_number, date
-        return None, None
-
-    @staticmethod
-    def decode_titles(titles):
-        """
-        Decode titles in all languages.
-        """
-        data = OrderedDict()
-        for title in titles:
-            language = title.get(u'@lang', u'ol')
-            value = title[u'$'] or u''
-            if value:
-                data[language] = value
-        return data
-
-    @staticmethod
-    def decode_abstracts(abstracts):
-        """
-        Decode abstracts in all languages.
-        """
-        data = OrderedDict()
-        for abstract in abstracts:
-            language = abstract.get(u'@lang', u'ol')
-
-            lines = to_list(abstract['p'])
-            lines = map(lambda line: line['$'], lines)
-            value = '\n'.join(lines)
-
-            if value:
-                data[language] = value
-
-        return data
-
-    @staticmethod
-    def decode_parties(partylist, name):
-        """
-        Decode list of applicants or inventors.
-        """
-        #print 'partylist:', partylist
-        parties = []
-        for party in partylist:
-
-            # Use only "epodoc" party members, as they contain the origin country
-            if party['@data-format'] != 'epodoc':
-                continue
-
-            epodoc_name = party[name]['name']['$'].replace(u'\u2002', u' ')
-            matches = re.match('(?P<name>.+?) \[(?P<country>.+?)\]', epodoc_name)
-            if matches:
-                parties.append(matches.groupdict())
-
-        return parties
-
     def read(self, data):
         """
-        Read information from data object.
+        Read bibliographic information from raw OPS API JSON response.
         """
 
-        pointer_country = JsonPointer('/exchange-document/@country')
-        pointer_docnumber = JsonPointer('/exchange-document/@doc-number')
-        pointer_kind = JsonPointer('/exchange-document/@kind')
-        pointer_family_id = JsonPointer('/exchange-document/@family-id')
+        #pprint(data)
 
-        pointer_application_reference = JsonPointer('/exchange-document/bibliographic-data/application-reference/document-id')
-        pointer_publication_reference = JsonPointer('/exchange-document/bibliographic-data/publication-reference/document-id')
-        pointer_invention_title = JsonPointer('/exchange-document/bibliographic-data/invention-title')
-        pointer_abstract = JsonPointer('/exchange-document/abstract')
-        pointer_applicant = JsonPointer('/exchange-document/bibliographic-data/parties/applicants/applicant')
-        pointer_inventor = JsonPointer('/exchange-document/bibliographic-data/parties/inventors/inventor')
+        pubref = self.decoder.pointer_publication_reference.resolve(data)
+        self.publication_number_epodoc, self.publication_date = self.decoder.document_number_date(pubref, 'epodoc')
+        self.publication_number_docdb, _ = self.decoder.document_number_date(pubref, 'docdb')
+        if self.publication_date:
+            self.publication_year = self.publication_date[:4]
 
+        appref = self.decoder.pointer_application_reference.resolve(data)
+        self.application_number_epodoc, self.application_date = self.decoder.document_number_date(appref, 'epodoc')
+        self.application_number_docdb, _ = self.decoder.document_number_date(appref, 'docdb')
+        if self.application_date:
+            self.application_year = self.application_date[:4]
 
-        pubref = pointer_publication_reference.resolve(data)
-        self.publication_number_epodoc, self.publication_date = self.decode_document_number_date(pubref, 'epodoc')
-        self.publication_number_docdb, _ = self.decode_document_number_date(pubref, 'docdb')
+        self.applicants = self.decoder.applicants(data)
+        self.inventors = self.decoder.inventors(data)
 
-        appref = pointer_application_reference.resolve(data)
-        self.application_number_epodoc, self.application_date = self.decode_document_number_date(appref, 'epodoc')
-        self.application_number_docdb, _ = self.decode_document_number_date(pubref, 'docdb')
+        self.country = self.decoder.pointer_country.resolve(data)
+        self.kind = self.decoder.pointer_kind.resolve(data)
+        self.document_number = self.country + self.decoder.pointer_docnumber.resolve(data) + self.kind
+        self.family_id = self.decoder.pointer_family_id.resolve(data)
 
-        try:
-            titles = to_list(pointer_invention_title.resolve(data))
-            title = self.decode_titles(titles)
-        except JsonPointerException:
-            title = {}
+        self.abstract = self.decoder.abstracts(data)
+        self.title = self.decoder.titles(data)
 
-        try:
-            abstracts = to_list(pointer_abstract.resolve(data))
-            abstract = self.decode_abstracts(abstracts)
-        except JsonPointerException:
-            abstract = {}
-
-        try:
-            applicants = to_list(pointer_applicant.resolve(data))
-            applicants = self.decode_parties(applicants, 'applicant-name')
-        except JsonPointerException:
-            applicants = []
-
-        try:
-            inventors = to_list(pointer_inventor.resolve(data))
-            inventors = self.decode_parties(inventors, 'inventor-name')
-        except JsonPointerException:
-            inventors = []
-
-        self.country = pointer_country.resolve(data)
-        self.document_number = pointer_country.resolve(data) + pointer_docnumber.resolve(data) + pointer_kind.resolve(data)
-        self.family_id = pointer_family_id.resolve(data)
-
-        self.abstract = abstract
-        self.title = title
-        self.applicants = applicants
-        self.inventors = inventors
+        self.classifications['IPC'] = self.decoder.classifications_ipc(data)
+        self.classifications['IPCR'] = self.decoder.classifications_ipcr(data)
+        self.classifications.update(self.decoder.classifications_more(data))
 
 
-class OPSRegisterDocument:
+@attr.s
+class OPSRegisterDocument(object):
     """
     Implement the data model of OPS register documents.
     """
 
-    def __init__(self):
-        self.designated_states = []
+    status = attr.ib(default=None)
+    filing_language = attr.ib(default=None)
+
+    # dates-rights-effective, opposition-data and ep-patent-statuses
+    actions = attr.ib(default=attr.Factory(list))
+
+    # Dictionary holding lists of historic entries for
+    # designated_states, applicants, inventors and agents.
+    history = attr.ib(default=attr.Factory(OrderedDict))
+
+    # Entries holding historic data
+    application_reference = attr.ib(default=attr.Factory(list))
+    publication_reference = attr.ib(default=attr.Factory(list))
+    designated_states = attr.ib(default=attr.Factory(list))
+    applicants = attr.ib(default=attr.Factory(list))
+    inventors = attr.ib(default=attr.Factory(list))
+    agents = attr.ib(default=attr.Factory(list))
+    countries_lapsed = attr.ib(default=attr.Factory(list))
+    licensee_data = attr.ib(default=attr.Factory(dict))
+
+    # References to other documents
+    related_documents = attr.ib(default=attr.Factory(dict))
+
+    # Inventions which involve the use of or concern biological material
+    # for which depositing information is available.
+    # See also "Notice from the European Patent Office dated 7 July 2010":
+    # http://www.epo.org/law-practice/legal-texts/official-journal/2016/etc/se4/p230.html
+    bio_deposit = attr.ib(default=attr.Factory(OrderedDict))
+
+
+    # TODO
+    # application-reference, publication-reference, priority-claims
+    # references-cited
+    # search-reports-information
+
+
+    # Infrastructure
+    decoder = OPSRegisterDocumentDecoder
+
 
     def read(self, data):
 
-        designated_states_reference = JsonPointer('/reg:register-document/reg:bibliographic-data/reg:designation-of-states')
-        self.designated_states = self.decode_designated_states(designated_states_reference.resolve(data))
+        #pprint(data)
 
-    @staticmethod
-    def decode_designated_states(data):
+        self.status = self.decoder.status(data)
+        self.filing_language = self.decoder.filing_language(data)
+        self.actions = self.decoder.actions(data)
+
+        self.history['publication_reference'] = self.decoder.publication_reference(data)
+        self.history['application_reference'] = self.decoder.application_reference(data)
+        self.history['designated_states'] = self.decoder.designated_states(data)
+        self.history['applicants'] = self.decoder.applicants(data)
+        self.history['inventors'] = self.decoder.inventors(data)
+        self.history['agents'] = self.decoder.agents(data)
+        self.history['countries_lapsed'] = self.decoder.countries_lapsed(data)
+        self.history['licensee_data'] = self.decoder.licensee_data(data)
+        self.history_to_recent()
+
+        self.related_documents = self.decoder.related_documents(data)
+        self.bio_deposit = self.decoder.bio_deposit(data)
+
+    def history_to_recent(self):
         """
-        Decode designated states from register document.
+        Iterate each history item in ``self.history`` and - as each is actually a list of historic
+        entries - use the first entry (the most recent one) as representative/current one.
+
+        Put its ``items`` value directly into an instance attribute like
+        self.{designated_states,applicants,inventors,agents}.
         """
-
-        countries_reference = JsonPointer('/reg:designation-pct/reg:regional/reg:country')
-        countries_raw = to_list(countries_reference.resolve(data))
-
-        states = []
-        for country_raw in countries_raw:
-            country = country_raw['$']
-            states.append(country)
-
-        return states
+        for key, value in self.history.items():
+            if isinstance(value, list) and value and 'data' in value[0]:
+                setattr(self, key, value[0]['data'])

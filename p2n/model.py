@@ -3,6 +3,7 @@
 import attr
 from collections import OrderedDict
 from Patent2Net.P2N_Lib import NiceName
+from p2n.util import unique
 
 
 @attr.s
@@ -56,17 +57,53 @@ class Patent2NetBrevet(object):
 
         brevet = cls()
 
+        # We are using the publication number in epodoc format as a document identifier
         brevet.label = document.publication_number_epodoc
-        brevet.country = document.country
 
+        brevet.country = document.country
+        brevet.kind = document.kind
+
+        # Remark: This is ambiguous as it could also be application_date/application_year
+        brevet.date = document.publication_date
+        brevet.year = document.publication_year
+
+        # Applicants and inventors
         brevet.applicant = [item['name'] for item in document.applicants]
         brevet.inventor = [item['name'] for item in document.inventors]
         brevet.applicant_nice = NiceName(brevet.applicant)
         brevet.inventor_nice = NiceName(brevet.inventor)
 
-        brevet.Applicant_Country = [item['country'] for item in document.applicants]
-        brevet.Inventor_Country = [item['country'] for item in document.inventors]
+        # IPCR classifications
+        if 'IPCR' in document.classifications:
+            ipcr_classes = document.classifications['IPCR']
 
+            # List of full IPCR classifications
+            brevet.classification = ipcr_classes
+
+            # Shortened versions of IPC classes for convenience in analytics/pivoting
+            brevet.IPCR1 = unique([ipcr[0] for ipcr in ipcr_classes])
+            brevet.IPCR3 = unique([ipcr[:3] for ipcr in ipcr_classes])
+            brevet.IPCR4 = unique([ipcr[:4] for ipcr in ipcr_classes])
+            brevet.IPCR7 = unique([ipcr.split('/')[0] for ipcr in ipcr_classes])
+
+        # CPC classifications
+        if 'CPC' in document.classifications:
+            brevet.CPC = document.classifications['CPC']
+
+        # Remark: This will only use the country identifier of the first applicant
+        if document.applicants:
+            brevet.Applicant_Country = document.applicants[0]['country']
+
+        # Remark: This will only use the country identifier of the first inventor
+        if document.inventors:
+            brevet.Inventor_Country = document.inventors[0]['country']
+
+        # Remark: This just uses the first title
+        # TODO: Introduce mechanism to control language selection
+        if document.title:
+            brevet.title = document.title.values()[0]
+
+        # Propagate register information
         if document.register:
             brevet.designated_states = document.register.designated_states
 
@@ -131,14 +168,11 @@ class Patent2NetBrevet(object):
         }
         """
 
-        fields = attr.fields(Patent2NetBrevet)
-        fieldnames = [field.name for field in fields]
-        #print 'fieldnames:', fieldnames
+        data = attr.asdict(self, dict_factory=OrderedDict)
 
         result = OrderedDict()
-        for key in fieldnames:
+        for key, value in data.iteritems():
 
-            value = getattr(self, key)
             key = key.replace('family_length', 'family lenght')
             key = key.replace('_', '-')
 

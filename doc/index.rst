@@ -20,7 +20,7 @@ Getting started
 
     setup
     configure
-    usage
+    usage/index
 
 
 ***********

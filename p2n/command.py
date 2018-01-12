@@ -5,10 +5,11 @@ import sys
 import json
 import docopt
 import logging
+import operator
 from p2n import __version__
 from p2n.api import Patent2Net
 from p2n.config import OPSCredentials
-from p2n.util import boot_logging, normalize_docopt_options, run_script
+from p2n.util import boot_logging, normalize_docopt_options, run_script, JsonObjectEncoder
 
 logger = logging.getLogger(__name__)
 
@@ -27,11 +28,14 @@ def run():
       p2n iramuteq [--config=requete.cql]
       p2n freeplane [--config=requete.cql]
       p2n carrot [--config=requete.cql]
+      p2n images [--config=requete.cql]
       p2n interface [--config=requete.cql]
       p2n run [--config=requete.cql] [--with-family]
+      p2n adhoc search --expression=<expression>
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
-      p2n adhoc list --expression=<expression> [--with-family] [--field=<field>]
+      p2n adhoc list --expression=<expression> [--with-family] [--field=<field>] [--with-register]
       p2n adhoc worldmap --expression=<expression> --country-field=<country-field> [--with-family] [--with-register]
+      p2n adhoc pivot --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n --version
       p2n (-h | --help)
 
@@ -49,6 +53,7 @@ def run():
       p2n iramuteq                          Fetch more data and export it to suitable format for using in Iramuteq
       p2n freeplane                         Build mind map for Freeplane
       p2n carrot                            Export data to XML suitable for using in Carrot
+      p2n images                            Fetch images
       p2n interface                         Build main Patent2Net html interface
       p2n run                               Run data acquisition and all formatters
 
@@ -66,14 +71,19 @@ def run():
       # Build all world maps
       p2n maps
 
+      # Run data acquisition and all targets
+      p2n run
+
 
     -----------
     Ad hoc mode
     -----------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
-      p2n adhoc dump                        Display results for given query expression in Patent2Net format (JSON)
-      p2n adhoc list                        Display list of publication numbers for given query expression
+      p2n adhoc search                      Display full results for given query expression in raw OPS format (JSON)
+      p2n adhoc dump                        Display full results for given query expression in OpsExchangeDocument or Patent2NetBrevet format (JSON)
+      p2n adhoc list                        Display list of values from single field for given query expression
       p2n adhoc worldmap                    Generate world map for given query expression over given field
+      p2n adhoc pivot                       Generate data for pivot table
 
     Options:
       --expression=<expression>             Search expression in CQL format, e.g. "TA=lentille"
@@ -81,9 +91,9 @@ def run():
                                             Choose from "ops" or "brevet" [default: ops].
       --field=<field>                       Which field name to use with "p2n adhoc list" [default: document_number].
       --with-register                       Also acquire register information for each result hit.
-                                            Required for "--country-field=designated_states".
+                                            Required for "--country-field=register.designated_states".
       --country-field=<country-field>       Field name of country code for "p2n adhoc worldmap"
-                                            e.g. "country", "applicants", "inventors", "designated_states"
+                                            e.g. "country", "applicants", "inventors", "register.designated_states"
 
     Examples:
 
@@ -106,7 +116,10 @@ def run():
       p2n adhoc worldmap --expression='TA=lentille' --country-field='country'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
       p2n adhoc worldmap --expression='TA=lentille' --country-field='inventors'
-      p2n adhoc worldmap --expression='TA=lentille' --country-field='designated_states' --with-register
+      p2n adhoc worldmap --expression='TA=lentille' --country-field='register.designated_states' --with-register
+
+      # Generate data suitable for PivotTable.js (JSON)
+      p2n adhoc pivot --expression='TA=lentille' --with-family
 
     """
 
@@ -154,7 +167,13 @@ def adhoc_interface(options):
         with_family=options['with-family'],
         with_register=options['with-register'])
 
-    # Display results for given query expression, e.g. run::
+    # Display full results for given query expression in raw OPS format (JSON), e.g. run::
+    # p2n adhoc search --expression='TA=lentille'
+    if options['search']:
+        payload = patent2net.response_data
+        print(json.dumps(payload, cls=JsonObjectEncoder))
+
+    # Display full results for given query expression in OpsExchangeDocument or Patent2NetBrevet format (JSON), e.g. run::
     # p2n adhoc dump --expression='TA=lentille'
     if options['dump']:
         if options['format'] == 'ops':
@@ -165,19 +184,31 @@ def adhoc_interface(options):
             logger.error('Unknown format "{}" for dumping.'.format(options['format']))
             sys.exit(1)
 
-        print(json.dumps(payload))
+        print(json.dumps(payload, cls=JsonObjectEncoder))
 
+    # Display list of values from single field for given query expression, e.g. run::
+    # p2n adhoc list --expression='TA=lentille'
     if options['list']:
         documents = results.documents
-        publication_numbers = [getattr(document, options['field']) for document in documents]
-        print(json.dumps(publication_numbers, indent=4))
+        output = []
+        for document in documents:
+            try:
+                values = [operator.attrgetter(options['field'])(document)]
+                output += values
+            except AttributeError:
+                pass
+        print(json.dumps(output, indent=4))
 
     # Generate world map over given field, e.g. run::
-    # p2n adhoc worldmap --expression='TA=lentille' --country-field='Applicant-Country'
+    # p2n adhoc worldmap --expression='TA=lentille' --country-field='applicants'
     if options['worldmap']:
         mapdata = results.worldmap(options['country-field'])
         print(json.dumps(mapdata))
 
+    # Generate data for PivotTable.js
+    if options['pivot']:
+        mapdata = results.pivot(options['format'])
+        print(json.dumps(mapdata))
 
 def classic_interface(options):
     """
@@ -254,3 +285,5 @@ def classic_interface(options):
         run_script('OPSGatherContentsV2-Iramuteq.py', configfile)
         run_script('FusionIramuteq2.py', configfile)
 
+    if options['images'] or options['run']:
+        run_script('OPSGatherContentsV2-Images.py', configfile)

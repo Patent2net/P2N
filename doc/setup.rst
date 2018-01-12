@@ -1,6 +1,15 @@
+.. _setup:
+
 #####
 Setup
 #####
+
+This part of the documentation covers the installation of Patent2Net.
+The first step to using any software package is getting it properly installed.
+Please read this section carefully.
+
+After successfully installing the software, you might want to
+follow up with its :ref:`configuration`.
 
 
 ************
@@ -13,7 +22,7 @@ Install from source
 - Source releases are available from GitHub: https://github.com/Patent2net/P2N/releases
 - Install a specific version using ``pip``::
 
-    pip install 'https://github.com/Patent2net/P2N/archive/3.0.0-dev5.tar.gz'
+    pip install 'https://github.com/Patent2net/P2N/archive/develop.tar.gz' --upgrade
 
 
 Install binary package

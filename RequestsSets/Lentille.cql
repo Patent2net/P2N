@@ -25,8 +25,11 @@ GatherBiblio: True
 GatherContent: True
 OPSGatherContentsv2-Iramuteq: True
 
-#patents families extending the PU to families
+# patents families extending the PU to families
 GatherFamilly: True
+
+# fetch images
+GatherImages: True
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi

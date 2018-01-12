@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 The Patent2Net Developers
 import logging
-import p2n.maps
 import p2n.ops.client
+import p2n.formatter.maps
+import p2n.formatter.tables
 from p2n.model import Patent2NetBrevet
 from p2n.ops.client import OPSClient
 from p2n.ops.model import OPSBiblioSearchResponse, OPSFamilyResponse, OPSRegisterResponse
+from p2n.util import exception_traceback
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +20,7 @@ class Patent2Net:
 
         self.ops_client = OPSClient(self.ops_key, self.ops_secret)
 
+        self.response_data = None
         self.documents = []
         self.brevets = []
 
@@ -36,13 +39,13 @@ class Patent2Net:
         """
 
         # Submit search expression
-        data = self.ops_client.crawl(expression)
+        self.response_data = self.ops_client.crawl(expression)
 
         # Debugging
         #print(json.dumps(data))
 
         # Decode response
-        response = OPSBiblioSearchResponse(data)
+        response = OPSBiblioSearchResponse(self.response_data)
 
         # A list of ``OPSExchangeDocument`` object instances
         self.documents = response.results
@@ -89,6 +92,7 @@ class Patent2Net:
 
             # Iterate all family members of the root document
             # and add them to the list of expanded documents
+            family_numbers = []
             for family_member in response.results:
 
                 # Read publication number of family member without kindcode
@@ -103,8 +107,11 @@ class Patent2Net:
                     continue
 
                 # Record number and document of family member
+                family_numbers.append(family_member_number)
                 document_numbers.append(family_member_number)
                 documents_expanded.append(family_member)
+
+            #logger.info('Family members: {}'.format(family_numbers))
 
         # Switch the current list of result documents over to the list
         # of documents expanded by their respective family members
@@ -115,10 +122,9 @@ class Patent2Net:
         Acquire register information for each ``OPSExchangeDocument``
         object instance in ``self.documents``.
 
-        It will enrich the ``OPSExchangeDocument`` instance by adding more attributes:
-
-        - ``register``: Reference to an instance of ``OPSRegisterDocument``
-        - ``designated_states``: List of country codes of designated states
+        It will enrich the ``OPSExchangeDocument`` instance by adding
+        the attribute ``register``, which is a reference to an instance
+        of ``OPSRegisterDocument``.
         """
 
         # Iterate all result documents
@@ -143,10 +149,9 @@ class Patent2Net:
 
                     # Propagate register information into OPSExchangeDocument object
                     document.register = register_document
-                    document.designated_states = register_document.designated_states
 
-            except:
-                logger.warning('Could not decode register information for document "{}"'.format(document_number))
+            except Exception as ex:
+                logger.warning('Could not decode register information for document "{}": {}\n{}'.format(document_number, ex, exception_traceback()))
 
     def documents_to_brevets(self):
         """
@@ -179,10 +184,27 @@ class Patent2Net:
         # Currently, it just counts *all* countries, so the deviation is even greater
         # when running with "--with-family" as a larger number of duplicate entries
         # will get counted more often.
-        #mapdata = p2n.maps.d3plus_data_brevets(self.brevets, country_field)
+        #mapdata = p2n.formatter.maps.d3plus_data_brevets(self.brevets, country_field)
 
         # DONE: Now operates on the native OPS data model and
         # properly aggregates unique applicant/inventor names.
-        mapdata = p2n.maps.d3plus_data_documents(self.documents, country_field)
+        mapdata = p2n.formatter.maps.d3plus_data_documents(self.documents, country_field)
 
         return mapdata
+
+    def pivot(self, format='ops'):
+        """
+        Generate data suitable for feeding into PivotTable.js, either from
+        Patent2NetBrevet or from OPSExchangeDocument data model.
+        """
+
+        if format == 'ops':
+            pivotdata = p2n.formatter.tables.pivottables_data_documents(self.documents)
+
+        elif format == 'brevet':
+            pivotdata = p2n.formatter.tables.pivottables_data_brevets(self.brevets)
+
+        else:
+            raise ValueError('Unknown format for pivot data "{}"'.format(format))
+
+        return pivotdata

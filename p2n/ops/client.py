@@ -42,8 +42,13 @@ class OPSClient:
         range_end = offset + limit
 
         logger.info('Searching with expression "{expression}". offset={offset}, limit={limit}'.format(**locals()))
-        response = self.client.published_data_search(
-            expression, range_begin=range_begin, range_end=range_end, constituents=['biblio'])
+        try:
+            response = self.client.published_data_search(
+                expression, range_begin=range_begin, range_end=range_end, constituents=['biblio'])
+        except requests.exceptions.HTTPError as ex:
+            logger.error('OPS request error "{}". The response is:\n{}'.format(ex, ex.response.content))
+            raise SearchError(ex)
+
         data = response.json()
         return data
 
@@ -64,7 +69,7 @@ class OPSClient:
 
         # Extract total count of results
         total_count = biblio_response.total_result_count
-        logger.info('Total count: %s', total_count)
+        logger.info('Result count: %s', total_count)
 
         # The first 2000 hits are accessible from OPS
         if total_count > 2000:
@@ -77,7 +82,7 @@ class OPSClient:
         # Request more results with {chunksize} documents each
         for offset in range(offset_second_chunk, total_count, chunksize):
 
-            # Request chunk
+            # Request next chunk
             chunk = self.search(expression, offset=offset, limit=chunksize)
 
             # Merge chunk into main list of results
@@ -104,11 +109,13 @@ class OPSClient:
         except requests.HTTPError as ex:
             response = ex.response
 
-        logger.info('Register information for document "{}" response status: {}'.format(document_number, response.status_code))
-
         try:
             data = response.json()
         except ValueError:
             data = None
 
         return data
+
+
+class SearchError(Exception):
+    pass
