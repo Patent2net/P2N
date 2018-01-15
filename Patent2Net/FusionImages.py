@@ -20,18 +20,18 @@ def get_patent_label(patent):
 def generate_thumbnails(img_path):
     base_path, img_fname = os.path.split(img_path)
     p, ext = os.path.splitext(img_fname)
-    thumb = p + ".tb.png"
+    thumb = p + '.tb.png'
     thumb_f = os.path.join(base_path, thumb)
-    orig = p + ".png"
+    orig = p + '.png'
     orig_f = os.path.join(base_path, orig)
     if not os.path.exists(orig_f):
         im = Image.open(img_path)
         im2 = im.convert('L')
         im2.thumbnail(THUMBNAIL_SIZE, Image.LANCZOS)
-        im2.save(thumb_f, "PNG")
+        im2.save(thumb_f, 'PNG')
         im = Image.open(img_path)
-        im.save(orig, "PNG")
-    return thumb, orig
+        im.save(orig, 'PNG')
+    return thumb, orig, img_fname
 
 
 configFile = LoadConfig()
@@ -45,9 +45,9 @@ P2NFamilly = configFile.GatherFamilly
 
 if IsEnableScript:
 
-    prefixes = [""]
+    prefixes = ['']
     if P2NFamilly:
-        prefixes.append("Families")
+        prefixes.append('Families')
 
     for prefix in prefixes:
         ndf = prefix + configFile.ndf
@@ -58,21 +58,24 @@ if IsEnableScript:
         for patent in patents:
             patent_label = get_patent_label(patent)
             i = 1
-            print "Processing patent {}".format(patent_label)
+            print 'Processing patent {}'.format(patent_label)
             path_img_base = '{}//{}-{}.tiff'.format(ResultPathImages, patent_label, '{}')
             path = path_img_base.format(i)
             while os.path.exists(path):
-                thumb, orig = generate_thumbnails(path)
+                thumb, orig, tiff = generate_thumbnails(path)
                 gallery.append({
-                    "thumb": thumb,
-                    "orig": orig,
+                    'thumb': thumb,
+                    'orig': orig,
+                    'label': patent['title'],
+                    'code': patent_label,
+                    'tiff': tiff,
                 })
                 i += 1
                 path = path_img_base.format(i)
-    # print gallery
-    RenderTemplate(
-        "ModeleImages.html",
-        ResultPathImages + '/index.html',
-        requete=requete.replace('"', ''),
-        gallery=gallery,
-    )
+        # print gallery
+        RenderTemplate(
+            'ModeleImages.html',
+            ResultPathImages + '/index' + prefix + '.html',
+            request=requete.replace('"', ''),
+            gallery=gallery,
+        )
