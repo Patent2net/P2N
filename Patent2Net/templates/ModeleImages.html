@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Patents images for request: "{{request}}"</title>
+    <script charset="utf-8" type="text/javascript" language="javascript" src="../../../Patent2Net/media/jquery.js"></script>
+    <script charset="utf-8" type="text/javascript" language="javascript" src="../../../Patent2Net/extensions/MagnificPopup/dist/jquery.magnific-popup.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/extensions/MagnificPopup/dist/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/P2N.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/media/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/media/css/fancybox-thumbs.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/media/css/fancybox-buttons.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/media/css/fancybox.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/media/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="../../../Patent2Net/media/css/main.css">
+</head>
+
+<body>
+
+    <header class="wrapper dark">
+        <a href="../../index.html"><img class="logo" src="../../../Patent2Net/media/img/logo_dark.png" alt=""/></a>
+
+        <section>
+            <h1>Universe of OPS Patent Request: </h1>"{{request}}"</section>
+    </header>
+
+    <div class="container">
+
+        <p>Images...</p>
+
+
+        <div class="popup-gallery">
+            {% for img in gallery %}
+            <a href="{{ img.orig }}" title="The Cleaner"><img src="{{ img.thumb }}" width="128" height="128"></a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <footer>
+        <a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page">Patent2net documentation</a>
+    </footer>
+
+<script>
+
+$(document).ready(function() {
+	$('.popup-gallery').magnificPopup({
+        delegate: 'a',
+		type: 'image',
+		tLoading: 'Loading image #%curr%...',
+		mainClass: 'mfp-img-mobile',
+		gallery: {
+			enabled: true,
+			navigateByImgClick: true,
+			preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+		},
+		image: {
+			tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+			titleSrc: function(item) {
+				return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+			}
+		}
+	});
+});
+
+</script>
+</body>
+
+</html>

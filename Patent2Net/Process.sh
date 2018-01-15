@@ -10,8 +10,10 @@ python FormateExportDataTable.py
 python FormateExportPivotTable.py
 
 python OPSGatherContentsV2-Iramuteq.py
+python OPSGatherContentsV2-Images.py
 python P2N-FreePlane.py
 python FusionCarrot2.py
+python FusionImages.py
 python FusionIramuteq2.py
 python P2N-PreNetworks.py CountryCrossTech
 python P2N-PreNetworks.py CrossTech
