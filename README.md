@@ -62,6 +62,7 @@ Todo List (not limitative, just ideas):
 * Improve the Mindmap option to get it more efficient for creativity (Celso is working on)
 * Build the entire network as a gephi file for download to let new combined network analysis possible
 * Use the list of standardised applicant names from EPO to normalize nets and tables. See: [CSV datafile] (http://documents.epo.org/projects/babylon/rawdata.nsf/0/71DE2EB24A084A19C1257F3B0032BA98/)
+Or may be this name standardization routines: https://sites.google.com/site/patentdataproject/Home/posts/namestandardizationroutinesuploaded
 
 
 #### Add some new capabilities to Patent2Net, i.e.:
