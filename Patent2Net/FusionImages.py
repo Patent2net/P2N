@@ -30,7 +30,7 @@ def generate_thumbnails(img_path):
         im2.thumbnail(THUMBNAIL_SIZE, Image.LANCZOS)
         im2.save(thumb_f, 'PNG')
         im = Image.open(img_path)
-        im.save(orig, 'PNG')
+        im.save(orig_f, 'PNG')
     return thumb, orig, img_fname
 
 
