@@ -64,6 +64,7 @@ if IsEnableScript:
             while os.path.exists(path):
                 thumb, orig, tiff = generate_thumbnails(path)
                 gallery.append({
+                    "_id": '{}-{}'.format(patent_label, i),
                     'thumb': thumb,
                     'orig': orig,
                     'label': patent['title'],
@@ -78,4 +79,5 @@ if IsEnableScript:
             ResultPathImages + '/index' + prefix + '.html',
             request=requete.replace('"', ''),
             gallery=gallery,
+            json=json.dumps(gallery)
         )
