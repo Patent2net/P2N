@@ -68,6 +68,7 @@ if IsEnableScript:
                     'thumb': thumb,
                     'orig': orig,
                     'label': patent['title'],
+                    'ipcr7': patent['IPCR7'],
                     'code': patent_label,
                     'tiff': tiff,
                 })
@@ -79,5 +80,5 @@ if IsEnableScript:
             ResultPathImages + '/index' + prefix + '.html',
             request=requete.replace('"', ''),
             gallery=gallery,
-            json=json.dumps(gallery)
+            json=json.dumps(gallery),
         )

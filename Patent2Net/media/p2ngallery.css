@@ -1,17 +1,21 @@
-.mfp-gallery a{
+.mfp-gallery a {
     color: white;
 }
 body {
-    background-color: #DDD;
+    background-color: #ddd;
 }
-.gallery {
 
+.white-text {
+    color: #ddd !important;
+}
+
+.gallery {
 }
 
 .gallery-obj {
     text-align: center;
     padding: 5px;
-    border: 1px solid #EEE;
+    border: 1px solid #eee;
     background-color: white;
     border-radius: 10px;
 }
@@ -23,5 +27,5 @@ body {
 }
 
 .gallery-obj:hover {
-    background-color: #EEE;
+    background-color: #eee;
 }
