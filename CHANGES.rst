@@ -5,6 +5,9 @@ Patent2Net CHANGES
 
 development
 ===========
+
+2018-03-20 3.0.0-dev6
+=====================
 - Make ``p2n adhoc dump`` output results either in "OpsExchangeDocument" or "Patent2NetBrevet" format
 - Make ``p2n adhoc list`` output arbitrary fields of "OpsExchangeDocument" (projection)
 - Improve documentation regarding CQL query language and updated command line parameters
@@ -28,7 +31,13 @@ development
   submitting an invalid expression like ``--expression='foo=bar'``
 - Add command ``p2n adhoc search`` for displaying search results only in raw OPS format
 - Complete the data model for OPS Exchange Document
-
+- Improve FusionImages.py
+    - Add link to general template, fix and add context info for images
+    - Image fusion
+    - Improve layout/pagination for patent images gallery
+    - Fix output thumbs
+    - Add page size handler
+- Improve gracefulness for Interface2.py and OPSGatherContentsV2-Images.py, see also #23.
 - Fix ``p2n --version`` output, addressing #23. Thanks, @smorvan!
 
 2017-12-01 3.0.0-dev5
