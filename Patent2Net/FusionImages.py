@@ -18,12 +18,13 @@ def get_patent_label(patent):
 
 
 def generate_thumbnails(img_path):
+    img_path =os.path.normpath(img_path)
     base_path, img_fname = os.path.split(img_path)
     p, ext = os.path.splitext(img_fname)
     thumb = p + '.tb.png'
-    thumb_f = os.path.join(base_path, thumb)
+    thumb_f = os.path.normpath(os.path.join(base_path, thumb))
     orig = p + '.png'
-    orig_f = os.path.join(base_path, orig)
+    orig_f = os.path.normpath(os.path.join(base_path, orig))
     if not os.path.exists(orig_f):
         im = Image.open(img_path)
         im2 = im.convert('L')

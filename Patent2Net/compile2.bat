@@ -1,26 +1,27 @@
 rmdir /S /Q dist\Patent2Net
 
-pyinstaller  --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt OPSGatherContentsV2-Iramuteq.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherAugment-Families.txt OPSGatherAugment-Families.py
-REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt Compatibilizer.py
+pyinstaller -p .  --workpath=..\tempocomp --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt OPSGatherContentsV2-Iramuteq.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Images.txt OPSGatherContentsV2-Images.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherAugment-Families.txt OPSGatherAugment-Families.py
+REM pyinstaller -p . -y --noupx --version-file=version-Compatibilizer.txt Compatibilizer.py
 
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-Networks.txt P2N-Networks.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-PreNetworks.txt P2N-PreNetworks.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-NetworksJS.txt P2N-NetworksJS.py
-
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionIramuteq2.txt FusionIramuteq2.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Fusion.txt Fusion.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-FreePlane.txt P2N-FreePlane.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTable.txt FormateExportDataTable.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportPivotTable.txt FormateExportPivotTable.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTableFamilies.txt FormateExportDataTableFamilies.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportBiblio.txt FormateExportBiblio.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportCountryCartography.txt FormateExportCountryCartography.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionCarrot2.txt FusionCarrot2.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt Interface2.py
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt Parallel3.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-Networks.txt P2N-Networks.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-PreNetworks.txt P2N-PreNetworks.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-NetworksJS.txt P2N-NetworksJS.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionImages.txt FusionImages.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionIramuteq2.txt FusionIramuteq2.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Fusion.txt Fusion.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-FreePlane.txt P2N-FreePlane.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTable.txt FormateExportDataTable.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportPivotTable.txt FormateExportPivotTable.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTableFamilies.txt FormateExportDataTableFamilies.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportBiblio.txt FormateExportBiblio.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportCountryCartography.txt FormateExportCountryCartography.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionCarrot2.txt FusionCarrot2.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt Interface2.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt Parallel3.py
 
 
 rmdir /S /Q  ..\tempocomp\FormateExportAttractivityCartography\setuptools-19.2-py2.7.egg
@@ -52,27 +53,28 @@ rmdir /S /Q  ..\tempocomp\Parallel3\setuptools-19.2-py2.7.egg
 
 REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
 
-pyinstaller  --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt ..\specs\FormateExportAttractivityCartography.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt ..\specs\OPSGatherPatentsv2.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt ..\specs\OPSGatherContentsV2-Iramuteq.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherAugment-Families.txt ..\specs\OPSGatherAugment-Families.spec
-REM pyinstaller -y --noupx --version-file=version-Compatibilizer.txt ..\specs\Compatibilizer.spec
+pyinstaller -p .  --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt ..\specs\FormateExportAttractivityCartography.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt ..\specs\OPSGatherPatentsv2.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Images.txt ..\specs\OPSGatherContentsV2-Images.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt ..\specs\OPSGatherContentsV2-Iramuteq.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherAugment-Families.txt ..\specs\OPSGatherAugment-Families.spec
+REM pyinstaller -p . -y --noupx --version-file=version-Compatibilizer.txt ..\specs\Compatibilizer.spec
 
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-Networks.txt ..\specs\P2N-Networks.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-PreNetworks.txt ..\specs\P2N-PreNetworks.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-NetworksJS.txt ..\specs\P2N-NetworksJS.spec
-
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionIramuteq2.txt ..\specs\FusionIramuteq2.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Fusion.txt ..\specs\Fusion.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-FreePlane.txt ..\specs\P2N-FreePlane.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTable.txt ..\specs\FormateExportDataTable.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportPivotTable.txt ..\specs\FormateExportPivotTable.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTableFamilies.txt ..\specs\FormateExportDataTableFamilies.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportBiblio.txt ..\specs\FormateExportBiblio.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportCountryCartography.txt ..\specs\FormateExportCountryCartography.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionCarrot2.txt ..\specs\FusionCarrot2.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt ..\specs\Interface2.spec
-pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt ..\specs\Parallel3.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-Networks.txt ..\specs\P2N-Networks.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-PreNetworks.txt ..\specs\P2N-PreNetworks.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-NetworksJS.txt ..\specs\P2N-NetworksJS.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionImages.txt ..\specs\FusionImages.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionIramuteq2.txt ..\specs\FusionIramuteq2.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Fusion.txt ..\specs\Fusion.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-P2N-FreePlane.txt ..\specs\P2N-FreePlane.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTable.txt ..\specs\FormateExportDataTable.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportPivotTable.txt ..\specs\FormateExportPivotTable.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTableFamilies.txt ..\specs\FormateExportDataTableFamilies.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportBiblio.txt ..\specs\FormateExportBiblio.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportCountryCartography.txt ..\specs\FormateExportCountryCartography.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionCarrot2.txt ..\specs\FusionCarrot2.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt ..\specs\Interface2.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt ..\specs\Parallel3.spec
 
 
 mkdir  ..\distribution\Patent2Net\
@@ -81,6 +83,7 @@ xcopy /S /Y ..\distribution\FormateExportAttractivityCartography ..\distribution
 xcopy /S /Y ..\distribution\OPSGatherPatentsv2 ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherContentsV2-Iramuteq ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherAugment-Families ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\OPSGatherContentsV2-Images ..\distribution\Patent2Net\
 REM xcopy /S /Y ..\distribution\Compatibilizer ..\distribution\Patent2Net\
 
 
@@ -89,6 +92,7 @@ xcopy /S /Y ..\distribution\P2N-PreNetworks ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\P2N-NetworksJS ..\distribution\Patent2Net\
 
 xcopy /S /Y ..\distribution\FusionIramuteq2 ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\FusionImages ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\Fusion ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\P2N-FreePlane ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\FormateExportDataTable ..\distribution\Patent2Net\
@@ -111,14 +115,42 @@ copy /y P2N.css ..\distribution\patent2Net
 copy /y NameCountryMap.csv ..\distribution\Patent2Net\
 copy /y scriptSearch.js ..\distribution\Patent2Net\
 copy /y Searchscript.js ..\distribution\Patent2Net\
-copy /y CollecteETRaite.bat dist
+copy /y CollecteETRaite.bat ..\distribution\
+copy /y Process.bat ..\distribution\
+copy /y FormatingProcess.bat ..\distribution\
+copy /y GatherProcess.bat ..\distribution\
+copy /y NetsProcess.bat ..\distribution\
+copy /y ProcessPy.bat ..\distribution\
 copy /y OpenNav.bat ..\distribution\Patent2Net\OpenNav.bat
-mkdir dist\Patent2Net\templates
-xcopy /S /Y templates dist\Patent2Net\templates
-copy /y cles-epo.txt dist
+mkdir  ..\distribution\Patent2Net\templates
+xcopy /S /Y templates  ..\distribution\Patent2Net\templates
+copy /y cles-epo.txt  ..\distribution\
 mkdir ..\distribution\Patent2Net\lib2to3
 xcopy /S /Y lib2to3 ..\distribution\Patent2Net\lib2to3
 mkdir ..\distribution\Patent2Net\extensions
 mkdir ..\distribution\Patent2Net\media
 xcopy /S /Y extensions ..\distribution\Patent2Net\extensions
 xcopy /S /Y media ..\distribution\Patent2Net\media
+mkdir ..\distribution\RequestsSet
+mkdir ..\distribution\REQUESTS
+REM cleaning
+rmdir /S /Q ..\distribution\FormateExportAttractivityCartography
+rmdir /S /Q ..\distribution\OPSGatherPatentsv2
+rmdir /S /Q ..\distribution\OPSGatherContentsV2-Iramuteq
+rmdir /S /Q ..\distribution\OPSGatherAugment-Families
+rmdir /S /Q ..\distribution\OPSGatherContentsV2-Images
+rmdir /S /Q ..\distribution\P2N-Networks
+rmdir /S /Q ..\distribution\P2N-PreNetworks
+rmdir /S /Q ..\distribution\P2N-NetworksJS
+rmdir /S /Q ..\distribution\FusionIramuteq2
+rmdir /S /Q ..\distribution\FusionImages
+rmdir /S /Q ..\distribution\Fusion
+rmdir /S /Q ..\distribution\P2N-FreePlane
+rmdir /S /Q ..\distribution\FormateExportDataTable
+rmdir /S /Q ..\distribution\FormateExportPivotTable
+rmdir /S /Q ..\distribution\FormateExportDataTableFamilies
+rmdir /S /Q ..\distribution\FormateExportBiblio
+rmdir /S /Q ..\distribution\FormateExportCountryCartography
+rmdir /S /Q ..\distribution\FusionCarrot2
+rmdir /S /Q ..\distribution\Interface2
+rmdir /S /Q ..\distribution\Parallel3

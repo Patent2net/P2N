@@ -41,7 +41,7 @@ if len(sys.argv)<2 or sys.argv[1] not in Nets:
     sys.exit()
 else:
     Nets.remove(sys.argv[1])
-    if len(sys.argv) == 3:
+    if len(sys.argv) < 3:
         visu = 'neato'
     else:
         visu = sys.argv[2]
