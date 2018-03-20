@@ -29,6 +29,7 @@ development
 - Add command ``p2n adhoc search`` for displaying search results only in raw OPS format
 - Complete the data model for OPS Exchange Document
 
+- Fix ``p2n --version`` output, addressing #23. Thanks, @smorvan!
 
 2017-12-01 3.0.0-dev5
 =====================
