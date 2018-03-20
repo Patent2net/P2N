@@ -97,8 +97,9 @@ Output of "``p2n --help``"
     Ad hoc mode
     -----------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
-      p2n adhoc dump                        Display results for given query expression in Patent2Net format (JSON)
-      p2n adhoc list                        Display list of publication numbers for given query expression
+      p2n adhoc search                      Display search results for given query expression in raw OPS format (JSON)
+      p2n adhoc dump                        Display full results for given query expression in OpsExchangeDocument or Patent2NetBrevet format (JSON)
+      p2n adhoc list                        Display list of values from single field for given query expression
       p2n adhoc worldmap                    Generate world map for given query expression over given field
       p2n adhoc pivot                       Generate data for pivot table
 
@@ -137,3 +138,4 @@ Output of "``p2n --help``"
 
       # Generate data suitable for PivotTable.js (JSON)
       p2n adhoc pivot --expression='TA=lentille' --with-family
+

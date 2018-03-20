@@ -99,6 +99,7 @@ Output of "``p2n --help``"
     Classic mode
     ------------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
+      p2n run                               Run data acquisition and all formatters
       p2n acquire                           Run document acquisition
         --with-family                       Also run family data acquisition with "p2n acquire"
       p2n maps                              Build maps of country coverage of patents, as well as applicants and inventors
@@ -110,7 +111,6 @@ Output of "``p2n --help``"
       p2n carrot                            Export data to XML suitable for using in Carrot
       p2n images                            Fetch images
       p2n interface                         Build main Patent2Net html interface
-      p2n run                               Run data acquisition and all formatters
 
     Options:
       --config=<config>                     Path to requete.cql. Will fall back to environment variable "P2N_CONFIG".
@@ -124,6 +124,7 @@ Output of "``p2n --help``"
       p2n acquire --config=/path/to/RequestsSets/Lentille.cql --with-family
 
       # Build all world maps
+      export P2N_CONFIG=/path/to/RequestsSets/Lentille.cql
       p2n maps
 
       # Run data acquisition and all targets
