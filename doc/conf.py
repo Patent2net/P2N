@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Patent2Net'
-copyright = u'2013-2017, The Patent2Net Developers'
+copyright = u'2013-2018, The Patent2Net Developers'
 author = u'The Patent2Net Developers'
 
 # The version info for the project you're documenting, acts as replacement for
