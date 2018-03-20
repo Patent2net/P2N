@@ -78,7 +78,14 @@ if Gather:
                 "total": len(lstfic),
                 "languages": totalLanguages
             }
-        return {}
+        else:
+            print 'WARNING: Directory "{}" does not exist'.format(path)
+
+        return {
+            "type": content,
+            "total": 0,
+            "languages": {},
+        }
 
     for content in [u'Abstract', u'Claims', u'Description']:
         totalsPerType.append(generateTotal(content))
@@ -86,10 +93,12 @@ if Gather:
     for content in [u'FamiliesAbstract', u'FamiliesClaims', u'FamiliesDescription']:
         totalsPerFamilyType.append(generateTotal(content))
 
+outfile = GlobalPath + '//' + ndf + '.html'
+print 'Writing "{outfile}"'.format(outfile=outfile)
 
 RenderTemplate(
     "ModeleContenuIndex.html",
-    GlobalPath + '//' + ndf + '.html',
+    outfile,
     GlobalPath=GlobalPath,
     CollectName=ndf,
     Request=requete,

@@ -20,6 +20,7 @@ def run():
     """
     Usage:
       p2n ops init --key=<ops-oauth-key> --secret=<ops-oauth-secret>
+      p2n run [--config=requete.cql] [--with-family]
       p2n acquire [--config=requete.cql] [--with-family]
       p2n maps [--config=requete.cql]
       p2n networks [--config=requete.cql]
@@ -30,7 +31,6 @@ def run():
       p2n carrot [--config=requete.cql]
       p2n images [--config=requete.cql]
       p2n interface [--config=requete.cql]
-      p2n run [--config=requete.cql] [--with-family]
       p2n adhoc search --expression=<expression>
       p2n adhoc dump --expression=<expression> [--format=<format>] [--with-family] [--with-register]
       p2n adhoc list --expression=<expression> [--with-family] [--field=<field>] [--with-register]
@@ -44,6 +44,7 @@ def run():
     Classic mode
     ------------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
+      p2n run                               Run data acquisition and all formatters
       p2n acquire                           Run document acquisition
         --with-family                       Also run family data acquisition with "p2n acquire"
       p2n maps                              Build maps of country coverage of patents, as well as applicants and inventors
@@ -55,7 +56,6 @@ def run():
       p2n carrot                            Export data to XML suitable for using in Carrot
       p2n images                            Fetch images
       p2n interface                         Build main Patent2Net html interface
-      p2n run                               Run data acquisition and all formatters
 
     Options:
       --config=<config>                     Path to requete.cql. Will fall back to environment variable "P2N_CONFIG".
@@ -69,6 +69,7 @@ def run():
       p2n acquire --config=/path/to/RequestsSets/Lentille.cql --with-family
 
       # Build all world maps
+      export P2N_CONFIG=/path/to/RequestsSets/Lentille.cql
       p2n maps
 
       # Run data acquisition and all targets

@@ -124,7 +124,11 @@ if IsEnableScript:
     for prefix in prefixes:
         ndf = prefix + configFile.ndf
 
-        biblio_file = LoadBiblioFile(ResultBiblioPath, ndf)
+        try:
+            biblio_file = LoadBiblioFile(ResultBiblioPath, ndf)
+        except IOError as ex:
+            print 'WARNING: Could not load information for "{}". Not found / error: {}'.format(ndf, ex)
+
         patents = biblio_file['brevets']
         metadata = {}
 
