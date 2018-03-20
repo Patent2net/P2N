@@ -10,7 +10,9 @@ FormateExportDataTable.exe
 FormateExportPivotTable.exe
 
 OPSGatherContentsV2-Iramuteq.exe
+OPSGatherContentsV2-Images.exe
 P2N-FreePlane.exe
+FusionImages.exe
 FusionCarrot2.exe
 FusionIramuteq2.exe
 P2N-PreNetworks.exe CountryCrossTech

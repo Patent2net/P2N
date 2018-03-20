@@ -109,6 +109,11 @@
             <a href="#" onclick="{{wo('*CollectName*Carto.html')}} {{wo('*CollectName*CartoApplicant.html')}} {{wo('*CollectName*CartoInventor.html')}} return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
         </li>
         {% endif %}
+        {% if Images %}
+        <li>
+            <a href="#" onclick="{{wo('PatentImages/index.html')}} return false;">Images (when available) </a>
+        </li>
+        {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}
         <li>
             <a href="#" onclick="{{wo('GephiFiles/*CollectName*_InventorsJS.html')}} {{wo('GephiFiles/*CollectName*_ApplicantsJS.html')}} {{wo('GephiFiles/*CollectName*_CrossTechJS.html')}} return false;">Networks (Inventor, Applicant, Technology)</a>
@@ -136,6 +141,11 @@
         {% if FormateExportCountryCartography %}
         <li>
             <a href="#" onclick="{{wo('Families*CollectName*Carto.html')}} {{wo('Families*CollectName*CartoApplicant.html')}} {{wo('Families*CollectName*CartoInventor.html')}} return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
+        </li>
+        {% endif %}
+        {% if Images %}
+        <li>
+            <a href="#" onclick="{{wo('PatentImages/indexFamilies.html')}} return false;">Images (when available) </a>
         </li>
         {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}

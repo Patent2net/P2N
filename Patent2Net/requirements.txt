@@ -10,3 +10,4 @@ matplotlib==2.0.0
 python-louvain==0.5
 jinja2
 lxml==3.8.0
+Pillow

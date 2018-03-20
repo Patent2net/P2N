@@ -119,6 +119,7 @@ RenderTemplate(
 
     FreePlane=configFile.FreePlane,
     FusionCarrot2=configFile.FusionCarrot2,
+    Images=configFile.GatherImages,
 
 )
 

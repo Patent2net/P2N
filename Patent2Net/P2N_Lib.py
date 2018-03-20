@@ -43,6 +43,32 @@ import codecs
 import os
 from jinja2 import Environment, FileSystemLoader
 
+def GenereListeFichiers(rep):
+    """ prend un dossier en paramètre (chemin absolu) et génère la liste
+    complète des fichiers TXT de l'arborescence"""
+    import os
+    listeFicFR = []
+    listeFicEN = []
+    listeFicUNK = []
+    for root, subFolders, files in os.walk(rep):
+
+        if len(subFolders)>0:
+            for sousRep in subFolders:
+                temporar = GenereListeFichiers(rep+'//'+sousRep)
+                listeFicFR.extend(temporar[0])
+                listeFicEN.extend(temporar[1])
+                listeFicUNK.extend(temporar[2])
+        else:
+            for fichier in files:
+                if fichier.endswith('.txt') and fichier.startswith('fr'):
+                    listeFicFR.append(root+'//'+fichier)
+                elif fichier.endswith('.txt') and fichier.startswith('en'):
+                    listeFicEN.append(root+'//'+fichier)
+                else:
+                    if fichier.endswith('.txt'):
+                        listeFicUNK.append(root+'//'+fichier)
+                
+    return (list(set(listeFicFR)), list(set(listeFicEN)), list(set(listeFicUNK)))
 
 def isMaj(car):
     if car.lower() != car:

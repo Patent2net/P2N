@@ -5,11 +5,11 @@
 ##############################
 # the "patents universe" corresponding to the request
 # insert below your request in cql format as done in the example
-request: ta="filter*" and ta="drink* water" AND (pn = U not (pn = UA or pn = US or pn = UY))
+request: TA=lentille
 
 ###############################
 # Name of files OR directories
-DataDirectory: Water
+DataDirectory: Lentille
 
 ###############################
 #Patent2Net options : Set to *True* or False
@@ -23,13 +23,13 @@ GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
 GatherContent: True
-OPSGatherContentsv2-Iramuteq: False
+OPSGatherContentsv2-Iramuteq: True
 
-# Patent images
-OPSGatherContentsV2-Images:True
-
-#patents families extending the PU to families
+# patents families extending the PU to families
 GatherFamilly: True
+
+# fetch images
+GatherImages: True
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi
