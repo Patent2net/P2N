@@ -79,7 +79,7 @@ def run():
     Ad hoc mode
     -----------
       p2n ops init                          Initialize Patent2Net with OPS OAuth credentials
-      p2n adhoc search                      Display full results for given query expression in raw OPS format (JSON)
+      p2n adhoc search                      Display search results for given query expression in raw OPS format (JSON)
       p2n adhoc dump                        Display full results for given query expression in OpsExchangeDocument or Patent2NetBrevet format (JSON)
       p2n adhoc list                        Display list of values from single field for given query expression
       p2n adhoc worldmap                    Generate world map for given query expression over given field
@@ -167,7 +167,7 @@ def adhoc_interface(options):
         with_family=options['with-family'],
         with_register=options['with-register'])
 
-    # Display full results for given query expression in raw OPS format (JSON), e.g. run::
+    # Display search results for given query expression in raw OPS format (JSON), e.g. run::
     # p2n adhoc search --expression='TA=lentille'
     if options['search']:
         payload = patent2net.response_data
