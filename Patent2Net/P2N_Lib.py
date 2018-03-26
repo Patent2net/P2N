@@ -2122,7 +2122,7 @@ def LoadBiblioFile(rep, name):
     import cPickle
     DataBrevets = dict()
     DataBrevets['brevets'] =[]
-    with open(rep+'//Description'+name, 'r') as fic:
+    with open(os.path.normpath(rep+'//Description'+name), 'r') as fic:
         Descript = cPickle.load(fic)
         DataBrevets['ficBrevets'] = Descript['ficBrevets']
         DataBrevets['requete'] =  Descript['requete']

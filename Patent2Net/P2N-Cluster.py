@@ -68,12 +68,19 @@ temporPath = configFile.temporPath
 ResultContentsPath = configFile.ResultContentsPath
 ResultBiblioPath = configFile.ResultBiblioPath
 # at final step, next line should enter configFile as above
-ResultPathContentAug ='..//DATA//'+ndf+'//PatentContents//Metrics'
+ResultPathContentAug =os.path.normpath('..//DATA//'+ndf+'//PatentContents//Metrics')
 Excluded = []
 
 EnsVoc = dict()
 Labelle  = OrderedDict()
-with open (ResultPath +'//Excluding-voc.txt', 'r') as fic:
+if "Excluding-voc.txt" not in os.listdir(ResultPath):
+    Excl = open(os.path.normpath(os.path.join(ResultPath,'Excluding-voc.txt')), 'w')
+    print("I've created a new empty file " + ResultPath +"//Excluding-voc.txt")
+    print ("Consider revisiting it to exclude vocabulary (coma separated terms) from process")
+    Excl.write('\n')
+    Excl.close()
+    
+with open (os.path.normpath(os.path.join(ResultPath ,'Excluding-voc.txt')), 'r') as fic:
     data = fic.read()
     brev_stpswrds  = data.split(',')
     stopwords.extend(brev_stpswrds) # for tdidf vectorizer
@@ -560,7 +567,7 @@ for name, group in groups:
     tempoLab.append(labels)
     tempoFic.append(TitFic)
     
-interactive_legend = plugins.InteractiveLegendPlugin(memoFig , memoLab, legend_offset=(0,300),
+interactive_legend = plugins.InteractiveLegendPlugin( memoFig , memoLab, legend_offset=(0,300),
                                                          alpha_unsel=0.1, alpha_over=0.9, start_visible=False)
 interactive_legend2 = plugins.InteractiveLegendPlugin(memoFig2,  memoLab2, legend_offset=(0,0),
                                                           alpha_unsel=0.1, alpha_over=0.8, start_visible=False)

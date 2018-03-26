@@ -1,6 +1,7 @@
 import os
 import sys
 
+
 class P2NConfig:
     def __init__(self):
 
@@ -15,6 +16,7 @@ class P2NConfig:
         self.GatherPatent = False
         self.GatherFamilly = False
         self.GatherIramuteq = False
+        self.GatherImages = False
         # Networks config loading
         self.InventorNetwork = False
         self.ApplicantNetwork = False
@@ -35,11 +37,11 @@ class P2NConfig:
         self.FreePlane = False
         self.FusionCarrot2 = False
 
-        #opening request file, reading parameters
+        # opening request file, reading parameters
         content = self.readInputFile()
 
         for line in content:
-            ### General config loading
+            # General config loading
             if line.count('request:') > 0:
                 self.requete = self.getStr(line)
             elif line.count('DataDirectory:') > 0:
@@ -54,6 +56,8 @@ class P2NConfig:
                 self.GatherPatent = self.getBoolean(line)
             elif line.count('GatherFamilly') > 0:
                 self.GatherFamilly = self.getBoolean(line)
+            elif line.count('GatherImages') > 0:
+                self.GatherImages = self.getBoolean(line)
 
             # Networks config loading
             elif line.count('InventorNetwork') > 0:
@@ -101,15 +105,15 @@ class P2NConfig:
         return open("..//requete.cql", "r").readlines()
 
     def generatePaths(self):
-        self.ResultPath = os.path.join(self.GlobalPath, self.ndf)
-        self.ResultListPath = self.ResultPath+'//PatentLists'
-        self.ResultBiblioPath = self.ResultPath+'//PatentBiblios'
-        self.ResultContentsPath = self.ResultPath+'//PatentContents'
-        self.temporPath = self.ResultPath+'//tempo'
-        self.ResultAbstractPath = self.ResultContentsPath+'//Abstract'
-        self.ResultFamiliesAbstractPath = self.ResultContentsPath+'//FamiliesAbstract'
-        self.ResultGephiPath = self.ResultPath + '//GephiFiles'
-
+        self.ResultPath = os.path.normpath(os.path.join(self.GlobalPath, self.ndf))
+        self.ResultListPath = os.path.normpath(self.ResultPath + '//PatentLists')
+        self.ResultBiblioPath = os.path.normpath(self.ResultPath + '//PatentBiblios')
+        self.ResultContentsPath = os.path.normpath(self.ResultPath + '//PatentContents')
+        self.temporPath = os.path.normpath(self.ResultPath + '//tempo')
+        self.ResultAbstractPath = os.path.normpath(self.ResultContentsPath + '//Abstract')
+        self.ResultFamiliesAbstractPath = os.path.normpath(self.ResultContentsPath + '//FamiliesAbstract')
+        self.ResultGephiPath = os.path.normpath(self.ResultPath + '//GephiFiles')
+        self.ResultPathImages = os.path.normpath(self.ResultPath + '//PatentImages')
         for path in [
             self.ResultListPath,
             self.ResultBiblioPath,
@@ -118,7 +122,9 @@ class P2NConfig:
             self.ResultAbstractPath,
             self.ResultFamiliesAbstractPath,
             self.ResultGephiPath,
+            self.ResultPathImages,
         ]:
+            
             if not os.path.isdir(path):
                 os.makedirs(path)
 
@@ -128,7 +134,7 @@ class P2NConfig:
     def getBoolean(self, line):
         s = self.getStr(line)
         if s.count('True') > 0 or s.count('true') > 0:
-            return True # to gather contents
+            return True  # to gather contents
         else:
             return False
 
