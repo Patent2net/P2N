@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2017 The Patent2Net Developers
+# (c) 2017-2018 The Patent2Net Developers
+import os
 import sys
 import time
 import types
@@ -180,3 +181,132 @@ def exception_traceback(exc_info=None):
     exc_type, exc_val, exc_tb = exc_info
     traceback.print_exception(exc_type, exc_val, exc_tb, file=excout)
     return excout.getvalue()
+
+
+@memoize
+def find_convert():
+    """
+    Debian: aptitude install imagemagick
+    /usr/bin/convert
+
+    Mac OS X
+    /opt/local/bin/convert
+
+    Self-compiled
+    /opt/imagemagick-7.0.2/bin/convert
+    """
+
+    candidates = [
+        '/opt/imagemagick-7.0.2/bin/convert',
+        '/opt/imagemagick/bin/convert',
+        '/opt/local/bin/convert',
+        '/usr/bin/convert',
+        ]
+    return find_program_candidate(candidates)
+
+def find_program_candidate(candidates):
+    for candidate in candidates:
+        if os.path.isfile(candidate):
+            return candidate
+
+def to_png(tiff_payload, format='tif', width='', height=''):
+
+    width = str(width)
+    height = str(height)
+
+    # Unfortunately, PIL can not handle G4 compression.
+    # Failure: exceptions.IOError: decoder group4 not available
+    # Maybe patch: http://mail.python.org/pipermail/image-sig/2003-July/002354.html
+    """
+    import Image
+    png = StringIO.StringIO()
+    try:
+        Image.open(StringIO.StringIO(tiff_payload)).save(png, 'PNG')
+        png.seek(0)
+    except Exception, e:
+        print "ERROR (PIL+G4)!", e
+        pass
+    """
+
+    """
+    Instructions for installing ImageMagick on Debian::
+
+        apt install imagemagick
+
+    Instructions for installing ImageMagick on Windows::
+
+        https://www.imagemagick.org/script/download.php#windows
+
+    Instructions for building ImageMagick on Debian::
+
+        # https://packages.debian.org/source/wheezy/imagemagick
+        aptitude install build-essential checkinstall ghostscript libbz2-dev libexif-dev fftw-dev libfreetype6-dev libjasper-dev libjpeg-dev liblcms2-dev liblqr-1-0-dev libltdl-dev libpng-dev librsvg2-dev libtiff-dev libx11-dev libxext-dev libxml2-dev zlib1g-dev liblzma-dev libpango1.0-dev
+
+        ./configure --prefix=/opt/imagemagick-7.0.2
+        wget http://www.imagemagick.org/download/ImageMagick.tar.gz
+        # untar and cd
+        make -j6 && make install
+
+    """
+
+
+    # Let's resort to use ImageMagick! ;-(
+    # http://www.imagemagick.org/pipermail/magick-users/2003-May/008869.html
+    #convert_bin = os.path.join(os.path.dirname(__file__), 'imagemagick', 'convert.exe')
+
+    more_args = []
+
+    # Compute size for "resize" parameter
+    size = ''
+    if width or height:
+        if width:
+            size += width
+        size += 'x'
+        if height:
+            size += height
+
+        more_args += ['-resize', size]
+
+    convert = find_convert()
+    #command = [convert, 'tif:-', '+set', 'date:create', '+set', 'date:modify', 'png:-']
+    command = [
+        convert,
+        #'{0}:-'.format(format),
+        '-',                            # Convert from any format
+        '+set', 'date:create', '+set', 'date:modify',
+        # FIXME: make this configurable
+        #'-resize', '530x',
+        '-colorspace', 'rgb', '-flatten', '-depth', '8',
+        '-antialias', '-quality', '100', '-density', '300',
+        #'-level', '30%,100%',
+        ] \
+        + more_args + \
+        ['png:-']
+
+    command_debug = ' '.join(command)
+
+    proc = subprocess.Popen(
+        command,
+        shell = (os.name == 'nt'),
+        #shell = True,
+        stdin = subprocess.PIPE,
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+    )
+
+    stdout = stderr = ''
+
+    logger.info('Running command {}'.format(command_debug))
+    try:
+        stdout, stderr = proc.communicate(tiff_payload)
+        if proc.returncode is not None and proc.returncode != 0:
+            raise Exception('TIFF to PNG conversion failed')
+    except:
+        logger.error('TIFF to PNG conversion failed, {1}. returncode={2}, command="{0}"'.format(command_debug, stderr, proc.returncode))
+        raise Exception('TIFF to PNG conversion failed')
+
+    if 'ImageMagick' in stdout[:200]:
+        logger.error('TIFF to PNG conversion failed, stdout={1}, stderr={1}. command="{0}"'.format(command_debug, stdout, stderr))
+        raise Exception('TIFF to PNG conversion failed')
+
+    return stdout

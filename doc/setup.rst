@@ -20,9 +20,14 @@ Installation
 Install from source
 ===================
 - Source releases are available from GitHub: https://github.com/Patent2net/P2N/releases
-- Install a specific version using ``pip``::
+- Install a specific version::
+
+    pip install 'https://github.com/Patent2net/P2N/archive/3.0.0-dev6.tar.gz' --upgrade
+
+- Install the current development version::
 
     pip install 'https://github.com/Patent2net/P2N/archive/develop.tar.gz' --upgrade
+
 
 
 Install binary package
@@ -35,6 +40,18 @@ Install binary package
 ********
 Appendix
 ********
+
+Install ImageMagick
+===================
+
+On Debian Linux::
+
+        apt install imagemagick
+
+On Windows::
+
+        https://www.imagemagick.org/script/download.php#windows
+
 
 Install Patent2Net on Linux
 ===========================

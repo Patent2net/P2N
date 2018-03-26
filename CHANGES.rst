@@ -5,6 +5,8 @@ Patent2Net CHANGES
 
 development
 ===========
+- Use ImageMagick for thumbnail generation in ``FusionImages.py``,
+  see also https://github.com/Patent2net/P2N/issues/24
 
 2018-03-20 3.0.0-dev6
 =====================
