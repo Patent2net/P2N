@@ -30,9 +30,21 @@ Patent2Net/_CompERR32.txt
 Patent2Net/_CompLOG32.txt
 Patent2Net/P2N_Version(2)08-Jan-2018.info
 requete.cql
-DATA
+DATA\
+DATA/Lentille/
 
 *.html
 *.json
 *.bib
 *.html
+DATA/Lentille/FamiliesLentille.html
+DATA/Lentille/FamiliesLentille.json
+*.bib
+DATA/Lentille/Lentille.bib
+DATA/Lentille/Lentille.html
+DATA/Lentille/Lentille.json
+DATA/Lentille/LentilleCartoApplicant.html
+DATA/Lentille/LentilleCartoInventor.html
+DATA/Lentille/LentilleFP.html
+DATA/Lentille/LentillePivot.html
+requete.cql

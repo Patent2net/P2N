@@ -84,7 +84,7 @@ def get_images_files(ops_client, path_image, link, page_start, num_pages):
         if not os.path.exists(path_img):
             print '... Retrieving img page {} of {}'.format(page, (page_start + num_pages - 1))
             resp = ops_client.image(link, range=page)
-            file(path_img, 'w').write(resp.content)
+            file(path_img, 'wb').write(resp.content)
         pathes.append(path_img)
     return pathes
 
