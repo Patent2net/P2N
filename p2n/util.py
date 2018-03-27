@@ -4,13 +4,14 @@ import os
 import sys
 import time
 import types
+import where
 import logging
 import operator
 import functools
 import itertools
 import traceback
 import subprocess
-from StringIO import StringIO
+from six import StringIO, BytesIO
 from json.encoder import JSONEncoder
 from collections import OrderedDict
 
@@ -189,46 +190,92 @@ def find_convert():
     Debian: aptitude install imagemagick
     /usr/bin/convert
 
-    Mac OS X
+    Mac OS X with Homebrew
+    /usr/local/bin/convert
+
+    Mac OS X with Macports
     /opt/local/bin/convert
 
     Self-compiled
+    /opt/imagemagick/bin/convert
     /opt/imagemagick-7.0.2/bin/convert
     """
 
+    # Some nailed location candidates
     candidates = [
         '/opt/imagemagick-7.0.2/bin/convert',
         '/opt/imagemagick/bin/convert',
+        '/usr/local/bin/convert',
         '/opt/local/bin/convert',
         '/usr/bin/convert',
-        ]
-    return find_program_candidate(candidates)
+    ]
+
+    # More location candidates from the system
+    candidates += where.where('convert')
+
+    # Find location of "convert" program
+    convert_path = find_program_candidate(candidates)
+
+    logger.info('Found "convert" program at {}'.format(convert_path))
+    return convert_path
 
 def find_program_candidate(candidates):
     for candidate in candidates:
         if os.path.isfile(candidate):
             return candidate
 
-def to_png(tiff_payload, format='tif', width='', height=''):
-
-    width = str(width)
-    height = str(height)
-
-    # Unfortunately, PIL can not handle G4 compression.
-    # Failure: exceptions.IOError: decoder group4 not available
-    # Maybe patch: http://mail.python.org/pipermail/image-sig/2003-July/002354.html
+def to_png(tiff, width=None, height=None):
     """
-    import Image
-    png = StringIO.StringIO()
+    Convert image to PNG format with optional resizing.
+
+    :param tiff: A stream buffer object like BytesIO
+    :param width: The width of the image in pixels (optional)
+    :param height: The height of the image in pixels (optional)
+    :return: A BytesIO object instance containing image data
+    """
+
+
+    """
+    The PIL module didn't properly support TIFF images with G4 compression::
+
+        Failure: exceptions.IOError: decoder group4 not available
+        Maybe patch: http://mail.python.org/pipermail/image-sig/2003-July/002354.html
+
+    Nowadays, this should be supported by Pillow on recent platforms:
+    https://pillow.readthedocs.io/en/latest/releasenotes/5.0.0.html#compressed-tiff-images
+    """
     try:
-        Image.open(StringIO.StringIO(tiff_payload)).save(png, 'PNG')
+        from PIL import Image
+
+        # Read image
+        image = Image.open(tiff)
+
+        if width and height:
+
+            # Convert image to grayscale
+            image = image.convert('L')
+
+            # Resize image
+            image.thumbnail((width, height), Image.LANCZOS)
+
+        # Save image into a stream buffer
+        png = BytesIO()
+        image.save(png, 'PNG')
+
+        # Readers should start reading at the beginning of the stream
         png.seek(0)
-    except Exception, e:
-        print "ERROR (PIL+G4)!", e
-        pass
-    """
+
+        return png
+
+    except Exception as ex:
+        logger.warning('Image conversion using "Pillow" failed: {}'.format(ex))
+
 
     """
+    However, if the conversion using "Pillow" fails for some reason,
+    let's try to use the "convert" utility from ImageMagick.
+
+
     Instructions for installing ImageMagick on Debian::
 
         apt install imagemagick
@@ -249,45 +296,81 @@ def to_png(tiff_payload, format='tif', width='', height=''):
 
     """
 
-
-    # Let's resort to use ImageMagick! ;-(
-    # http://www.imagemagick.org/pipermail/magick-users/2003-May/008869.html
-    #convert_bin = os.path.join(os.path.dirname(__file__), 'imagemagick', 'convert.exe')
-
     more_args = []
 
-    # Compute size for "resize" parameter
+    # Compute value for "resize" parameter
     size = ''
     if width or height:
+
         if width:
-            size += width
+            size += str(width)
+
+        # Use "x" for separating "width" and "height" when resizing
         size += 'x'
+
         if height:
-            size += height
+            size += str(height)
 
         more_args += ['-resize', size]
 
     convert = find_convert()
-    #command = [convert, 'tif:-', '+set', 'date:create', '+set', 'date:modify', 'png:-']
+    if not convert:
+        message = 'Could not find ImageMagick program "convert", please install from e.g. https://imagemagick.org/'
+        logger.error(message)
+        raise AssertionError(message)
+
     command = [
         convert,
-        #'{0}:-'.format(format),
-        '-',                            # Convert from any format
         '+set', 'date:create', '+set', 'date:modify',
-        # FIXME: make this configurable
-        #'-resize', '530x',
         '-colorspace', 'rgb', '-flatten', '-depth', '8',
         '-antialias', '-quality', '100', '-density', '300',
-        #'-level', '30%,100%',
+        # '-level', '30%,100%',
+
+        # Debugging
+        # (see "convert -list debug")
+        #'-verbose',
+        #'-debug', 'All',
+
         ] \
         + more_args + \
-        ['png:-']
+        [
 
-    command_debug = ' '.join(command)
+        # Convert from specific format
+        #'{0}:-'.format(format),
+
+        # Convert from any format
+        '-',
+
+        # Convert to PNG format
+        'png:-',
+    ]
+
+    command_string = ' '.join(command)
+    try:
+        logger.debug('Converting image using "{}"'.format(command_string))
+        return run_imagemagick(command, tiff.read())
+
+    except Exception as ex:
+        logger.error('Image conversion using ImageMagicks "convert" program failed: {}'.format(ex))
+        raise
+
+def run_imagemagick(command, input=None):
+    output = run_command(command, input)
+    if 'ImageMagick' in output.read()[:200]:
+        command_string = ' '.join(command)
+        message = 'Image conversion failed, found "ImageMagick" in STDOUT. Command was "{}"'.format(command_string)
+        logger.error(message)
+        raise RuntimeError(message)
+    output.seek(0)
+    return output
+
+def run_command(command, input=None):
+
+    command_string = ' '.join(command)
 
     proc = subprocess.Popen(
         command,
-        shell = (os.name == 'nt'),
+        #shell = (os.name == 'nt'),
         #shell = True,
         stdin = subprocess.PIPE,
         stdout = subprocess.PIPE,
@@ -295,18 +378,50 @@ def to_png(tiff_payload, format='tif', width='', height=''):
     )
 
     stdout = stderr = ''
-
-    logger.info('Running command {}'.format(command_debug))
     try:
-        stdout, stderr = proc.communicate(tiff_payload)
+        stdout, stderr = proc.communicate(input)
         if proc.returncode is not None and proc.returncode != 0:
-            raise Exception('TIFF to PNG conversion failed')
-    except:
-        logger.error('TIFF to PNG conversion failed, {1}. returncode={2}, command="{0}"'.format(command_debug, stderr, proc.returncode))
-        raise Exception('TIFF to PNG conversion failed')
+            message = 'Command "{}" failed, returncode={}, stderr={}'.format(command_string, proc.returncode, stderr)
+            logger.error(message)
+            raise RuntimeError(message)
 
-    if 'ImageMagick' in stdout[:200]:
-        logger.error('TIFF to PNG conversion failed, stdout={1}, stderr={1}. command="{0}"'.format(command_debug, stdout, stderr))
-        raise Exception('TIFF to PNG conversion failed')
+    except Exception as ex:
+        if isinstance(ex, RuntimeError):
+            raise
+        else:
+            message = 'Command "{}" failed, returncode={}, exception={}, stderr={}'.format(command_string, proc.returncode, ex, stderr)
+            logger.error(message)
+            raise RuntimeError(message)
 
-    return stdout
+    return BytesIO(stdout)
+
+
+    """
+    # Use Delegator.py for process execution
+    
+    # Currently, there seem to be problems using both binary STDIN and STDOUT:
+    # https://github.com/kennethreitz/delegator.py/issues/51
+    # Let's try again soon.
+    
+    #proc = delegator.run(command)
+    #proc = delegator.run(command, block=True, binary=True)
+    proc = delegator.run(command, block=False, binary=True)
+
+    # https://github.com/kennethreitz/delegator.py/issues/50
+    #proc.blocking = False
+    proc.send(tiff.read())
+    #proc.subprocess.send(tiff.read() + b"\n")
+    proc.block()
+    #print 'out:', proc.out
+    print 'self.blocking:', proc.blocking
+    print 'self._uses_subprocess:', proc._uses_subprocess
+    print 'self.subprocess:', proc.subprocess
+
+    print 'stdout-1:', proc.std_out
+    stdout = proc.std_out.read()
+    print 'stdout-2:', stdout
+    #if 'ImageMagick' in stdout[:200]:
+    #    raise ValueError('Image conversion failed, found "ImageMagick" in STDOUT')
+
+    return BytesIO(stdout)
+    """

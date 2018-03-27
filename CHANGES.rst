@@ -7,6 +7,7 @@ development
 ===========
 - Use ImageMagick for thumbnail generation in ``FusionImages.py``,
   see also https://github.com/Patent2net/P2N/issues/24
+- Use "Pillow" for thumbnail generation, gracefully fall back to ImageMagick's "convert"
 
 2018-03-20 3.0.0-dev6
 =====================
