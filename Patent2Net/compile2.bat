@@ -23,6 +23,10 @@ pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\dist
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt Interface2.py
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt Parallel3.py
 
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt ClusterPreProcess.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --hidden-import sklearn.neighbors.typedefs --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
+
 
 rmdir /S /Q  ..\tempocomp\FormateExportAttractivityCartography\setuptools-19.2-py2.7.egg
 rmdir /S /Q  ..\tempocomp\OPSGatherPatentsv2\setuptools-19.2-py2.7.egg
@@ -76,6 +80,9 @@ pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\dist
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt ..\specs\Interface2.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt ..\specs\Parallel3.spec
 
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-IPC-Abstracts-Augment.txt ..\specs\IPC-Abstracts-Augment.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt specs\ClusterPreProcess.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-Cluster.txt specs\P2N-Cluster.spec
 
 mkdir  ..\distribution\Patent2Net\
 
@@ -86,6 +93,9 @@ xcopy /S /Y ..\distribution\OPSGatherAugment-Families ..\distribution\Patent2Net
 xcopy /S /Y ..\distribution\OPSGatherContentsV2-Images ..\distribution\Patent2Net\
 REM xcopy /S /Y ..\distribution\Compatibilizer ..\distribution\Patent2Net\
 
+xcopy /S /Y ..\distribution\IPC-Abstracts-Augment ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\ClusterPreProcess ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\P2N-Cluster ..\distribution\Patent2Net\
 
 xcopy /S /Y ..\distribution\P2N-Networks ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\P2N-PreNetworks ..\distribution\Patent2Net\
@@ -110,18 +120,18 @@ REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
 xcopy /Y root\* ..\distribution\
 
 copy /y cacert.pem ..\distribution\Patent2Net\
-copy /y countries.json ..\distribution\patent2Net
-copy /y P2N.css ..\distribution\patent2Net
+copy /y countries.json ..\distribution\Patent2Net
+copy /y P2N.css ..\distribution\Patent2Net
 copy /y NameCountryMap.csv ..\distribution\Patent2Net\
 copy /y scriptSearch.js ..\distribution\Patent2Net\
 copy /y Searchscript.js ..\distribution\Patent2Net\
-copy /y CollecteETRaite.bat ..\distribution\
-copy /y Process.bat ..\distribution\
-copy /y FormatingProcess.bat ..\distribution\
-copy /y GatherProcess.bat ..\distribution\
-copy /y NetsProcess.bat ..\distribution\
-copy /y ProcessPy.bat ..\distribution\
-copy /y OpenNav.bat ..\distribution\Patent2Net\OpenNav.bat
+copy /y CollecteETRaite.bat ..\distribution\Patent2Net\
+copy /y Process.bat ..\distribution\Patent2Net\
+copy /y FormatingProcess.bat ..\distribution\Patent2Net\
+copy /y GatherProcess.bat ..\distribution\Patent2Net\
+copy /y NetsProcess.bat ..\distribution\Patent2Net\
+copy /y ProcessPy.bat ..\distribution\Patent2Net\
+REM copy /y OpenNav.bat ..\distribution\Patent2Net\OpenNav.bat
 mkdir  ..\distribution\Patent2Net\templates
 xcopy /S /Y templates  ..\distribution\Patent2Net\templates
 copy /y cles-epo.txt  ..\distribution\
