@@ -30,17 +30,17 @@ def generate_thumbnails(img_path):
         print 'Converting image {}'.format(img_path)
 
         # PIL can not handle images with G4 compression
-        
-#        im = Image.open(img_path)
-#        im2 = im.convert('L')
-#        im2.thumbnail(THUMBNAIL_SIZE, Image.LANCZOS)
-#        im2.save(thumb_f, 'PNG')
-#        im = Image.open(img_path)
-#        im.save(orig_f, 'PNG')
-       
+        im = Image.open(img_path)
+        im2 = im.convert('L')
+        im2.thumbnail(THUMBNAIL_SIZE, Image.LANCZOS)
+        im2.save(thumb_f, 'PNG')
+        im = Image.open(img_path)
+        im.save(orig_f, 'PNG')
 
+    if not os.path.exists(orig_f):
         # Use ImageMagick or other tooling
-        with open(img_path) as tiff:
+        with open(img_path, "rb") as tiff:
+
             tiff_payload = tiff.read()
 
             # Write original image in PNG format
@@ -52,7 +52,7 @@ def generate_thumbnails(img_path):
             width, height = THUMBNAIL_SIZE
             payload_thumbnail = to_png(tiff_payload, width=width, height=height)
             with open(thumb_f, 'w') as png_thumbnail:
-				  png_thumbnail.write(payload_thumbnail)
+                png_thumbnail.write(payload_thumbnail)
 
     return thumb, orig, img_fname
 
@@ -104,4 +104,4 @@ if IsEnableScript:
             request=requete.replace('"', ''),
             gallery=gallery,
             json=json.dumps(gallery),
-        )
+)

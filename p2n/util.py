@@ -208,6 +208,10 @@ def find_program_candidate(candidates):
     for candidate in candidates:
         if os.path.isfile(candidate):
             return candidate
+        else:
+            import where
+            return where.first("magick")+ ' convert'
+        
 
 def to_png(tiff_payload, format='tif', width='', height=''):
 
@@ -230,23 +234,16 @@ def to_png(tiff_payload, format='tif', width='', height=''):
 
     """
     Instructions for installing ImageMagick on Debian::
-
         apt install imagemagick
-
     Instructions for installing ImageMagick on Windows::
-
         https://www.imagemagick.org/script/download.php#windows
-
     Instructions for building ImageMagick on Debian::
-
         # https://packages.debian.org/source/wheezy/imagemagick
         aptitude install build-essential checkinstall ghostscript libbz2-dev libexif-dev fftw-dev libfreetype6-dev libjasper-dev libjpeg-dev liblcms2-dev liblqr-1-0-dev libltdl-dev libpng-dev librsvg2-dev libtiff-dev libx11-dev libxext-dev libxml2-dev zlib1g-dev liblzma-dev libpango1.0-dev
-
         ./configure --prefix=/opt/imagemagick-7.0.2
         wget http://www.imagemagick.org/download/ImageMagick.tar.gz
         # untar and cd
         make -j6 && make install
-
     """
 
 
@@ -273,7 +270,8 @@ def to_png(tiff_payload, format='tif', width='', height=''):
         convert,
         #'{0}:-'.format(format),
         '-',                            # Convert from any format
-        '+set', 'date:create', '+set', 'date:modify',
+        '+set', 'date:create', '+set', 'date:modify',  
+        '-define', 'stream:buffer-size=0',
         # FIXME: make this configurable
         #'-resize', '530x',
         '-colorspace', 'rgb', '-flatten', '-depth', '8',
