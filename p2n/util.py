@@ -233,9 +233,6 @@ def find_program_candidate(candidates):
     for candidate in candidates:
         if os.path.isfile(candidate):
             return candidate
-        else:
-            import where
-            return where.first("magick") + ' convert'
 
 
 def to_png(tiff, width=None, height=None):
