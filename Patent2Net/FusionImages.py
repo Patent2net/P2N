@@ -32,9 +32,8 @@ def generate_thumbnails(img_path):
     png_large_name = filename + '.png'
     png_thumb_name = filename + '.tb.png'
 
-    png_large_path  = os.path.normpath(os.path.join(base_path, png_large_name))
+    png_large_path = os.path.normpath(os.path.join(base_path, png_large_name))
     png_thumb_path = os.path.normpath(os.path.join(base_path, png_thumb_name))
-
 
     # Convert original TIFF file to PNG format and also create a thumbnailed version.
     # Use Pillow, ImageMagick or other tooling.

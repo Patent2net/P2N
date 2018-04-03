@@ -25,11 +25,13 @@ def setup_logging(level=logging.INFO):
         stream=sys.stderr,
         level=level)
 
+
 def boot_logging(options=None):
     log_level = logging.INFO
     if options and options.get('--debug'):
         log_level = logging.DEBUG
     setup_logging(level=log_level)
+
 
 def normalize_docopt_options(options):
     normalized = {}
@@ -37,6 +39,7 @@ def normalize_docopt_options(options):
         key = key.strip('--<>')
         normalized[key] = value
     return normalized
+
 
 def run_script(script, configfile, directory='Patent2Net'):
 
@@ -56,7 +59,8 @@ def run_script(script, configfile, directory='Patent2Net'):
             if outcome is not None:
                 returncode = process.returncode
                 if returncode != 0:
-                    logger.error('Command "{command}" failed with return code {returncode}'.format(**locals()))
+                    logger.error(
+                        'Command "{command}" failed with return code {returncode}'.format(**locals()))
                 return returncode
 
             time.sleep(1)
@@ -66,6 +70,7 @@ def run_script(script, configfile, directory='Patent2Net'):
             process.terminate()
             process.wait()
             return process.returncode
+
 
 def memoize(obj):
     """
@@ -82,17 +87,20 @@ def memoize(obj):
 
     return memoizer
 
+
 def to_list(obj):
     """Convert an object to a list if it is not already one"""
     if not isinstance(obj, (list, tuple)):
         obj = [obj, ]
     return obj
 
+
 def filterdict(dct, keys=None):
     """Filter dictionaries using specified keys"""
     keys = keys or []
     dct = {key: value for (key, value) in dct.iteritems() if key in keys}
     return dct
+
 
 def dictproduct(dct):
     """
@@ -123,6 +131,7 @@ class JsonObjectEncoder(JSONEncoder):
     """
     Serialize nested object compositions to JSON
     """
+
     def default(self, o):
         # TODO: Maybe use "o.asdict()"?
         return o.__dict__
@@ -219,10 +228,15 @@ def find_convert():
     logger.info('Found "convert" program at {}'.format(convert_path))
     return convert_path
 
+
 def find_program_candidate(candidates):
     for candidate in candidates:
         if os.path.isfile(candidate):
             return candidate
+        else:
+            import where
+            return where.first("magick") + ' convert'
+
 
 def to_png(tiff, width=None, height=None):
     """
@@ -233,7 +247,6 @@ def to_png(tiff, width=None, height=None):
     :param height: The height of the image in pixels (optional)
     :return: A BytesIO object instance containing image data
     """
-
 
     """
     The PIL module didn't properly support TIFF images with G4 compression::
@@ -270,30 +283,22 @@ def to_png(tiff, width=None, height=None):
     except Exception as ex:
         logger.warning('Image conversion using "Pillow" failed: {}'.format(ex))
 
-
     """
     However, if the conversion using "Pillow" fails for some reason,
     let's try to use the "convert" utility from ImageMagick.
 
 
     Instructions for installing ImageMagick on Debian::
-
         apt install imagemagick
-
     Instructions for installing ImageMagick on Windows::
-
         https://www.imagemagick.org/script/download.php#windows
-
     Instructions for building ImageMagick on Debian::
-
         # https://packages.debian.org/source/wheezy/imagemagick
         aptitude install build-essential checkinstall ghostscript libbz2-dev libexif-dev fftw-dev libfreetype6-dev libjasper-dev libjpeg-dev liblcms2-dev liblqr-1-0-dev libltdl-dev libpng-dev librsvg2-dev libtiff-dev libx11-dev libxext-dev libxml2-dev zlib1g-dev liblzma-dev libpango1.0-dev
-
         ./configure --prefix=/opt/imagemagick-7.0.2
         wget http://www.imagemagick.org/download/ImageMagick.tar.gz
         # untar and cd
         make -j6 && make install
-
     """
 
     more_args = []
@@ -322,6 +327,7 @@ def to_png(tiff, width=None, height=None):
     command = [
         convert,
         '+set', 'date:create', '+set', 'date:modify',
+        '-define', 'stream:buffer-size=0',
         '-colorspace', 'rgb', '-flatten', '-depth', '8',
         '-antialias', '-quality', '100', '-density', '300',
         # '-level', '30%,100%',
@@ -331,7 +337,7 @@ def to_png(tiff, width=None, height=None):
         #'-verbose',
         #'-debug', 'All',
 
-        ] \
+    ] \
         + more_args + \
         [
 
@@ -354,15 +360,18 @@ def to_png(tiff, width=None, height=None):
         logger.error('Image conversion using ImageMagicks "convert" program failed: {}'.format(ex))
         raise
 
+
 def run_imagemagick(command, input=None):
     output = run_command(command, input)
     if 'ImageMagick' in output.read()[:200]:
         command_string = ' '.join(command)
-        message = 'Image conversion failed, found "ImageMagick" in STDOUT. Command was "{}"'.format(command_string)
+        message = 'Image conversion failed, found "ImageMagick" in STDOUT. Command was "{}"'.format(
+            command_string)
         logger.error(message)
         raise RuntimeError(message)
     output.seek(0)
     return output
+
 
 def run_command(command, input=None):
 
@@ -372,16 +381,17 @@ def run_command(command, input=None):
         command,
         #shell = (os.name == 'nt'),
         #shell = True,
-        stdin = subprocess.PIPE,
-        stdout = subprocess.PIPE,
-        stderr = subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
 
     stdout = stderr = ''
     try:
         stdout, stderr = proc.communicate(input)
         if proc.returncode is not None and proc.returncode != 0:
-            message = 'Command "{}" failed, returncode={}, stderr={}'.format(command_string, proc.returncode, stderr)
+            message = 'Command "{}" failed, returncode={}, stderr={}'.format(
+                command_string, proc.returncode, stderr)
             logger.error(message)
             raise RuntimeError(message)
 
@@ -389,20 +399,20 @@ def run_command(command, input=None):
         if isinstance(ex, RuntimeError):
             raise
         else:
-            message = 'Command "{}" failed, returncode={}, exception={}, stderr={}'.format(command_string, proc.returncode, ex, stderr)
+            message = 'Command "{}" failed, returncode={}, exception={}, stderr={}'.format(
+                command_string, proc.returncode, ex, stderr)
             logger.error(message)
             raise RuntimeError(message)
 
     return BytesIO(stdout)
 
-
     """
     # Use Delegator.py for process execution
-    
+
     # Currently, there seem to be problems using both binary STDIN and STDOUT:
     # https://github.com/kennethreitz/delegator.py/issues/51
     # Let's try again soon.
-    
+
     #proc = delegator.run(command)
     #proc = delegator.run(command, block=True, binary=True)
     proc = delegator.run(command, block=False, binary=True)
