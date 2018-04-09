@@ -1,4 +1,4 @@
-rmdir /S /Q dist\Patent2Net
+rmdir /S /Q ..\distribution\Patent2Net
 
 pyinstaller -p .  --workpath=..\tempocomp --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt FormateExportAttractivityCartography.py
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt OPSGatherPatentsv2.py
@@ -118,7 +118,8 @@ xcopy /S /Y ..\distribution\Parallel3 ..\distribution\Patent2Net\
 REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
 
 xcopy /Y root\* ..\distribution\
-
+copy /Y ipcr_2015.xml ..\distribution\Patent2Net\
+copy /Y requete.cql ..\distribution\
 copy /y cacert.pem ..\distribution\Patent2Net\
 copy /y countries.json ..\distribution\Patent2Net
 copy /y P2N.css ..\distribution\Patent2Net
@@ -143,6 +144,13 @@ xcopy /S /Y extensions ..\distribution\Patent2Net\extensions
 xcopy /S /Y media ..\distribution\Patent2Net\media
 mkdir ..\distribution\RequestsSet
 mkdir ..\distribution\REQUESTS
+copy /y Process.bat ..\distribution\
+copy /y GatherProcess.bat  ..\distribution\
+copy /y NetsProcess.bat  ..\distribution\
+copy /y FormatingProcess.bat  ..\distribution\
+copy /y *.info ..\distribution\
+del *.info
+
 REM cleaning
 rmdir /S /Q ..\distribution\FormateExportAttractivityCartography
 rmdir /S /Q ..\distribution\OPSGatherPatentsv2
@@ -164,3 +172,4 @@ rmdir /S /Q ..\distribution\FormateExportCountryCartography
 rmdir /S /Q ..\distribution\FusionCarrot2
 rmdir /S /Q ..\distribution\Interface2
 rmdir /S /Q ..\distribution\Parallel3
+

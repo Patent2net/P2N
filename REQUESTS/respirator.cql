@@ -26,6 +26,9 @@ OPSGatherContentsv2-Iramuteq: False
 #patents families extending the PU to families
 GatherFamilly: True
 
+#NEW 2018: images
+GatherImages: True
+
 ###############################
 # Networks. Produce both online and for download and local use of Gephi
 # Inventors' network 
@@ -92,4 +95,9 @@ FormateExportPivotTable: True
 # for download and local use of Carrot2 and Iramuteq
 FusionCarrot2: True
 FusionIramuteq2: True
+
+###############################
+# NEW Feature (BETA)
+# Double clustering system based on non so trivial words
+P2N-Cluster: True
 
