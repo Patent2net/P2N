@@ -21,6 +21,8 @@ requires = [
     'docopt==0.6.2',
     'jsonpointer==1.12',
     'attrs==17.3.0',
+    'Pillow==5.0.0',
+    'where==1.0.2',
 ]
 
 test_requires = [
