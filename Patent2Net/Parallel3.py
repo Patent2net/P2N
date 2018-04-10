@@ -53,14 +53,14 @@ lstReq = [fic for fic in os.listdir(RequeteFolder) if fic.endswith('cql')]
 #            3.1: ["FusionCarrot2.exe", "FusionIramuteq2.exe"],
 #        4:"Interface2.exe"
 #        }
-Gatherers = ["OPSGatherPatentsv2.exe","OPSGatherAugment-Families.exe", "OPSGatherContentsv2-Iramuteq.exe"]
+Gatherers = ["OPSGatherPatentsv2.exe","OPSGatherAugment-Families.exe", "OPSGatherContentsv2-Iramuteq.exe", "OPSGatherContentsV2-Images.exe"]
 Pretraite1 = "P2N-PreNetworks.exe"
 Traite1 = ["P2N-FreePlane.exe", "FormateExportBiblio.exe", "FormateExportAttractivityCartography.exe",
-                  "FormateExportDataTable.exe","FormateExportCountryCartography.exe"]
-NetProc = [ "P2N-Networks.exe", "P2N-NetworksJS.exe" ]
+                  "FormateExportDataTable.exe","FormateExportCountryCartography.exe", "IPC-Abstracts-Augment.exe"]
+NetProc = [ "P2N-Networks.exe", "P2N-NetworksJS.exe", "ClusterPreProcess.exe" ]
                    # these processing program can be launched after the first gatherer has ended
 Traite2 = ["FormateExportDataTableFamilies.exe", "FormateExportPivotTable.exe"] #same comment with second gatherer
-Traite3 = ["FusionCarrot2.exe", "FusionIramuteq2.exe"] # same again , : this one is preocessed bu gatherContentsV2
+Traite3 = ["FusionCarrot2.exe", "FusionIramuteq2.exe", "FusionImages.exe", "P2N-Cluster.exe"] # same again , : this one is preocessed bu gatherContentsV2
 
 Nets = ["CountryCrossTech", "CrossTech", "InventorsCrossTech", "Applicants_CrossTech", "Inventors",
  "ApplicantInventor", "Applicants", "References", "Citations", "Equivalents"]

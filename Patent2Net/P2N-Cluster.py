@@ -80,7 +80,7 @@ if "Excluding-voc.txt" not in os.listdir(ResultPath):
     Excl.write('\n')
     Excl.close()
     
-with open (os.path.normpath(os.path.join(ResultPath ,'Excluding-voc.txt')), 'r') as fic:
+with open (os.path.normpath(os.path.join(ResultPath, 'Excluding-voc.txt')), 'r') as fic:
     data = fic.read()
     brev_stpswrds  = data.split(',')
     stopwords.extend(brev_stpswrds) # for tdidf vectorizer
@@ -108,19 +108,19 @@ Labels = []
 Abstracts  = [] # Pure abstracts
 IPCRsText  = []
 
-Contents = joblib.load(ResultContentsPath+'//Contents-'+ndf+'.pkl')   # Contains IPCRs (text of associated IPCR classes) + title + abstracts 
-Titles = joblib.load( ResultContentsPath+'//Titles-'+ndf+'.pkl')
-Labels = joblib.load( ResultContentsPath+'//Labels-'+ndf+'.pkl')
-IPCRsText = joblib.load( ResultContentsPath+'//IPCRsText-'+ndf+'.pkl')
-Abstracts = joblib.load( ResultContentsPath+'//Abstracts-'+ndf+'.pkl')
+Contents = joblib.load(os.path.normpath(ResultContentsPath+'//Contents-'+ndf+'.pkl'))   # Contains IPCRs (text of associated IPCR classes) + title + abstracts 
+Titles = joblib.load( os.path.normpath(ResultContentsPath+'//Titles-'+ndf+'.pkl'))
+Labels = joblib.load( os.path.normpath(ResultContentsPath+'//Labels-'+ndf+'.pkl'))
+IPCRsText = joblib.load( os.path.normpath(ResultContentsPath+'//IPCRsText-'+ndf+'.pkl'))
+Abstracts = joblib.load( os.path.normpath(ResultContentsPath+'//Abstracts-'+ndf+'.pkl'))
 CIB = []
 
 print("loading patents contents")
 #
-Tit2FicName=joblib.load(ResultContentsPath+'//Titles_ficNames-'+ndf+'.pkl')    
+Tit2FicName=joblib.load(os.path.normpath(ResultContentsPath+'//Titles_ficNames-'+ndf+'.pkl'))
 #
-FreqTrie= joblib.load(ResultContentsPath+'//FreqTrie'+ndf+'.pkl')
-word_freq_df = joblib.load(ResultContentsPath+'//word_freq'+ndf+'.pkl')
+FreqTrie= joblib.load(os.path.normpath(ResultContentsPath+'//FreqTrie'+ndf+'.pkl'))
+word_freq_df = joblib.load(os.path.normpath(ResultContentsPath+'//word_freq'+ndf+'.pkl'))
 
 D0=len(set(word_freq_df['term'])) #unic forms of corpus
 H0=np.log(D0) # 
@@ -152,8 +152,8 @@ bigrams = [truc for truc in ValueTerms if isinstance(truc.split(' '), list) and 
 trigrams = [truc for truc in ValueTerms if isinstance(truc.split(' '), list) and (len(truc.split(' ')) ==3)]
 quadrigrams = [truc for truc in ValueTerms if isinstance(truc.split(' '), list) and (len(truc.split(' ')) ==4)]
 monog = [truc for truc in ValueTerms if ' ' not in truc]
-EnsVoc=joblib.load(ResultContentsPath+'//EnsVocFile'+ndf +'.pkl')
-Voc=joblib.load(ResultContentsPath+'//VocFile'+ndf+ '.pkl')  
+EnsVoc=joblib.load(os.path.normpath(ResultContentsPath+'//EnsVocFile'+ndf +'.pkl'))
+Voc=joblib.load(os.path.normpath(ResultContentsPath+'//VocFile'+ndf+ '.pkl'))
 #cleanning exluded words  
 for termes in Excluded:
     for mot in bigrams:
@@ -520,7 +520,7 @@ for name, group in groups2:
     
 #    points = ax.plot(group.x, group.y, marker='o', linestyle='', ms=10, 
 #                     mec= cluster_colors [name],color=cluster_colors [name])
-    points = ax.plot(group.x, group.y, marker='x', linestyle='', ms=10, mew=3,
+    points = ax.plot(group.x, group.y, marker='x', linestyle='', ms=10, mew=3, #♀title = 'test1a',
                      mec= 'red',color=cluster_colors[name], alpha=0.9)
     
     for cle in group.x.keys():
@@ -537,7 +537,7 @@ for name, group in groups2:
 #    mpld3.plugins.connect(fig, mpld3.plugins.ClickInfo( ligne,  urls = iterFic.next()))
 for name, group in groups:
     points = ax.plot(group.x, group.y, marker='o', linestyle='', ms=18, mec='none',
-                       label=cluster_names[name], 
+                       label=cluster_names[name], title = 'test1b',
                      color=cluster_colors2[name], alpha=0.6 
                      )
     memoFig.append(points)
@@ -567,9 +567,9 @@ for name, group in groups:
     tempoLab.append(labels)
     tempoFic.append(TitFic)
     
-interactive_legend = plugins.InteractiveLegendPlugin( memoFig , memoLab, legend_offset=(0,300),
+interactive_legend = plugins.InteractiveLegendPlugin(memoFig , memoLab, legend_offset=(0,300), title = 'test2a',
                                                          alpha_unsel=0.1, alpha_over=0.9, start_visible=False)
-interactive_legend2 = plugins.InteractiveLegendPlugin(memoFig2,  memoLab2, legend_offset=(0,0),
+interactive_legend2 = plugins.InteractiveLegendPlugin(memoFig2,  memoLab2, legend_offset=(0,0), title = 'test2b',
                                                           alpha_unsel=0.1, alpha_over=0.8, start_visible=False)
 #TitFics = []
 #tempoFic=[]
@@ -598,7 +598,7 @@ ptl = scatter_matrix(df, alpha=0.2, figsize=(6, 6), diagonal='kde')
 #uncomment the below to export to html
 html = mpld3.fig_to_html(fig)
 
-with open(ResultPath+"//"+ndf+"-Clust.html", "w") as fic:
+with open(os.path.normpath(ResultPath+"//"+ndf+"-Clust.html", "w")) as fic:
     fic.write(html)
  
 #plt.close()

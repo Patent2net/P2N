@@ -1,33 +1,32 @@
-﻿# Patent2Net configuration file
-##############################
+﻿##############################
 # request
 # insert below your request in cql format as done in the example
-request: TA="lentille"
+request: AB="Online system*" AND AB="education*" UNION AB="Digital learning objects" UNION AB="Education*" AND AB="game*" UNION AB="Education*" AND AB="simulation*" UNION (AB="Social" and AB="media") AND AB="learn*" UNION AB=education* AND AB=distance UNION AB="Learning analytics" UNION "Learning analytics" UNION AB=education* AND AB=distance UNION AB=education* AND AB=distance
 
 ##############################
 # Directory to use
 # insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
-DataDirectory: Lentille
+DataDirectory: EducOn
 
 ###############################
-#Patent2Net options : Set to *True* or False
+#Patent2Net options : Set to *True* or True
 ###############################
 # Collecting
 # patents list corresponding to the request. e.g the "Patent Universe" (PU)
-GatherPatent: True
+GatherPatent: False
 
 # patents bibliographic data corresponding to patent list
 GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
-GatherContent: True
-OPSGatherContentsv2-Iramuteq: True
+GatherContent: False
+OPSGatherContentsv2-Iramuteq: False
 
 #patents families extending the PU to families
-GatherFamilly: True
+GatherFamilly: False
 
 #NEW 2018: images
-GatherImages: True
+GatherImages: False
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi
@@ -78,7 +77,7 @@ FormateExportBiblio: True
 
 ###############################
 # Produce the world maps of inventors, applicants, deposit country
-FormateExportAttractivityCartography: False
+FormateExportAttractivityCartography: True
 FormateExportCountryCartography: True
 
 ###############################
@@ -100,4 +99,3 @@ FusionIramuteq2: True
 # NEW Feature (BETA)
 # Double clustering system based on non so trivial words
 P2N-Cluster: True
-
