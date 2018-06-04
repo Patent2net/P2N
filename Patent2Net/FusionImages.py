@@ -5,8 +5,8 @@ import json
 import logging
 from P2N_Lib import LoadBiblioFile, RenderTemplate
 from P2N_Config import LoadConfig
-from p2n.config import label_from_prefix
-from p2n.util import boot_logging, to_png
+from config import label_from_prefix
+from util import boot_logging, to_png
 
 logger_name = os.path.basename(__file__).replace('.py', '')
 logger = logging.getLogger(logger_name)

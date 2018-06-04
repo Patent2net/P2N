@@ -27,7 +27,7 @@ import cPickle
 from P2N_Lib import Update, GetFamilly, flatten
 from P2N_Lib import LoadBiblioFile
 from P2N_Config import LoadConfig
-from p2n.config import OPSCredentials
+from config import OPSCredentials
 
 import epo_ops
 import os

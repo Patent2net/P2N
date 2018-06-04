@@ -25,8 +25,9 @@ pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\dist
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt Parallel3.py
 
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.py
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt ClusterPreProcess.py
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --hidden-import sklearn.neighbors.typedefs --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --hidden-import sklearn.neighbors.typedefs --hidden-import sklearn.tree._utils --hidden-import sklearn.tree --hidden-import sklearn.neighbors.quad_tree --hidden-import pandas._libs.tslibs.timedeltas  --version-file=version-P2N-ClusterPreProcess.txt ClusterPreProcess.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --hidden-import sklearn.neighbors.typedefs --hidden-import sklearn.tree._utils --hidden-import sklearn.tree --hidden-import sklearn.neighbors.quad_tree --hidden-import pandas._libs.tslibs.timedeltas --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
+
 
 
 rmdir /S /Q  ..\tempocomp\FormateExportAttractivityCartography\setuptools-19.2-py2.7.egg
@@ -58,7 +59,7 @@ rmdir /S /Q  ..\tempocomp\Parallel3\setuptools-19.2-py2.7.egg
 
 REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
 
-pyinstaller -p .  --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt ..\specs\FormateExportAttractivityCartography.spec
+pyinstaller --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-FormateExportAttractivityCartography.txt ..\specs\FormateExportAttractivityCartography.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-OPSGatherPatentsv2.txt ..\specs\OPSGatherPatentsv2.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Images.txt ..\specs\OPSGatherContentsV2-Images.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-OPSGatherContentsV2-Iramuteq.txt ..\specs\OPSGatherContentsV2-Iramuteq.spec
@@ -82,9 +83,9 @@ pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\dist
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt ..\specs\Parallel3.spec
 
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-IPC-Abstracts-Augment.txt ..\specs\IPC-Abstracts-Augment.spec
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt specs\ClusterPreProcess.spec
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-Cluster.txt specs\P2N-Cluster.spec
-
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --hidden-import sklearn.tree._utils --hidden-import sklearn.tree --hidden-import sklearn.neighbors.quad_tree --hidden-import pandas._libs.tslibs.timedeltas --version-file=version-P2N-ClusterPreProcess.txt ..\specs\ClusterPreProcess.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --hidden-import sklearn.neighbors.typedefs --hidden-import sklearn.tree --hidden-import sklearn.neighbors.quad_tree --hidden-import pandas._libs.tslibs.timedeltas --hidden-import sklearn.tree  --version-file=version-P2N-ClusterPreProcess.txt ..\specs\ClusterPreProcess.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --hidden-import sklearn.tree._utils --hidden-import sklearn.tree --hidden-import sklearn.neighbors.quad_tree --hidden-import pandas._libs.tslibs.timedeltas --version-file=version-P2N-Cluster.txt ..\specs\P2N-Cluster.spec
 mkdir  ..\distribution\Patent2Net\
 
 xcopy /S /Y ..\distribution\FormateExportAttractivityCartography ..\distribution\Patent2Net\
@@ -117,7 +118,7 @@ xcopy /S /Y ..\distribution\Parallel3 ..\distribution\Patent2Net\
 
 
 REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
-
+copy /S /Y nltk_data ..\distribution\Patent2Net\
 xcopy /Y root\* ..\distribution\
 copy /Y ipcr_2015.xml ..\distribution\Patent2Net\
 copy /Y requete.cql ..\distribution\
@@ -144,11 +145,6 @@ mkdir ..\distribution\Patent2Net\media
 xcopy /S /Y extensions ..\distribution\Patent2Net\extensions
 xcopy /S /Y media ..\distribution\Patent2Net\media
 mkdir ..\distribution\RequestsSet
-mkdir ..\distribution\REQUESTS
-copy /y Process.bat ..\distribution\Patent2Net
-copy /y GatherProcess.bat  ..\distribution\Patent2Net
-copy /y NetsProcess.bat  ..\distribution\Patent2Net
-copy /y FormatingProcess.bat  ..\distribution\Patent2Net
 copy /y *.info ..\distribution\
 del *.info
 

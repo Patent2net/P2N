@@ -20,7 +20,7 @@ GatherBiblio = configFile.GatherBiblio
 GatherPatent = configFile.GatherPatent
 GatherFamilly = configFile.GatherFamilly
 
-# should set a working dir one upon a time... done it is temporPath
+ #should set a working dir one upon a time... done it is temporPath
 ResultBiblioPath = configFile.ResultBiblioPath
 ResultPatentPath = configFile.ResultListPath
 ResultContentsPath = configFile.ResultContentsPath
@@ -30,33 +30,31 @@ GlobalPath = configFile.GlobalPath
 # take request from BiblioPatent file
 
 
-# NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-if 'Description' + ndf in os.listdir(ResultBiblioPath):
+if 'Description'+ndf in os.listdir(ResultBiblioPath) or 'Description'+ndf.title() in os.listdir(ResultBiblioPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
     data = LoadBiblioFile(ResultBiblioPath, ndf)
     requete = data['requete']
-else:  # Retrocompatibility
+else: #Retrocompatibility
     print "please use Comptatibilizer"
-    # if 'Fusion' in data.keys()
+    #if 'Fusion' in data.keys()
     data = dict()
-if GatherFamilly:  # pdate needed for families
-    # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-    if 'DescriptionFamilies' + ndf in os.listdir(ResultBiblioPath):
+if GatherFamilly:#pdate needed for families
+    if 'DescriptionFamilies'+ndf in os.listdir(ResultBiblioPath) or 'DescriptionFamilies'+ndf.title() in os.listdir(ResultBiblioPath) : # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
         data2 = LoadBiblioFile(ResultBiblioPath, 'Families' + ndf)
         nbFam = len(data2['brevets'])
-    else:  # Retrocompatibility
+    else: #Retrocompatibility
         print "please use Comptatibilizer"
-    # if 'Fusion' in data.keys()with open( ResultBiblioPath+'//Families'+ndf, 'r') as ficBib:
+    #if 'Fusion' in data.keys()with open( ResultBiblioPath+'//Families'+ndf, 'r') as ficBib:
  #        data2 = cPickle.load(ficBib)
 
 else:
-    nbFam = 0
+    nbFam=0
 
 import datetime
 today = datetime.datetime.today()
 date = today.strftime('%d, %b %Y')
 
 totalPatents = ""
-if data.has_key("brevets"):  # compatibility, this may be useless
+if data.has_key("brevets"): #compatibility, this may be useless
     totalPatents = len(data["brevets"])
 else:
     totalPatents = "see datatable :-)"
@@ -130,10 +128,12 @@ RenderTemplate(
     FusionCarrot2=configFile.FusionCarrot2,
     Images=configFile.GatherImages,
 
+    Cluster = configFile.Cluster,
+   
 )
 
 # updating index.js for server side and local menu
-inFile = []  # memorize content
+inFile =[] # memorize content
 with open('../dex.js') as FicRes:
     data = FicRes.readlines()
     for lig in data[2:]:
@@ -146,9 +146,8 @@ with open('../dex.js', 'w') as ficRes:
     ficRes.write(" <ul>\ ".strip())
     ficRes.write("\n")
 
-    # write last analyse
-    ficRes.write(
-        """<li><a href="DATA/***request***.html" target="_blank">***request***</a></li>\ """.replace('***request***', ndf).strip())
+     # write last analyse
+    ficRes.write("""<li><a href="DATA/***request***.html" target="_blank">***request***</a></li>\ """.replace('***request***', ndf).strip())
     ficRes.write("\n")
     for exist in inFile:
         if ndf not in exist:

@@ -36,7 +36,7 @@ from P2N_Lib import Initialize, PatentSearch,  GatherPatentsData, LoadBiblioFile
 #from P2N_Lib import Update
 #from P2N_Lib import EcritContenu, coupeEnMots
 from P2N_Config import LoadConfig
-from p2n.config import OPSCredentials
+from config import OPSCredentials
 
 import epo_ops
 import os
@@ -276,12 +276,12 @@ if GatherBibli and GatherBiblio:
                 brevet[u'document-id'][u'doc-number']['$']
             listeLabel.append(ndb)
             if ndb not in YetGathered:
-                try:
-                    BiblioPatents = GatherPatentsData(
+                #try:
+                BiblioPatents = GatherPatentsData(
                         brevet, ops_client, ResultContentsPath, ResultAbstractPath,  PatIgnored, [])
-                except:
-                    print ndb, " ignored... error occured"
-                    next
+#                except:
+#                    print ndb, " ignored... error occured"
+#                    next
                 if BiblioPatents is None:
                     BiblioPatents = []
                 tempor = []

@@ -1,4 +1,6 @@
 OPSGatherPatentsv2.exe
+OPSGatherAugment-Families.exe
+
 FormateExportAttractivityCartography.exe
 FormateExportBiblio.exe
 FormateExportCountryCartography.exe
@@ -6,10 +8,11 @@ FormateExportCountryCartography.exe
 FormateExportDataTableFamilies.exe
 FormateExportDataTable.exe
 FormateExportPivotTable.exe
-OPSGatherAugment-Families.exe
 
 OPSGatherContentsV2-Iramuteq.exe
+OPSGatherContentsV2-Images.exe
 P2N-FreePlane.exe
+FusionImages.exe
 FusionCarrot2.exe
 FusionIramuteq2.exe
 P2N-PreNetworks.exe CountryCrossTech
@@ -44,4 +47,7 @@ P2N-NetworksJS.exe Applicants
 P2N-NetworksJS.exe References
 P2N-NetworksJS.exe Citations
 P2N-NetworksJS.exe Equivalents
+IPC-Abstracts-Augment.exe
+clusterPreProcess.exe
+P2N-Cluster.exe
 Interface2.exe
