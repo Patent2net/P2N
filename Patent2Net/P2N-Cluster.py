@@ -693,6 +693,7 @@ class ClickInfo(mpld3.plugins.PluginBase):
     """Hack of mpld3 Plugin for getting info on click adding "on mouse over" tooltip function   """
 
     JAVASCRIPT = """
+    
     mpld3.register_plugin("ClickInfo", ClickInfo);
     ClickInfo.prototype = Object.create(mpld3.Plugin.prototype);
     ClickInfo.prototype.constructor = ClickInfo;
@@ -705,6 +706,10 @@ class ClickInfo(mpld3.plugins.PluginBase):
     };
 
     ClickInfo.prototype.draw = function(){
+        var getUrl = window.location;
+        var Chemin = getUrl.pathname.split('/').slice(0, 3);
+        var baseUrl = getUrl .protocol + "//" + getUrl.host + Chemin.join('/')
+        
         var obj = mpld3.get_element(this.props.id);
         urls = this.props.urls;
         labels = this.props.labels;
@@ -715,7 +720,12 @@ class ClickInfo(mpld3.plugins.PluginBase):
                     .style("visibility", "hidden");
         obj.elements().on("mousedown",
                           function(d, i){ 
-                            window.open(urls[i], '_blank')});
+                            window.open(baseUrl+urls[i], '_blank')});
+        obj.elements().on("mousemove", function(d, i){
+                  tooltip
+                    .style("top", d3.event.pageY + this.props.voffset + "px")
+                    .style("left",d3.event.pageX + this.props.hoffset + "px");
+                 }.bind(this))
         obj.elements().on("mouseover", function(d, i){
                               tooltip.html(labels[i])
                                      .style("visibility", "visible");});
@@ -731,6 +741,7 @@ class ClickInfo(mpld3.plugins.PluginBase):
         self.voffset = voffset
         self.hoffset = hoffset
         self.css_ = css or ""
+
         if isinstance(points, matplotlib.lines.Line2D):
             suffix = "pts"
         else:
@@ -769,9 +780,6 @@ tempoFic = []
 Here = os.getcwdu().replace('\\', '//')
 Here = Here.replace('Patent2Net', ResultPathContentAug[ResultPathContentAug.index('DATA'):])+'//'
 
-
-print (len(tempoLab))
-print (len(tempoFic))
  #tooltip
   
 #leg=ax.legend(numpoints=1, bbox_to_anchor=(1.60, 0), loc='lower right') #show legend with only one dot
@@ -783,6 +791,7 @@ memoFig2 =[]
 memoLab2=[]
 tempoFic = []
 MemoPoints= dict()
+tempoLab2 = []
 for name, group in groups2: 
     
 #    points = ax.plot(group.x, group.y, marker='o', linestyle='', ms=10, 
@@ -790,28 +799,32 @@ for name, group in groups2:
     points = ax.plot(group.x, group.y, marker='x', linestyle='', ms=10, mew=3, #♀title = 'test1a',
                      mec= 'red',color=cluster_colors[name], alpha=0.9)
     
-    for cle in group.x.keys():
-        MemoPoints[(group.x[cle], group.y[cle])] =group.title[cle]
+#
     memoFig2.append(points)
     memoLab2.append(NewClusName2[name])
-    
+#    
 
     Lab = [ lab  for lab in labels]
-    tempoLab.extend(Lab)
+#    tempoLab2.extend(Lab)
+TitFic =[]
 
 for name, group in groups:
     points = ax.plot(group.x, group.y, marker='o', linestyle='', ms=18, mec='none',
                        label=cluster_names[name], 
                      color=cluster_colors2[name], alpha=0.6 
                      )
+#    memoPts.extend([tuple(truc) for truc in points[0].get_xydata()])
     memoFig.append(points)
+#    memoFig3.extend(points)
     memoCoul.append(cluster_colors[name])
     memoLab.append(cluster_names[name])
-    
+    for cle in group.x.keys():
+        MemoPoints[(group.x[cle], group.y[cle])] =group.title[cle]
     ax.set_aspect('auto')
     labels = [i for i in group.title]
-    #memoLab2.append(labels)
-
+#    Lab2.append(labels)
+    #memoLab2.extend(group.title.values.tolist())
+#    memoLab.append(cluster_names[name])
     #set tooltip using points, labels and the already defined 'css'
 #    tooltip = mpld3.plugins.PointHTMLTooltip(points[0], labels,
 #                                       voffset=10, hoffset=10, css=css)
@@ -827,10 +840,11 @@ for name, group in groups:
     ax.axes.get_yaxis().set_visible(False)
     #next shoul be done at the en of loop for I guess
     #TitFic = ['file:///D:/Doc-David/Developpement/SpyderWorkspace/Git-P2N/DATA/Banana/PatentContents/Metrics/' +Tit2FicName [lab] for lab in labels]
-    TitFic = ['file:///'+ Here +Tit2FicName [lab] for lab in labels]
-    tempoLab.append(labels)
-    tempoFic.append(TitFic)
+    TitFic += [['/PatentContents/Metrics/' + Tit2FicName [lab] for lab in labels]]
+#    tempoLab.append(labels)
+    #TiftempoFic.extend(TitFic)
     
+        
 interactive_legend = InteractiveLegendPlugin(memoFig , memoLab, legend_offset=(0,300), title = 'Choose kmeans++ classes from their most common terms',
                                                          alpha_unsel=0.1, alpha_over=0.9, start_visible=False)
 interactive_legend2 = InteractiveLegendPlugin(memoFig2,  memoLab2, legend_offset=(0,0), title = 'Combine with IPC (mostly) terms in Goffman zone',
@@ -841,22 +855,66 @@ interactive_legend2 = InteractiveLegendPlugin(memoFig2,  memoLab2, legend_offset
 mpld3.plugins.connect(fig,interactive_legend)
 mpld3.plugins.connect(fig,interactive_legend2) 
 #fig.text(1, 1, "Here are some curves", size=18, ha='right')
-
-tooltip =dict()
-for ligne in fig.get_axes()[0].lines:
-        Urls=[]
-        labels =[]
-        for point in ligne.get_xydata():
+#mpld3.plugins.connect(fig, ClickInfo( memoFig, labels=Lab2,  urls = TitFic))
+indice=0 #to indiciate on filenames in Labels list
+compt2 = 0
+compt = 0
+#tooltip =dict()        
+Urls=[]
+labels =[]
+ligne=[]
+for pt in fig.get_axes()[0].lines:
+#    if compt2>len(Titles)/2:
+        for point in pt.get_xydata():
             if tuple(point) in MemoPoints.keys():
-                Urls.append('file:///'+ Here +Tit2FicName [MemoPoints[tuple(point)]])
-                labels.append(MemoPoints[tuple(point)])
+               Urls.append('/PatentContents/Metrics/' +Tit2FicName[MemoPoints[tuple(point)]])
+               labels.append(Labels[indice % len(Titles)]+': '+ MemoPoints[tuple(point)])
+               compt+=1
+               ligne.append(pt)
             else:
                 print("should never be here")
-        mpld3.plugins.connect(fig, ClickInfo( ligne, labels=labels,  urls = Urls))
- 
+            indice+=1
+        
+    #compt2+=1
+
+#REbulding a line for setting tooltips and clickpoint
+indi1=0
+indi2=0
+Bulles =[]
+for pt in fig.get_axes()[0].lines:
+    indi2=indi1+len(pt.get_xydata())
+    Bulles.append(ClickInfo(pt, labels[indi1:indi2], Urls[indi1:indi2],
+                 hoffset=0, voffset=-30, css=None))
+    indi1=indi2  
 mpld3.plugins.connect(fig, TopToolbar())
+Pt=[truc.points for truc in Bulles]
+testo=[]
+for tr in Pt:
+   testo.extend(tr.get_xydata())
+coord= np.asarray(testo)   
+dessin = Pt[0].set_data(coord[:,0], coord[:,1])
+points = ax.plot(coord[:,0], coord[:,1], marker='o', linestyle='', ms=18, mec= 'black',color='green', alpha=0.01)
+mpld3.plugins.connect(fig, ClickInfo(points[0], labels, Urls,
+                 hoffset=0, voffset=-30, css=None))
+    
+css = """
+text.mpld3-text, div.mpld3-tooltip {
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: black;
+  opacity: 1.0;
+  padding: 2px;
+  border: 0px;
+}
 
+g.mpld3-xaxis, g.mpld3-yaxis {
+display: none; }
 
+svg.mpld3-figure {
+margin-left: -300px;
+margin-right: -50px;}}
+
+"""  
 
 
 #uncomment the below to export to html
@@ -864,13 +922,12 @@ html = mpld3.fig_to_html(fig)
 
 #mpld3.save_json(fig, ResultPath+"//"+ndf+"-Clust.json")
 #Go for th ugly way
-toto = [truc for truc in html.split('\n')]
+jsFile = [truc for truc in html.split('\n')]
 sty = []
 ind=0
+
 while True:
-    sty.append(toto[ind])
-    ind+=1
-    if '/style' in toto[ind]:
+    if '/style' in jsFile[ind]:
         sty.append(""".alert {
             padding: 20px;
             background-color: #f44336;
@@ -900,30 +957,22 @@ while True:
             background-color: #e7f3fe;
             border-left: 6px solid #2196F3;
         }""")
-        sty.append(toto[ind])
+        sty.append(css)
+        sty.append(jsFile[ind])
         break
-    elif ind>5000:
+    else:
+        sty.append(jsFile[ind])
+        ind+=1
+    if ind>5000:
         break #just in case
         
 #define custom css to format the font and to remove the axis labeling
-css = """
-text.mpld3-text, div.mpld3-tooltip {
-  font-family:Arial, Helvetica, sans-serif;
-}
-
-g.mpld3-xaxis, g.mpld3-yaxis {
-display: none; }
-
-svg.mpld3-figure {
-margin-left: -300px;
-margin-right: -50px;}}
-
-"""        
+      
 with open(os.path.normpath(ResultPath+"//"+"ClusterStyle.css"), "w") as fic:
-    fic.write('\n'.join(sty)+css)
+    fic.write('\n'.join(sty))
 while True:
-    if toto[ind].count('/div'):
-        divi=toto[ind]
+    if jsFile[ind].count('/div'):
+        divi=jsFile[ind]
         ind+=1
         break
     else:
@@ -931,10 +980,11 @@ while True:
         if ind>5000:
             break #just in case
 with open(os.path.normpath(ResultPath+"//"+ndf+"-Clust.src"), "w") as fic:
-    fic.write('\n'.join(toto[ind:]))
+    fic.write('\n'.join(jsFile[ind+1:len(jsFile)-1]))
 indi1= divi.index('"') +1
 indi2 = divi[indi1:].index('"') + indi1
 diviId= divi[indi1:indi2]
+ficSrc = ndf+'-Clust.src'
 html2 = """
 <!DOCTYPE html>
 <html lang="en">
@@ -942,9 +992,9 @@ html2 = """
     <meta charset="utf-8">
     <title>P2N twin clusterisation (Abstract / IPC description)</title>
     <link rel="stylesheet" href="ClusterStyle.css">
-    <script type="text/javascript" src="https://mpld3.github.io/js/d3.v3.min.js"></script>
-    <script type="text/javascript" src="https://mpld3.github.io/js/mpld3.v0.2.js"></script>
-    <link rel="import" href="""+'"'+ndf+"-Clust.src" + """">
+    <script type="text/javascript" src="../../Patent2Net/extensions/mpld3/d3.v3.min.js"></script>
+    <script type="text/javascript" src="../../Patent2Net/extensions/mpld3/mpld3.v0.2.js"></script>
+       
   </head>
   <body>
   <h1>Double clusterisation features for abstracts from request:</h1></br>"""+requete +"""
@@ -953,22 +1003,9 @@ html2 = """
   <p><strong>Tip:</strong> Use Excluding-Voc.txt to specify coma separated vocabulary to be excluded from class representation. P2N-Cluster must be relaunched to take effect.</p>
 </div>
   """+ divi + '\n' +  """
-   <script>
-    var link = document.querySelector('link[rel="import"]');
-    var content = link.import.querySelector('script');
-    var mainDoc = document;
-
-    // Grab DOM from """+ndf+"""-Clust.src's document.
-  document.querySelector('#"""+diviId+"""').appendChild(content.cloneNode(true));
-
-  </script>
+<script type="text/javascript" src="""+ficSrc +"""></script>
    <div class="danger">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
- <strong>Note!</strong> If nothing appears, you may need to do one of these two things:<ul>
-     <li>launch chrome disabling the <i>Same-origin policy</i> security by lauching in a terminal: </br>
-     <em>chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security</em></li>
-     <li>or transfert all P2N directory on a web server and in order to use http instead of file protocol to open this file.</li>
-     </ul>
 </div> 
      
   </body>
