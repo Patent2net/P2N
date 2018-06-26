@@ -1,41 +1,99 @@
 # -*- coding: utf-8 -*-
-"""
-Created on 6/01/2017
-
-@author: Luc, Andre
-After loading patent list (created from OPSGather-BiblioPatent),
-the script will proceed a check for each patent
-if it is orphan or has a family. In the last case, family patents are added to
-the initial list (may be some are already in it), and a hierarchic within
-the priority patent (selected as the oldest representative) and its brothers is created.
-IRAMUTEQ tagguing is added to analyse content
-****PatentNumber ****date ****CIB3
-"""
-
-#BiblioProperties = ['publication-ref', 'priority-active-indicator', 'classification',
-#u'resume', 'IPCR1', 'portee', 'IPCR3', 'applicant', 'IPCR4', 'IPCR7', 'label', 'IPCR11',
-#'date', 'citations', 'application-ref', 'pays', u'abstract', 'titre', 'inventeur',
-#'representative']
-
-BiblioProperties =  ['applicant', 'application-ref', 'citations', 'classification',
-                     'prior-Date', 'prior-dateDate'
-'inventor', 'IPCR1', 'IPCR11', 'IPCR3', 'IPCR4', 'IPCR7', 'label', 'country', 'kind',
-'priority-active-indicator', 'title','date',"publication-ref","representative",
-"CPC", "prior", "priority-claim", "year", "family-id", "equivalent",
- 'inventor-country', 'applicant-country', 'inventor-nice', 'applicant-nice', 'CitP', 'CitO', 'references']
-#from networkx_functs import *
-import cPickle #David? seems not used in this module
+# (c) 2017 The Patent2Net Developers
 
 import os
-import sys
 import epo_ops
-from epo_ops.models import Docdb
+import json
+import cPickle
 from epo_ops.models import Epodoc
-from P2N_Lib import ReturnBoolean, MakeIram2, LoadBiblioFile
-# David? produce an error in Spyder : ImportError: No module named P2N_Lib
+from P2N_Lib import LoadBiblioFile
+from P2N_Config import LoadConfig
+import traceback
 
 
-os.environ['REQUESTS_CA_BUNDLE'] = 'cacert.pem'#cacert.pem
+def get_patent_label(patent):
+    if isinstance(patent['label'], list):
+        return patent['label'][0]
+    return patent['label']
+
+
+def extract_meta_json_images(js):
+    docs_instance = []
+    inquiry_result = js['ops:world-patent-data']['ops:document-inquiry']['ops:inquiry-result']
+    if isinstance(inquiry_result, list):
+        for ir in inquiry_result:
+            di = ir['ops:document-instance']
+            if isinstance(di, list):
+                docs_instance += di
+            else:
+                docs_instance.append(di)
+    else:
+        di = inquiry_result['ops:document-instance']
+        if isinstance(di, list):
+            docs_instance = di
+        else:
+            docs_instance = [di]
+    return docs_instance
+
+
+def get_images_meta(ops_client, patent_label, path_json):
+    # Try to retrieve JSON meta info from local, otherwise get online from OPS
+    try:
+        return json.load(file(path_json))
+    except:
+        try:
+            ans = ops_client.published_data(reference_type='publication',
+                                            input=Epodoc(patent_label), endpoint='images')
+            file(path_json, 'w').write(ans.content)
+            return ans.json()
+        except Exception as err:
+            print "...Image meta for {} error".format(patent_label), err
+            if hasattr(err, 'response') and err.response.status_code == 404:
+                file(path_json, 'w').write('{}')
+    return None
+
+
+def extract_best_images(docs_instance):
+    chosen_doc = None
+    if isinstance(docs_instance, list):
+        for doc in docs_instance:
+            name = doc['@desc'].lower()
+            if name == u'drawing':  # reset anything before and return this as better images results
+                chosen_doc = doc
+                break
+            # elif name == u'fulldocument':
+            #     chosen_doc = doc
+            # elif name == u'firstpageclipping' and not chosen_doc:
+            #     chosen_doc = doc
+            # else:
+            #     print 'Non recognized image doc instance', doc
+    elif isinstance(docs_instance, dict) and docs_instance['@desc'].lower() == 'drawing':
+        chosen_doc = docs_instance
+    if not chosen_doc:
+        return None, None, None
+    link = chosen_doc[u'@link']
+    page_start = int(chosen_doc[u'ops:document-section'][u'@start-page'])
+    num_pages = int(chosen_doc[u'@number-of-pages'])
+    return link, page_start, num_pages
+
+
+def get_images_files(ops_client, path_image, link, page_start, num_pages):
+    pathes = []
+    for page in range(page_start, page_start + num_pages):
+        path_img = path_image.format(page)
+        if not os.path.exists(path_img):
+            print '... Retrieving img page {} of {}'.format(page, (page_start + num_pages - 1))
+            resp = ops_client.image(link, range=page)
+            file(path_img, 'wb').write(resp.content)
+        pathes.append(path_img)
+    return pathes
+
+
+def save_array_data(images_path, obj):
+    cPickle.dump(obj, file(os.path.join(images_path, 'image_data'), 'w'))
+
+
+os.environ['REQUESTS_CA_BUNDLE'] = 'cacert.pem'  # cacert.pem
 os.environ['CA_BUNDLE'] = 'cacert.pem'
 
 global key
@@ -48,201 +106,67 @@ key, secret = fic.read().split(',')
 key, secret = key.strip(), secret.strip()
 fic.close()
 
+configFile = LoadConfig()
+IsEnableScript = configFile.GatherImages
 
-DureeBrevet = 20
-SchemeVersion = '20140101' #for the url to the classification scheme
-
-ListeBrevet = [] # The patent List
-
-#opening request file, reading parameters
-with open("..//requete.cql", "r") as fic:
-    contenu = fic.readlines()
-    for lig in contenu:
-        #if not lig.startswith('#'):
-            if lig.count('request:')>0:
-                requete=lig.split(':')[1].strip()
-            if lig.count('DataDirectory:')>0:
-               ndf = lig.split(':')[1].strip()
-            if lig.count('GatherContent')>0:
-                Gather = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherBiblio')>0:
-                GatherBiblio = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherPatent')>0:
-                GatherPatent = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('GatherFamilly')>0:
-                GatherFamilly = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('OPSGatherContentsv2-Iramuteq')>0:
-                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
-            if lig.count('OPSGatherContentsV2-Images')>0:
-                IsEnableScript = ReturnBoolean(lig.split(':')[1].strip())
-
-rep = ndf
-
-ResultListPath = '..//DATA//'+rep+'//PatentBiblios'#Lists'
-ResultPathContent = '..//DATA//'+rep+'//PatentContents'
-temporPath = '..//DATA//'+rep+'//tempo'
-ResultBiblioPath= '..//DATA//'+rep+'//PatentBiblios'
-ResultPathImages= '..//DATA//'+rep+'//PatentImages'
-try:
-    os.makedirs(ResultPathContent)
-    os.makedirs(ResultPathImages)
-except:
-    pass
-
-ficOk = False
-
-
-# à ce niveau de script, la liste des brevets est chargée avec des données
-# biblio qui vont être complétées
-#import time, pprint
-
-cptNotFound=0
-def dictCleaner(dico): #same in OpsGatherAugmentFamilies
-    for clef in dico.keys():
-        if isinstance(dico[clef], list) and len(dico[clef]) ==1:
-            dico[clef] = dico[clef][0]
-        elif isinstance(dico[clef], list) and len(dico[clef]) == 0:
-            dico[clef] = ''
-        elif isinstance(dico[clef], list) and len(dico[clef]) >1:
-            if '' in dico[clef]:
-                for nb in range(dico[clef].count('')):
-                    dico[clef].remove('')
-        else:
-            pass
-    return dico
+ResultBiblioPath = configFile.ResultBiblioPath
+ResultPathImages = configFile.ResultPathImages
+P2NFamilly = configFile.GatherFamilly
 
 if IsEnableScript:
-    GatherContent = True
-    #not fun
-    registered_client = epo_ops.RegisteredClient(key, secret)
-    #        data = registered_client.family('publication', , 'biblio')
-    registered_client.accept_type = 'application/json'
+    ops_client = epo_ops.Client(key, secret)
+    ops_client.accept_type = 'application/json'
 
-    for ndf in [fic2 for fic2 in os.listdir(ResultBiblioPath) if fic2.count('Description')==0]:
-        if ndf.startswith('Families'):
-            typeSrc = 'Families'
-        else:
-            typeSrc = ''
-        if 'Description'+ndf or 'Description'+ndf.lower() in os.listdir(ResultListPath): # NEW 12/12/15 new gatherer append data to pickle file in order to consume less memory
-            ficBrevet = LoadBiblioFile(ResultListPath, ndf)
+    prefixes = [""]
+    if P2NFamilly:
+        prefixes.append("Families")
 
-        else: #Retrocompatibility
-            print 'gather your data again. sorry'
-            sys.exit()
+    for prefix in prefixes:
+        ndf = prefix + configFile.ndf
 
-        if ficBrevet.has_key('brevets'):
-            lstBrevet = ficBrevet['brevets']
-    #        if data.has_key('requete'):
-    #            DataBrevet['requete'] = data["requete"]
-            print "Found ",typeSrc, ' file and', len(lstBrevet), " patents! Gathering contents"
-        else:
-            print 'gather your data again'
-            sys.exit()
-
-        registered_client = epo_ops.RegisteredClient(key, secret)
-        #        data = registered_client.family('publication', , 'biblio')
-        registered_client.accept_type = 'application/json'
-        BiblioPatents = []
-        #making the directory saving patents
-
-        RepDir = ResultPathContent
         try:
-            for directory in ['Abstract', 'Claims', u'Description']:
-                if directory not in os.listdir(RepDir):
-                    os.makedirs(RepDir+"//"+directory)
-                if 'Families'+directory not in os.listdir(RepDir):
-                    os.makedirs(RepDir+"//Families"+directory)
-        except:
-            pass
-        #os.chdir(ndf.replace('.dump', ''))
-        desc, clm, ft, abstract = 0,0,0, 0
-        Langues = set()
+            biblio_file = LoadBiblioFile(ResultBiblioPath, ndf)
+        except IOError as ex:
+            print 'WARNING: Could not load information for "{}". Not found / error: {}'.format(ndf, ex)
 
-        if GatherContent:
-            Nombre = dict()
-            for brevet in lstBrevet:
-                brevet = dictCleaner(brevet)
-                ndb =brevet[u'label']#[u'document-id'][u'country']['$']+brevet[u'document-id'][u'doc-number']['$']brevet['publication-ref'][u'document-id'][0][u'kind']['$'])
-        #check for already gathered patents
-                pays = brevet['country']
-                if isinstance(ndb, list):
-                    print ndb, "using first one..."
-                    ndb = ndb[0]
-                    for key in ['label', 'country', 'kind']:
-                        brevet[key] = list(set(brevet[key])) # hum some problem (again) in cleaning data within the family gatherer... 22/12/15
-                if isinstance(pays, list):
-                    pays = pays[0]
-                for content in [typeSrc+'Abstract', typeSrc+'Claims',typeSrc+'Description']:
+        patents = biblio_file['brevets']
+        metadata = {}
 
-                    if content not in Nombre.keys():
-                        Nombre [content] = 0
-                    try:
-                        lstfic = os.listdir(ResultPathContent+'//' + content)
-                    except:
-                        lstfic = []
-                    endP= content.replace(typeSrc, "").lower()
-                    if endP == 'abstract':
-                        endP = 'biblio'
-                    fichier = [fics[3:] for fics in lstfic]   # content already gathered
-                    if ndb+'.txt' not in fichier: #hack here as chinese patents seems not be in claims or description endpoint
-                    #, u'fulltext'
-                        temp =('publication', Epodoc(pays+ndb[2:])) #, brevet[u'document-id'][u'kind']['$']))
-                        try:
-                            data = registered_client.published_data(*temp, endpoint = endP)             #registered_client.published_data()
-                            if data.ok and content.replace(typeSrc, "").lower() in str(data.json()):
-                                CheckDocDB = False
-                            else:
-                                CheckDocDB = True
-                        except:
-                            CheckDocDB = True
-                        if CheckDocDB:
-                            if isinstance(brevet[u'kind'], list):
-                                tempoData = []
-                                for cc in brevet[u'kind']:
-                                    temp =('publication', Docdb(ndb[2:],pays, cc)) # hope all comes from same country
-                                    try:
-                                        tempoData.append(registered_client.published_data(*temp, endpoint = endP))
-                                    except:
-                                        data = None
-                                        pass
-                                for dat in tempoData:
-                                    if dat is not None and dat.ok: #doing the same for all content. This may result in redundancy
-                                        contenu = content.replace(typeSrc, "").lower()
+        for patent in patents:
+            patent_label = get_patent_label(patent)
+            pathes = []
+            path_json = '{}//{}.json'.format(ResultPathImages, patent_label)
+            path_image = '{}//{}-{}.tiff'.format(ResultPathImages, patent_label, '{}')
+            print "Processing patent {}".format(patent_label)
+            js = get_images_meta(ops_client, patent_label, path_json)
+            if not js:
+                continue
+            # Try to read JSON meta, otherwise we don't have right meta
+            try:
+                docs_instance = extract_meta_json_images(js)
+            except Exception as err:
+                print "...Meta info for {} not found / error".format(patent_label), err
+                traceback.print_exc()
+                continue
 
-                                        patentCont = dat.json()
-                                        Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
-                                        if endP == 'biblio':
-                                            for contenu in ['claims', 'description']:
-                                                Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
-                            else:
-                                temp =('publication', Docdb(brevet[u'label'][2:],brevet[u'country'], brevet[u'kind']))
-                                try:
-                                    data = registered_client.published_data(*temp, endpoint = endP)
-                                except:
-                                    data = None
-                                    pass
-                            #OPS limitation ?
-                            #OPS includes character-coded full text only for EP, WO, AT, CH, CA, GB and ES.
-                            #http://forums.epo.org/open-patent-services-and-publication-server-web-service/topic3728.html
+            try:
+                link, page_start, num_pages = extract_best_images(docs_instance)
+                if link:
+                    pathes = get_images_files(ops_client, path_image, link, page_start, num_pages)
+                else:
+                    print '...Images for patent {} not found'.format(patent_label)
+                    continue
+            except Exception as err:
+                print "...Image for {} error".format(patent_label), err
+                if (hasattr(err, 'response')):
+                    print err.response.text
+                traceback.print_exc()
+                continue
+            metadata[patent_label] = {
+                'pathes': pathes,
+                'title': patent['title'],
+                'year': patent['year'],
+                'country': patent['Applicant-Country'],
+            }
 
-
-
-                        if data is not None and data.ok:
-                            contenu = content.replace(typeSrc, "").lower()
-
-                            patentCont = data.json()
-                            Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
-                            if endP == 'biblio':
-                                for contenu in ['claims', 'description']:
-                                    Langs = MakeIram2(brevet, ndb +'.txt', patentCont, RepDir+ '//'+ typeSrc + contenu+'//', contenu)
-                                    #Lang is unused. Trying to gather in biblio endpoint, just in case....
-
-
-                                # Next line is for setting analyses variables for Iramuteq....
-
-        else:
-            print "no gather parameter set. Finishing."
-
-
-
-        #print ft, " fulltext gathered. See ", ndf.replace('.dump', '')+'/fulltext/ directory for files'
+    save_array_data(ResultPathImages, metadata)

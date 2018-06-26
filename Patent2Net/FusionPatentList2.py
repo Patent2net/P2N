@@ -19,9 +19,9 @@ fic = open('..//cles-epo.txt', 'r')
 key, secret = fic.read().split(',')
 key, secret = key.strip(), secret.strip()
 fic.close()
-registered_client = epo_ops.RegisteredClient(key, secret)
-    #        data = registered_client.family('publication', , 'biblio')
-registered_client.accept_type = 'application/json'
+ops_client = epo_ops.Client(key, secret)
+    #        data = ops_client.family('publication', , 'biblio')
+ops_client.accept_type = 'application/json'
 
 print "Usage: FusionPatList dir1 dir2 [...] dirN dirResult"
 

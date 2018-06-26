@@ -7,6 +7,8 @@ python FormateExportPivotTable.py
 python OPSGatherAugment-Families.py
 python FormateExportDataTableFamilies.py
 python OPSGatherContentsV2-Iramuteq.py
+python OPSGatherContentsV2-Images.py 
+python FusionImages.py
 python P2N-FreePlane.py
 python FusionCarrot2.py 
 python FusionIramuteq2.py
