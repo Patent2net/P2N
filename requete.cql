@@ -1,16 +1,18 @@
-# Patent2Net configuration file
+﻿# Patent2Net configuration file
 ##############################
-# request
+# This example treat of around 10 patents containing the word "lentille"
+# very restrictive example, that has no sense, but just 10 patents... Quick test
+##############################
+# the "patents universe" corresponding to the request
 # insert below your request in cql format as done in the example
-request: TI=Respirator AND IPC= A61M1
-
-##############################
-# Directory to use
-# insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
-DataDirectory: Respirator
+request: TA=lentille
 
 ###############################
-#Patent2Net options : Set to *True* or True
+# Name of files OR directories
+DataDirectory: Lentille
+
+###############################
+#Patent2Net options : Set to *True* or False
 ###############################
 # Collecting
 # patents list corresponding to the request. e.g the "Patent Universe" (PU)
@@ -23,10 +25,10 @@ GatherBiblio: True
 GatherContent: True
 OPSGatherContentsv2-Iramuteq: True
 
-#patents families extending the PU to families
+# patents families extending the PU to families
 GatherFamilly: True
 
-#NEW 2018: images
+# fetch images
 GatherImages: True
 
 ###############################
@@ -96,7 +98,3 @@ FormateExportPivotTable: True
 FusionCarrot2: True
 FusionIramuteq2: True
 
-###############################
-# NEW Feature (BETA)
-# Double clustering system based on non so trivial words
-P2N-Cluster: True

@@ -10,7 +10,7 @@ request: TI=Respirator AND IPC= A61M1
 DataDirectory: Respirator
 
 ###############################
-#Patent2Net options : Set to *True* or True
+#Patent2Net options : Set to *True* or False
 ###############################
 # Collecting
 # patents list corresponding to the request. e.g the "Patent Universe" (PU)
@@ -21,10 +21,10 @@ GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
 GatherContent: True
-OPSGatherContentsv2-Iramuteq: True
+OPSGatherContentsv2-Iramuteq: False
 
 #patents families extending the PU to families
-GatherFamilly: True
+GatherFamilly: False
 
 #NEW 2018: images
 GatherImages: True
@@ -78,7 +78,7 @@ FormateExportBiblio: True
 
 ###############################
 # Produce the world maps of inventors, applicants, deposit country
-FormateExportAttractivityCartography: True
+FormateExportAttractivityCartography: False
 FormateExportCountryCartography: True
 
 ###############################

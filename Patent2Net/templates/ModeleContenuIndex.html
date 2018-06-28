@@ -36,17 +36,33 @@
     </script>
 
 
-</head> 
- 
+</head>
+
 <body>
 
     <section class="billboard dark">
         <header class="wrapper dark">
             <a href="http://patent2netV2.vlab4u.info/index.html"><img class="logo" src="../Patent2Net/media/img/logo_dark.png" alt="" /></a>
+            <nav>
+                <ul>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                </ul>
+            </nav>
         </header>
         <div class="caption dark animated wow fadeInDown clearfix">
         <h1><a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page" title="Patent2Net documentation" target="_blank">A patent collector and analyser</a> to expand <br/> your horizon with various data processing tools<br/> for education and scientific purposes</h1>
-            <p>using EPO's database of over <a href="http://worldwide.espacenet.com/"> 100 000 000 patents </a></p>
+            <p>using EPO's database of over <a href="http://worldwide.espacenet.com/"> 90 000 000 patents </a></p>
 
             <hr>
         </div>
@@ -59,7 +75,7 @@
         <li>Request: {{ Request }} </li>
         <li>Gathering date: {{ Date }} </li>
 
-      <li style="padding-top: 8px">Number of patents retrieved: {{ TotalPatents }}</li>
+        <li style="padding-top: 8px">Number of patents retrieved: {{ TotalPatents }}</li>
         {% for obj in TotalsPerType %}
         <li>{{obj.type}}:
             {% for lang, total in obj.languages.iteritems() %}
@@ -95,7 +111,7 @@
         {% endif %}
         {% if Images %}
         <li>
-            <a href="#" onclick="{{wo('PatentImages/index.html')}} return false;">All available images</a>
+            <a href="#" onclick="{{wo('PatentImages/index.html')}} return false;">Images (when available) </a>
         </li>
         {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}
@@ -113,12 +129,6 @@
             <a href="#" onclick="{{wo('GephiFiles/*CollectName*_EquivalentsJS.html')}} {{wo('GephiFiles/*CollectName*_ReferencesJS.html')}} {{wo('GephiFiles/*CollectName*_CitationsJS.html')}} return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
         </li>
         {% endif %}
-		{% if Cluster %}
-        <li>
-            <a href="'{{ CollectName }}/{{ CollectName }}-Clust.html" onclick="window.open('{{ CollectName }}/{{ CollectName }}-Clust.html', '_blank');return false;"> P2N Clusterer (Beta)</a>
-        </li>
-        {% endif %}
-    </ul>
     </ul>
     {% if HasFamily %}
     <h2>Families</h2>
@@ -135,7 +145,7 @@
         {% endif %}
         {% if Images %}
         <li>
-            <a href="#" onclick="{{wo('PatentImages/indexFamilies.html')}} return false;">All available images</a>
+            <a href="#" onclick="{{wo('PatentImages/indexFamilies.html')}} return false;">Images (when available) </a>
         </li>
         {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}

@@ -31,13 +31,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mp
 from sklearn.manifold import MDS
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.neighbors import typedefs  
-from sklearn.tree import _criterion
-from sklearn.tree import _utils
-from sklearn.neighbors import quad_tree
-from pandas._libs.tslibs import timedeltas
-from scipy._lib import messagestream 
-
 from collections import OrderedDict
 from TAL_P2N_Lib import tokenize_only 
 stopwords = nltk.corpus.stopwords.words('english')
