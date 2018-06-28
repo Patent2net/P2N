@@ -123,6 +123,10 @@ class P2NConfig:
             self.ResultFamiliesAbstractPath,
             self.ResultGephiPath,
             self.ResultPathImages,
+<<<<<<< HEAD
+=======
+            self.ResultClusterPath,
+>>>>>>> parent of ddbb642... Merge branch 'master' of https://github.com/Patent2net/P2N
         ]:
             
             if not os.path.isdir(path):
