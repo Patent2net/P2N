@@ -126,11 +126,7 @@ class P2NConfig:
             self.ResultFamiliesAbstractPath,
             self.ResultGephiPath,
             self.ResultPathImages,
-<<<<<<< HEAD
             self.ResultClusterPath,
-=======
-			self.ResultClusterPath,
->>>>>>> ecff9f3634ee81680e4e48145ab39ba3a72ea734
         ]:
             if not os.path.isdir(path):
                 os.makedirs(path)

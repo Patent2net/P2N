@@ -94,9 +94,9 @@ def dictCleaner(dico): #same in OpsGatherAugmentFamilies
 if IsEnableScript:
     GatherContent = True
     #not fun
-    ops_client = epo_ops.Client(key, secret)
-    #        data = ops_client.family('publication', , 'biblio')
-    ops_client.accept_type = 'application/json'
+    registered_client = epo_ops.RegisteredClient(key, secret)
+    #        data = registered_client.family('publication', , 'biblio')
+    registered_client.accept_type = 'application/json'
 
     for ndf in [fic2 for fic2 in os.listdir(ResultBiblioPath) if fic2.count('Description')==0]:
         if ndf.startswith('Families'):
@@ -119,9 +119,9 @@ if IsEnableScript:
             print 'gather your data again'
             sys.exit()
 
-        ops_client = epo_ops.Client(key, secret)
-        #        data = ops_client.family('publication', , 'biblio')
-        ops_client.accept_type = 'application/json'
+        registered_client = epo_ops.RegisteredClient(key, secret)
+        #        data = registered_client.family('publication', , 'biblio')
+        registered_client.accept_type = 'application/json'
         BiblioPatents = []
         #making the directory saving patents
 
@@ -169,7 +169,7 @@ if IsEnableScript:
                     #, u'fulltext'
                         temp =('publication', Epodoc(pays+ndb[2:])) #, brevet[u'document-id'][u'kind']['$']))
                         try:
-                            data = ops_client.published_data(*temp, endpoint = endP)             #ops_client.published_data()
+                            data = registered_client.published_data(*temp, endpoint = endP)             #registered_client.published_data()
                             if data.ok and content.replace(typeSrc, "").lower() in str(data.json()):
                                 CheckDocDB = False
                             else:
@@ -182,7 +182,7 @@ if IsEnableScript:
                                 for cc in brevet[u'kind']:
                                     temp =('publication', Docdb(ndb[2:],pays, cc)) # hope all comes from same country
                                     try:
-                                        tempoData.append(ops_client.published_data(*temp, endpoint = endP))
+                                        tempoData.append(registered_client.published_data(*temp, endpoint = endP))
                                     except:
                                         data = None
                                         pass
@@ -198,7 +198,7 @@ if IsEnableScript:
                             else:
                                 temp =('publication', Docdb(brevet[u'label'][2:],brevet[u'country'], brevet[u'kind']))
                                 try:
-                                    data = ops_client.published_data(*temp, endpoint = endP)
+                                    data = registered_client.published_data(*temp, endpoint = endP)
                                 except:
                                     data = None
                                     pass

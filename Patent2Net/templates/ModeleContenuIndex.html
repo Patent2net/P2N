@@ -36,7 +36,7 @@
     </script>
 
 
-</head> 
+</head>
 
 <body>
 
@@ -62,7 +62,7 @@
         </header>
         <div class="caption dark animated wow fadeInDown clearfix">
         <h1><a href="http://patent2netv2.vlab4u.info/dokuwiki/doku.php?id=page" title="Patent2Net documentation" target="_blank">A patent collector and analyser</a> to expand <br/> your horizon with various data processing tools<br/> for education and scientific purposes</h1>
-            <p>using EPO's database of over <a href="http://worldwide.espacenet.com/"> 100 000 000 patents </a></p>
+            <p>using EPO's database of over <a href="http://worldwide.espacenet.com/"> 90 000 000 patents </a></p>
 
             <hr>
         </div>
@@ -75,7 +75,7 @@
         <li>Request: {{ Request }} </li>
         <li>Gathering date: {{ Date }} </li>
 
-      <li style="padding-top: 8px">Number of patents retrieved: {{ TotalPatents }}</li>
+        <li style="padding-top: 8px">Number of patents retrieved: {{ TotalPatents }}</li>
         {% for obj in TotalsPerType %}
         <li>{{obj.type}}:
             {% for lang, total in obj.languages.iteritems() %}
@@ -109,11 +109,6 @@
             <a href="#" onclick="{{wo('*CollectName*Carto.html')}} {{wo('*CollectName*CartoApplicant.html')}} {{wo('*CollectName*CartoInventor.html')}} return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
         </li>
         {% endif %}
-        {% if Images %}
-        <li>
-            <a href="#" onclick="{{wo('PatentImages/index.html')}} return false;">Images (when available) </a>
-        </li>
-        {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}
         <li>
             <a href="#" onclick="{{wo('GephiFiles/*CollectName*_InventorsJS.html')}} {{wo('GephiFiles/*CollectName*_ApplicantsJS.html')}} {{wo('GephiFiles/*CollectName*_CrossTechJS.html')}} return false;">Networks (Inventor, Applicant, Technology)</a>
@@ -129,12 +124,6 @@
             <a href="#" onclick="{{wo('GephiFiles/*CollectName*_EquivalentsJS.html')}} {{wo('GephiFiles/*CollectName*_ReferencesJS.html')}} {{wo('GephiFiles/*CollectName*_CitationsJS.html')}} return false;">Equivalents, Reference (References to other patents or External references), Patents citations networks</a>
         </li>
         {% endif %}
-		{% if Cluster %}
-        <li>
-            <a href="'{{ CollectName }}/{{ CollectName }}-Clust.html" onclick="window.open('{{ CollectName }}/{{ CollectName }}-Clust.html', '_blank');return false;"> P2N Clusterer (Beta)</a>
-        </li>
-        {% endif %}
-    </ul>
     </ul>
     {% if HasFamily %}
     <h2>Families</h2>
@@ -147,11 +136,6 @@
         {% if FormateExportCountryCartography %}
         <li>
             <a href="#" onclick="{{wo('Families*CollectName*Carto.html')}} {{wo('Families*CollectName*CartoApplicant.html')}} {{wo('Families*CollectName*CartoInventor.html')}} return false;">Attractivity: Geolocalisation of patent covering (without EP, WO), Applicants, Inventors (when available) </a>
-        </li>
-        {% endif %}
-        {% if Images %}
-        <li>
-            <a href="#" onclick="{{wo('PatentImages/indexFamilies.html')}} return false;">Images (when available) </a>
         </li>
         {% endif %}
         {% if InventorNetwork or ApplicantNetwork or CrossTechNetwork %}
@@ -172,6 +156,10 @@
     </ul>
     {% endif %}
     <hr>
+	<h2>Clustered abstracts and IPC's</h2>
+	 <li>
+             <a href="#" onclick="{{wo('*CollectName*.html')}} {{wo('*CollectName*-Clust.html')}} return false;">Clusterised views of abstracts and IPC's (Beta)</a>
+	</li>
     <h1>Download data</h1> TIP: use "right-click" and "save as" on links!
     <h2>Patents</h2>
     <section class="subsection">

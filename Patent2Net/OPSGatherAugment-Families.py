@@ -27,7 +27,6 @@ import cPickle
 from P2N_Lib import Update, GetFamilly, flatten
 from P2N_Lib import LoadBiblioFile
 from P2N_Config import LoadConfig
-from config import OPSCredentials
 
 import epo_ops
 import os
@@ -38,8 +37,11 @@ global key
 global secret
 
 # put your credential from epo client in this file...
-c = OPSCredentials(credentials_file='../cles-epo.txt')
-key, secret = c.read()
+
+fic = open('..//cles-epo.txt', 'r')
+key, secret = fic.read().split(',')
+key, secret = key.strip(), secret.strip()
+fic.close()
 
 os.environ['REQUESTS_CA_BUNDLE'] = 'cacert.pem'
 DureeBrevet = 20
@@ -167,15 +169,15 @@ if GatherFamilly:
         ListeBrevetAug = []
         Done = []
     if ficOk and GatherFamilly:
-        ops_client = epo_ops.Client(key, secret)
-    #        data = ops_client.family('publication', , 'biblio')
-        ops_client.accept_type = 'application/json'
+        registered_client = epo_ops.RegisteredClient(key, secret)
+    #        data = registered_client.family('publication', , 'biblio')
+        registered_client.accept_type = 'application/json'
         DejaVu = []
         YetIn = []
         for Brev in ListeBrevet:
 
             if Brev is not None and Brev != '':
-                temp = GetFamilly(ops_client, Brev, ResultContentsPath)
+                temp = GetFamilly(registered_client, Brev, ResultContentsPath)
                 print "... loading ", Brev['label']
                 temp = CleanNones(temp)
                 if temp is not None:

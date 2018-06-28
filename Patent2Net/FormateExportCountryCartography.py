@@ -110,8 +110,8 @@ if IsEnableScript:
         RenderTemplate(
             "ModeleCarto.html",
             ResultPathContent + '//' + ndf+'Carto.html',
-            jsonFile=resJsonName,
-            request=requete.replace('"', ''),
+            ficJson=resJsonName,
+            requete=requete.replace('"', ''),
         )
 
         #due to limit of D3, countries ressources are necessary placed

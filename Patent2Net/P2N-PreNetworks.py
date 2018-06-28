@@ -364,9 +364,8 @@ for prefix in prefixes:
 
 
 
-                        #nx.set_node_attributes(G1,  {'label':Nodes[source]['label'], 'category':Nodes[source]['category']})
-                        G1.add_node(indSRC, label=Nodes[source]['label'], category=Nodes[source]['category'])
-                        G1.add_node(indTGT, label=Nodes[target]['label'], category=Nodes[target]['category'])
+                        G1.add_node(indSRC, attr_dict={'label':Nodes[source]['label'], 'category':Nodes[source]['category']})
+                        G1.add_node(indTGT, attr_dict={'label':Nodes[target]['label'], 'category':Nodes[target]['category']})
                         if Nodes[target]['category'] == 'CitedBy':
                             G1.add_edge(indTGT, indSRC, attr_dict= WeightDyn[(indSRC, indTGT)])# reverse link for citind the patent
 
@@ -385,12 +384,12 @@ for prefix in prefixes:
             AtribDyn[noeud]['end']= AtribDynLab[noeud]['label']['end']
             AtribDyn[noeud]['label']= AtribDynLab[noeud]['label']['label']
        #     Atrib[noeud] = AtribDynLab[noeud]['label']['label']
-        nx.set_node_attributes(G1,  AtribDyn, 'id')
+        nx.set_node_attributes(G1, 'id' , AtribDyn)
 
         Atrib = dict()
         for noeud in AtribDynLab.keys(): # ?????????
             AtribDyn[noeud] = AtribDynLab[noeud]['weight']
             Atrib [noeud] = AtribDynLab[noeud]['weight']['value']
-        nx.set_node_attributes(G1,  AtribDyn, 'weight' )
+        nx.set_node_attributes(G1,  'weight', AtribDyn)
 
         nx.write_gpickle(G1, temporPath+'/'+network+prefix)

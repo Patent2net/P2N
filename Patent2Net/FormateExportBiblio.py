@@ -134,13 +134,7 @@ if IsEnableScript:
                                 resFic.write(u'@Patent{'+entryName+',\n')
                             except UnicodeDecodeError:
                                 resFic.write(u'@Patent{""\n')
-                            if isinstance(Authors, unicode):
-                                resFic.write(u'\t author={' + Authors + '},\n')
-                            else:
-                                try:#arbitrary and uglu 05/2018
-                                    resFic.write(u'\t author={' + Authors.decode('latin1') + '},\n')
-                                except:
-                                    resFic.write(u'\t author={' + Authors.decode('utf8') + '},\n')
+                            resFic.write(u'\t author={' + Authors + '},\n')
                             try:
                                 resFic.write(u"\t title = {"+unicode(bre['title']).capitalize() +"},\n")
                             except: #damm unicode
