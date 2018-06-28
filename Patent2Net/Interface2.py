@@ -129,7 +129,7 @@ RenderTemplate(
     FreePlane=configFile.FreePlane,
     FusionCarrot2=configFile.FusionCarrot2,
     Images=configFile.GatherImages,
-
+    Cluster = configFile.Cluster,
 )
 
 # updating index.js for server side and local menu

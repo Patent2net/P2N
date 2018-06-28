@@ -78,6 +78,6 @@ with open(ResultFolder+'//PatentLists/'+res, 'w') as ficRes:
     print "Fusion done. Total in list: ", BrevetRes["number"]
 with open('..//Fusion'+res +'.txt', 'w') as ficSav:
     ficSav.write(BrevetRes["requete"])
-print "create requete.cql with ", res, " as dataDirectory and setting GatherPatent to False"
+print "create requete.cql with ", res, " as dataDirectory and setting GatherPatent to False (if you don't do this you may have no data and will have to rerun this program)"
 print "Use the following sentence as Request value (writen in Fusion'"+res+".txt file) \n"
 print BrevetRes["requete"]

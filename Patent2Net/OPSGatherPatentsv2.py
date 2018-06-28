@@ -133,7 +133,7 @@ except:
 
     except:
         lstBrevets = []  # gathering all again, I don t know if of serves the same ordered list of patents
-        ficOknd = False
+        ficOk = False
         nbTrouves = 1
 STOP = False
 # else:

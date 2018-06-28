@@ -77,7 +77,7 @@ def calculate_degree(graph):
     '''
     g = graph
     deg = nx.degree(g)
-    nx.set_node_attributes(g,'degree',deg)
+    nx.set_node_attributes(g,dict(deg),'degree')
     return g, deg
 
 def calculate_indegree(graph):
@@ -86,7 +86,7 @@ def calculate_indegree(graph):
     '''
     g = graph
     indeg = g.in_degree()
-    nx.set_node_attributes(g, 'indegree', indeg)
+    nx.set_node_attributes(g, dict(indeg), 'indegree')
     return g, indeg
     
 def calculate_outdegree(graph):
@@ -95,7 +95,7 @@ def calculate_outdegree(graph):
     '''
     g = graph
     outdeg = g.out_degree()
-    nx.set_node_attributes(g, 'outdegree', outdeg)
+    nx.set_node_attributes(g, dict(outdeg), 'outdegree')
     return g, outdeg
 
 def calculate_betweenness(graph):
@@ -103,7 +103,7 @@ def calculate_betweenness(graph):
     '''
     g = graph
     bc=nx.betweenness_centrality(g)
-    nx.set_node_attributes(g,'betweenness',bc)
+    nx.set_node_attributes(g,dict(bc),'betweenness')
     return g, bc
     
 def calculate_eigenvector_centrality(graph):  
@@ -112,7 +112,7 @@ def calculate_eigenvector_centrality(graph):
     '''
     g = graph
     ec = nx.eigenvector_centrality(g)
-    nx.set_node_attributes(g,'eigen_cent',ec)
+    nx.set_node_attributes(g,dict(ec),'eigen_cent')
     #ec_sorted = sorted(ec.items(), key=itemgetter(1), reverse=True)
     return g, ec
 
@@ -122,7 +122,7 @@ def calculate_degree_centrality(graph):
     '''
     g = graph
     dc = nx.degree_centrality(g)
-    nx.set_node_attributes(g,'degree_cent',dc)
+    nx.set_node_attributes(g,dict(dc),'degree_cent')
     degcent_sorted = sorted(dc.items(), key=itemgetter(1), reverse=True)
 #    for key,value in degcent_sorted[0:10]:
 #        print "Highest degree Centrality:", key, value
@@ -156,14 +156,14 @@ def find_partition(graph):
         #for member in members:
             #print member, i
     #print "Partition for node Arnicas: ", partition["arnicas"]
-    nx.set_node_attributes(g,'partition',partition)
+    nx.set_node_attributes(g,partition,'partition')
     return g, partition
      
 def add_partitions_to_digraph(graph, partitiondict):
     ''' Add the partition numbers to a graph - in this case, using this to update the digraph, with partitions calc'd off the undirected graph. Yes, it's a bad hack.
     '''
     g = graph
-    nx.set_node_attributes(g, 'partition', partitiondict)
+    nx.set_node_attributes(g, partitiondict, 'partition')
     nx.info(g)
     return
         

@@ -22,10 +22,10 @@ pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\dist
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionCarrot2.txt FusionCarrot2.py
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt Interface2.py
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt Parallel3.py
-
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionPatentList2.txt FusionPatentList2.py
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --version-file=version-IPC-Abstracts-Augment.txt IPC-Abstracts-Augment.py
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt ClusterPreProcess.py
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --hidden-import sklearn.neighbors.typedefs --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --version-file=version-P2N-ClusterPreProcess.txt ClusterPreProcess.py
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --clean --version-file=version-P2N-Cluster.txt P2N-Cluster.py
 
 
 rmdir /S /Q  ..\tempocomp\FormateExportAttractivityCartography\setuptools-19.2-py2.7.egg
@@ -76,16 +76,17 @@ pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\dist
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportDataTableFamilies.txt ..\specs\FormateExportDataTableFamilies.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportBiblio.txt ..\specs\FormateExportBiblio.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FormateExportCountryCartography.txt ..\specs\FormateExportCountryCartography.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionPatentList2.txt ..\specs\FusionPatentList2.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-FusionCarrot2.txt ..\specs\FusionCarrot2.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Interface2.txt ..\specs\Interface2.spec
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution  -y --noupx --version-file=version-Parallel3.txt ..\specs\Parallel3.spec
 
 pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-IPC-Abstracts-Augment.txt ..\specs\IPC-Abstracts-Augment.spec
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-ClusterPreProcess.txt specs\ClusterPreProcess.spec
-pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --hidden-import sklearn.neighbors.typedefs --version-file=version-P2N-Cluster.txt specs\P2N-Cluster.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-P2N-ClusterPreProcess.txt ..\specs\ClusterPreProcess.spec
+pyinstaller -p . --workpath=..\tempocomp  --specpath=..\specs --distpath=..\distribution -y --noupx --version-file=version-P2N-Cluster.txt ..\specs\P2N-Cluster.spec
+pyinstaller -p . --workpath=..\tempocomp --distpath=..\distribution\Patent2Net --onefile SrvWeb.py
 
 mkdir  ..\distribution\Patent2Net\
-
 xcopy /S /Y ..\distribution\FormateExportAttractivityCartography ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherPatentsv2 ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\OPSGatherContentsV2-Iramuteq ..\distribution\Patent2Net\
@@ -113,7 +114,8 @@ xcopy /S /Y ..\distribution\FormateExportCountryCartography ..\distribution\Pate
 xcopy /S /Y ..\distribution\FusionCarrot2 ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\Interface2 ..\distribution\Patent2Net\
 xcopy /S /Y ..\distribution\Parallel3 ..\distribution\Patent2Net\
-
+xcopy /S /Y ..\distribution\FusionPatentList2 ..\distribution\Patent2Net\
+xcopy /S /Y ..\distribution\SrvWeb.py ..\distribution\Patent2Net\
 
 REM xcopy /S /Y ..\distribution\P2N-FamiliesHierarc ..\distribution\Patent2Net\
 
@@ -172,4 +174,7 @@ rmdir /S /Q ..\distribution\FormateExportCountryCartography
 rmdir /S /Q ..\distribution\FusionCarrot2
 rmdir /S /Q ..\distribution\Interface2
 rmdir /S /Q ..\distribution\Parallel3
-
+rmdir /S /Q ..\distribution\FusionPatentList2
+rmdir /S /Q ..\distribution\IPC-Abstracts-Augment
+rmdir /S /Q ..\distribution\ClusterPreProcess
+rmdir /S /Q ..\distribution\P2N-Cluster

@@ -20,7 +20,7 @@ def SafeOpenWriteRequests(FileName, SavReq, TempoForderReq):
     try:    
         os.remove('..\\requete.cql')
     except:
-        "print should put a request in folder... doing it for you"
+        print ("should put a request in folder... doing it for you")
     command = 'copy /Y ' +FileName +' ..\\requete.cql'
     os.system(command)
     print "done saving requete, replaced by", FileName    
@@ -53,15 +53,15 @@ lstReq = [fic for fic in os.listdir(RequeteFolder) if fic.endswith('cql')]
 #            3.1: ["FusionCarrot2.exe", "FusionIramuteq2.exe"],
 #        4:"Interface2.exe"
 #        }
-Gatherers = ["OPSGatherPatentsv2.exe","OPSGatherAugment-Families.exe", "OPSGatherContentsv2-Iramuteq.exe"]
+Gatherers = ["OPSGatherPatentsv2.exe","OPSGatherAugment-Families.exe", "OPSGatherContentsv2-Iramuteq.exe", "OPSGatherContentsV2-Images.exe"]
 Pretraite1 = "P2N-PreNetworks.exe"
 Traite1 = ["P2N-FreePlane.exe", "FormateExportBiblio.exe", "FormateExportAttractivityCartography.exe",
                   "FormateExportDataTable.exe","FormateExportCountryCartography.exe"]
 NetProc = [ "P2N-Networks.exe", "P2N-NetworksJS.exe" ]
                    # these processing program can be launched after the first gatherer has ended
 Traite2 = ["FormateExportDataTableFamilies.exe", "FormateExportPivotTable.exe"] #same comment with second gatherer
-Traite3 = ["FusionCarrot2.exe", "FusionIramuteq2.exe"] # same again , : this one is preocessed bu gatherContentsV2
-
+Traite3 = ["FusionCarrot2.exe", "FusionIramuteq2.exe", "FusionImages.exe", "IPC-Abstracts-Augment.exe"] # same again , : this one is processed bu gatherContentsV2
+Traite4 = [ "ClusterPreProcess.exe", "P2N-Cluster.exe"]
 Nets = ["CountryCrossTech", "CrossTech", "InventorsCrossTech", "Applicants_CrossTech", "Inventors",
  "ApplicantInventor", "Applicants", "References", "Citations", "Equivalents"]
 
@@ -95,6 +95,7 @@ if __name__ == '__main__':
         traite1 = [command +' >> ErrorsLogs\\' + req.replace('.cql','')+command+'.log' for command in Traite1]
         traite2 = [command +' >> ErrorsLogs\\' + req.replace('.cql','')+command+'.log' for command in Traite2]
         traite3 = [command +' >> ErrorsLogs\\' + req.replace('.cql','')+command+'.log' for command in Traite3]
+        traite4 = [command +' >> ErrorsLogs\\' + req.replace('.cql','')+command+'.log' for command in Traite4]
 
         #QueueGatherer = Pool (processes = 1)
             
@@ -125,9 +126,13 @@ if __name__ == '__main__':
         QueueNets2 = Pool (processes = 2)
         QueueNets2.map(os.system, traite2)
        # iterat.next()
-        QueueNets3 = Pool (processes = 2)
+        QueueNets3 = Pool (processes = 3)
         QueueNets3.map(os.system, traite3)
         os.system('.\\Interface2.exe >> ErrorsLogs\\' + req.replace('.cql','')+NetProc[0] +net+'.log') # last program
+        QueueNets4 = Pool (processes = 1)
+        QueueNets4.map(os.system, traite4)
+        os.system('.\\Interface2.exe >> ErrorsLogs\\' + req.replace('.cql','')+NetProc[0] +net+'.log') # last program
+
 #    for req in lstReq:
         print req, " processed"
         

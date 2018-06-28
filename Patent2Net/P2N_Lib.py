@@ -2098,117 +2098,113 @@ def ExtractPatentsData(patentBib, client, contentPath):
 def GatherPatentsData(brevet, client, ContentsPath, AbstractsPath, PatIgnored, BP):
     from epo_ops.models import Docdb
     from epo_ops.models import Epodoc
-    temp = ('publication', Docdb(brevet[u'document-id'][u'doc-number']['$'],
-                                 brevet[u'document-id'][u'country']['$'], brevet[u'document-id'][u'kind']['$']))
-    # , brevet[u'document-id'][u'kind']['$']))
-    temp2 = ('publication', Epodoc(brevet[u'document-id'][u'country']
-                                   ['$'] + brevet[u'document-id'][u'doc-number']['$']))
-    # nameOfPatent for file system save (abstract, claims...)
-    ndb = brevet[u'document-id'][u'country']['$'] + brevet[u'document-id'][u'doc-number']['$']
+    class Object(object):
+        pass
 
+ 
+    if isinstance(brevet, dict):
+        temp = ('publication', Docdb(brevet[u'document-id'][u'doc-number']['$'],
+                                     brevet[u'document-id'][u'country']['$'], brevet[u'document-id'][u'kind']['$']))
+        # , brevet[u'document-id'][u'kind']['$']))
+        temp2 = ('publication', Epodoc(brevet[u'document-id'][u'country']
+                                       ['$'] + brevet[u'document-id'][u'doc-number']['$']))
+        # nameOfPatent for file system save (abstract, claims...)
+        ndb = brevet[u'document-id'][u'country']['$'] + brevet[u'document-id'][u'doc-number']['$']
+    else:
+        num =brevet[0][2:]
+        kind=brevet[1]
+        country=brevet[0][0:2]
+        temp = ('publication', Docdb(num, country, kind))
+        # , brevet[u'document-id'][u'kind']['$']))
+        temp2 = ('publication', Epodoc(brevet[0]))
+        # nameOfPatent for file system save (abstract, claims...)
+        ndb = brevet[0]
+        brevet = dict()
+        brevet[u'document-id'] = dict()
+        brevet[u'document-id'][u'doc-number'], brevet[u'document-id'][u'country'], brevet[u'document-id'][u'kind'] = dict(),dict(),dict()
+        brevet[u'document-id'][u'doc-number']['$'] = num
+        brevet[u'document-id'][u'country']['$'] = country
+        brevet[u'document-id'][u'kind']['$'] = kind
     try:  # trying Epodoc first, unused due to response format (multi document instead of one only)
         data = client.published_data(*temp2, endpoint='biblio')
         patentBib = data.json()
-        data2 = client.published_data(*temp, endpoint='biblio')
-        if data.ok and data2.ok:
-            patentBibtemp = data.json()
-            patentBibtemp2 = data2.json()
-            # terrible approx here... quantity of data is better !!!!
-            if len(str(patentBibtemp)) > len(str(patentBibtemp2)):
-                patentBib = patentBibtemp                          # should check instead the presence of all fields of data
-            else:
-                patentBib = patentBibtemp2
-        else:
-            print "hum something failed"
     except:
+        data= Object()
+        data.ok = False
+        pass
+    try:
+        data2 = client.published_data(*temp, endpoint='biblio')
+    except:
+        data2= Object()
+        data2.ok = False
+        pass
+    
+    if data.ok and data2.ok:
+        patentBibtemp = data.json()
+        patentBibtemp2 = data2.json()
+        # terrible approx here... quantity of data is better !!!!
+        if len(str(patentBibtemp)) > len(str(patentBibtemp2)):
+            patentBib = patentBibtemp                          # should check instead the presence of all fields of data
+        else:
+            patentBib = patentBibtemp2
+    elif data.ok:
+        patentBib = data.json()
+    elif data2.ok:
+        patentBib = data2.json()
+    else:
+        print "hum something failed"
+    
         print 'patent ignored ', ndb
         PatIgnored += 1
         return None
     # the next line generates an error when debugging line by line (Celso)
-    if data.ok:
+    
         #               hum this is unclear for all situations in OPS... in previous check
         # Gathering citing doc according to this patent
 
-        datEquiv = False  # for equivalents research
-        if isinstance(patentBib[u'ops:world-patent-data'][u'exchange-documents'], dict):
-            if isinstance(patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document'], dict):
-                tempoPat = ProcessBiblio(
-                    patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document'])
+    datEquiv = False  # for equivalents research
+    if isinstance(patentBib[u'ops:world-patent-data'][u'exchange-documents'], dict):
+        if isinstance(patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document'], dict):
+            tempoPat = ProcessBiblio(
+                patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document'])
+            try:
+                # , brevet[u'document-id'][u'kind']['$']))
+                tempo3 = ('publication', Epodoc(tempoPat['label']))
+                dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
+                patentEquiv = dataEquiv.json()
+                dataEquiv = patentEquiv[u'ops:world-patent-data'][u'ops:equivalents-inquiry'][u'ops:inquiry-result']
+                tempoPat['equivalents'] = SearchEquiv(dataEquiv)
+            except:
+
                 try:
-                    # , brevet[u'document-id'][u'kind']['$']))
-                    tempo3 = ('publication', Epodoc(tempoPat['label']))
-                    dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
+                    dataEquiv = client.published_data(
+                        *temp, endpoint='equivalents')  # use DbDoc
                     patentEquiv = dataEquiv.json()
                     dataEquiv = patentEquiv[u'ops:world-patent-data'][u'ops:equivalents-inquiry'][u'ops:inquiry-result']
                     tempoPat['equivalents'] = SearchEquiv(dataEquiv)
                 except:
+                    tempoPat['equivalents'] = 'empty'
+                    print "no equivalents"
+            tempoPat, YetGathered, BP = ExtractPatent(tempoPat, ContentsPath, BP)
+            request = 'ct=' + brevet[u'document-id'][u'country']['$'] + \
+                brevet[u'document-id'][u'doc-number']['$']
 
-                    try:
-                        dataEquiv = client.published_data(
-                            *temp, endpoint='equivalents')  # use DbDoc
-                        patentEquiv = dataEquiv.json()
-                        dataEquiv = patentEquiv[u'ops:world-patent-data'][u'ops:equivalents-inquiry'][u'ops:inquiry-result']
-                        tempoPat['equivalents'] = SearchEquiv(dataEquiv)
-                    except:
-                        tempoPat['equivalents'] = 'empty'
-                        print "no equivalents"
-                tempoPat, YetGathered, BP = ExtractPatent(tempoPat, ContentsPath, BP)
-                request = 'ct=' + brevet[u'document-id'][u'country']['$'] + \
-                    brevet[u'document-id'][u'doc-number']['$']
+            lstCitants, nbCitants = PatentCitersSearch(client, request)
+            tempoPat['CitedBy'] = lstCitants
+            tempoPat['Citations'] = nbCitants
+            MakeIram(tempoPat, ndb, patentBib, AbstractsPath)
+            BP[len(BP) - 1] = tempoPat
+            return BP
 
-                lstCitants, nbCitants = PatentCitersSearch(client, request)
-                tempoPat['CitedBy'] = lstCitants
-                tempoPat['Citations'] = nbCitants
-                MakeIram(tempoPat, ndb, patentBib, AbstractsPath)
-                BP[len(BP) - 1] = tempoPat
-                return BP
-
-            elif isinstance(patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document'], list):
-                for patent in patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document']:
-                    tempoPat = ProcessBiblio(patent)
-
-                    if tempoPat is not None:
-                        try:
-                            # , brevet[u'document-id'][u'kind']['$']))
-                            tempo3 = ('publication', Epodoc(tempoPat['label']))
-
-                            dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
-                            datEquiv = True
-                        except:
-                            try:
-                                # , brevet[u'document-id'][u'kind']['$']))
-                                tempo3 = ('publication', Docdb(
-                                    tempoPat['label'][2:]), tempoPat['country'][0], tempoPat['kind'])
-
-                                dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
-                            except:
-                                print "no equivalents..."
-                        if datEquiv:
-                            patentEquiv = dataEquiv.json()
-                            dataEquiv = patentEquiv[u'ops:world-patent-data'][u'ops:equivalents-inquiry'][u'ops:inquiry-result']
-                            tempoPat['equivalents'] = SearchEquiv(dataEquiv)
-                        else:
-                            tempoPat['equivalents'] = 'empty'
-                        tempoPat, YetGathered, BP = ExtractPatent(tempoPat, ContentsPath, BP)
-                        MakeIram(tempoPat, ndb, patentBib, AbstractsPath)
-                        request = 'ct=' + tempoPat['label']
-
-                        lstCitants, nbCitants = PatentCitersSearch(client, request)
-
-                        tempoPat['CitedBy'] = lstCitants
-                        tempoPat['Citations'] = nbCitants
-                        BP[len(BP) - 1] = tempoPat
-                        return BP
-
-        else:  # list of patents but at upper level GRRRR
-            for patents in patentBib[u'ops:world-patent-data'][u'exchange-documents']:
-                tempoPat = ProcessBiblio(patents[u'exchange-document'])
-                # if None not in tempo.values():
+        elif isinstance(patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document'], list):
+            for patent in patentBib[u'ops:world-patent-data'][u'exchange-documents'][u'exchange-document']:
+                tempoPat = ProcessBiblio(patent)
 
                 if tempoPat is not None:
                     try:
                         # , brevet[u'document-id'][u'kind']['$']))
                         tempo3 = ('publication', Epodoc(tempoPat['label']))
+
                         dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
                         datEquiv = True
                     except:
@@ -2216,6 +2212,7 @@ def GatherPatentsData(brevet, client, ContentsPath, AbstractsPath, PatIgnored, B
                             # , brevet[u'document-id'][u'kind']['$']))
                             tempo3 = ('publication', Docdb(
                                 tempoPat['label'][2:]), tempoPat['country'][0], tempoPat['kind'])
+
                             dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
                         except:
                             print "no equivalents..."
@@ -2226,14 +2223,50 @@ def GatherPatentsData(brevet, client, ContentsPath, AbstractsPath, PatIgnored, B
                     else:
                         tempoPat['equivalents'] = 'empty'
                     tempoPat, YetGathered, BP = ExtractPatent(tempoPat, ContentsPath, BP)
+                    MakeIram(tempoPat, ndb, patentBib, AbstractsPath)
                     request = 'ct=' + tempoPat['label']
+
                     lstCitants, nbCitants = PatentCitersSearch(client, request)
+
                     tempoPat['CitedBy'] = lstCitants
                     tempoPat['Citations'] = nbCitants
                     BP[len(BP) - 1] = tempoPat
                     return BP
+
+    else:  # list of patents but at upper level GRRRR
+        for patents in patentBib[u'ops:world-patent-data'][u'exchange-documents']:
+            tempoPat = ProcessBiblio(patents[u'exchange-document'])
+            # if None not in tempo.values():
+
+            if tempoPat is not None:
+                try:
+                    # , brevet[u'document-id'][u'kind']['$']))
+                    tempo3 = ('publication', Epodoc(tempoPat['label']))
+                    dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
+                    datEquiv = True
+                except:
+                    try:
+                        # , brevet[u'document-id'][u'kind']['$']))
+                        tempo3 = ('publication', Docdb(
+                            tempoPat['label'][2:]), tempoPat['country'][0], tempoPat['kind'])
+                        dataEquiv = client.published_data(*tempo3, endpoint='equivalents')
+                    except:
+                        print "no equivalents..."
+                if datEquiv:
+                    patentEquiv = dataEquiv.json()
+                    dataEquiv = patentEquiv[u'ops:world-patent-data'][u'ops:equivalents-inquiry'][u'ops:inquiry-result']
+                    tempoPat['equivalents'] = SearchEquiv(dataEquiv)
                 else:
-                    return
+                    tempoPat['equivalents'] = 'empty'
+                tempoPat, YetGathered, BP = ExtractPatent(tempoPat, ContentsPath, BP)
+                request = 'ct=' + tempoPat['label']
+                lstCitants, nbCitants = PatentCitersSearch(client, request)
+                tempoPat['CitedBy'] = lstCitants
+                tempoPat['Citations'] = nbCitants
+                BP[len(BP) - 1] = tempoPat
+                return BP
+            else:
+                return
 
 
 def byteify(input):
@@ -2745,13 +2778,17 @@ def PatentCitersSearch(client, requete, deb=1, fin=1):
 def PatentSearch(client, requete, deb=1, fin=1):
     # requete = requete.replace('/', '\\') #hum changed here for IPC search...
     # dont know repercutions... 15/09/2015
-    data = client.published_data_search(requete, deb, fin)
+    try:
+        data = client.published_data_search(requete, deb, fin)
+    except:
+        print 
+        
     Brevets = []
 
     if data.ok:
         data = data.json()
         nbTrouv = int(data[u'ops:world-patent-data'][u'ops:biblio-search'][u'@total-result-count'])
-        if nbTrouv > 0:
+        if nbTrouv > 0 and u'ops:publication-reference' in data[u'ops:world-patent-data'][u'ops:biblio-search'][u'ops:search-result'].keys():
             patents = data[u'ops:world-patent-data'][u'ops:biblio-search'][u'ops:search-result'][u'ops:publication-reference']
             if isinstance(patents, list):
                 for k in patents:
@@ -2762,7 +2799,8 @@ def PatentSearch(client, requete, deb=1, fin=1):
                 if patents not in Brevets:
                     Brevets.append(patents)
     else:
-        print "no result"
+        print "no result :", requete
+        nbTrouv = 0
         Brevets = []
         # return None
     return Brevets, nbTrouv

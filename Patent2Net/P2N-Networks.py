@@ -298,32 +298,34 @@ for prefix in prefixes:
 
                     lig = lig.replace('id="{', '')
                     lig = lig.replace("'id': ", 'id="')
-                    ind1 = lig.index(", 'label'")
-                    ind2 = lig[ind1:].index(" label")+ind1
-                    memo = lig[ind1:ind2]
-                    lig = lig.replace(memo, '"')
+#                    ind1 = lig.index(", 'label'") commented 20/06/2018
+#                    ind2 = lig[ind1:].index(" label")+ind1
+#                    memo = lig[ind1:ind2]
+#                    lig = lig.replace(memo, '"')
     #                if lig.count('attvalue')>0 and lig.count('for="1"')>0:
     #                    lig = lig.replace('" />', " />")
-                if lig.count('<edge')>0 and lig.count('<edges>')==0:
-                    ind1 = lig.index('start=')
-                    ind2 = lig[ind1:].index(" 'id': ")+ind1
-                    memo = lig[ind1:ind2]
-                    lig = lig.replace(lig[ind1:ind2+7], '')
-                    lig = lig.replace('target="{', 'target="')
-                    lig = lig.replace('source="{', 'source="')
-
-                    ind = lig.index(", 'label")
-                    ind2 = lig[ind:].index('target') + ind
-                    lig = lig.replace(lig[ind:ind2], '" ')
-                    ind = lig.index(", 'label")
-                    ind2 = lig[ind:].index('">') + ind+2
-                    lig = lig.replace(lig[ind:ind2], '" '+ memo +' >')
-                    if lig.count('start') ==2:
-                        ind= lig.index('target')
-                        ind2= lig[ind+14:].index(": ")
-                        lig = lig.replace(lig[ind: 14+len(lig[:ind])+ind2+2], 'target="')
+                #♠if lig.count('<edge')>0 and lig.count('<edges>')==0:
+#                    ind1 = lig.index('start=')
+#                    ind2 = lig[ind1:].index(" 'id': ")+ind1
+#                    memo = lig[ind1:ind2]
+#                    lig = lig.replace(lig[ind1:ind2+7], '')
+#                    lig = lig.replace('target="{', 'target="')
+#                    lig = lig.replace('source="{', 'source="')
+#
+#                    ind = lig.index(", 'label")
+#                    ind2 = lig[ind:].index('target') + ind
+#                    lig = lig.replace(lig[ind:ind2], '" ')
+#                    ind = lig.index(", 'label")
+#                    ind2 = lig[ind:].index('">') + ind+2
+#                    lig = lig.replace(lig[ind:ind2], '" '+ memo +' >')
+#                    if lig.count('start') ==2:
+#                        ind= lig.index('target')
+#                        ind2= lig[ind+14:].index(": ")
+#                        lig = lig.replace(lig[ind: 14+len(lig[:ind])+ind2+2], 'target="')
                 if lig.count('attvalue')>0 and lig.count('for="1"')>0:
                     lig = lig.replace("""'\" />""", "' />")
+                if lig.count('attvalue')>0:
+                    lig = lig.replace("""'" /""", """'/""")
     #                    lig = lig.replace("'id': ", 'source="', 1)
     #                    lig = lig.replace("id': ", 'target="',1)
     #                    ind1 = lig.index("end='")
