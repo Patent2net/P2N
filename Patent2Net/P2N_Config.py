@@ -125,7 +125,10 @@ class P2NConfig:
             self.ResultPathImages,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             self.ResultClusterPath,
+=======
+>>>>>>> 0c6bea052fd5faeeb1e88a0ff77251d1bdb208e9
 =======
 >>>>>>> 0c6bea052fd5faeeb1e88a0ff77251d1bdb208e9
 =======
