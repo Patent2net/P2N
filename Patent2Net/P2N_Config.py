@@ -36,8 +36,7 @@ class P2NConfig:
 
         self.FreePlane = False
         self.FusionCarrot2 = False
-        self.Cluster = False
-		
+
         # opening request file, reading parameters
         content = self.readInputFile()
 
@@ -95,8 +94,7 @@ class P2NConfig:
                 self.FreePlane = self.getBoolean(line)
             elif line.count('FusionCarrot2') > 0:
                 self.FusionCarrot2 = self.getBoolean(line)
-            elif line.count('P2N-Cluster') > 0:
-                self.Cluster = self.getBoolean(line)
+
         self.generatePaths()
 
     def readInputFile(self):
@@ -107,16 +105,15 @@ class P2NConfig:
         return open("..//requete.cql", "r").readlines()
 
     def generatePaths(self):
-        self.ResultPath = os.path.join(self.GlobalPath, self.ndf)
-        self.ResultListPath = self.ResultPath + '//PatentLists'
-        self.ResultBiblioPath = self.ResultPath + '//PatentBiblios'
-        self.ResultContentsPath = self.ResultPath + '//PatentContents'
-        self.temporPath = self.ResultPath + '//tempo'
-        self.ResultAbstractPath = self.ResultContentsPath + '//Abstract'
-        self.ResultFamiliesAbstractPath = self.ResultContentsPath + '//FamiliesAbstract'
-        self.ResultGephiPath = self.ResultPath + '//GephiFiles'
-        self.ResultPathImages = self.ResultPath + '//PatentImages'
-        self.ResultClusterPath =  self.ResultContentsPath+'//Metrics'
+        self.ResultPath = os.path.normpath(os.path.join(self.GlobalPath, self.ndf))
+        self.ResultListPath = os.path.normpath(self.ResultPath + '//PatentLists')
+        self.ResultBiblioPath = os.path.normpath(self.ResultPath + '//PatentBiblios')
+        self.ResultContentsPath = os.path.normpath(self.ResultPath + '//PatentContents')
+        self.temporPath = os.path.normpath(self.ResultPath + '//tempo')
+        self.ResultAbstractPath = os.path.normpath(self.ResultContentsPath + '//Abstract')
+        self.ResultFamiliesAbstractPath = os.path.normpath(self.ResultContentsPath + '//FamiliesAbstract')
+        self.ResultGephiPath = os.path.normpath(self.ResultPath + '//GephiFiles')
+        self.ResultPathImages = os.path.normpath(self.ResultPath + '//PatentImages')
         for path in [
             self.ResultListPath,
             self.ResultBiblioPath,
@@ -127,11 +124,14 @@ class P2NConfig:
             self.ResultGephiPath,
             self.ResultPathImages,
 <<<<<<< HEAD
+<<<<<<< HEAD
             self.ResultClusterPath,
 =======
-			self.ResultClusterPath,
->>>>>>> ecff9f3634ee81680e4e48145ab39ba3a72ea734
+>>>>>>> 0c6bea052fd5faeeb1e88a0ff77251d1bdb208e9
+=======
+>>>>>>> 0c6bea052fd5faeeb1e88a0ff77251d1bdb208e9
         ]:
+            
             if not os.path.isdir(path):
                 os.makedirs(path)
 
@@ -148,4 +148,3 @@ class P2NConfig:
 
 def LoadConfig():
     return P2NConfig()
-

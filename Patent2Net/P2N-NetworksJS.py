@@ -41,7 +41,7 @@ if len(sys.argv)<2 or sys.argv[1] not in Nets:
     sys.exit()
 else:
     Nets.remove(sys.argv[1])
-    if len(sys.argv) < 3:
+    if len(sys.argv) == 2:
         visu = 'neato'
     else:
         visu = sys.argv[2]
@@ -104,8 +104,8 @@ for prefix in prefixes:
     #arbiutrary
         G.graph['mode'] = "static"
         for k in G.nodes(): #statifying
-                G.nodes(data=True)[k]['id'] = G.nodes(data=True)[k]['id']['id']
-                G.nodes(data=True)[k]['weight'] = G.nodes(data=True)[k]['weight']['value']
+                G.nodes(data=True)[k][1].pop('id', None)
+                G.nodes(data=True)[k][1]['weight'] = G.nodes(data=True)[k][1]['weight']['value']
         G, deg = calculate_degree(G)
         G, bet = calculate_betweenness(G)
 
@@ -261,8 +261,7 @@ for prefix in prefixes:
 
         #        Visu['size'] = (G.node[k]["degree"]*1.0)#(G.node[k]["degree"]*1.0/Maxdegs)*150#(G.node[k]["weight"]) /MaxWeight #addd 1 for viewiong all...
             #Visu['size'] = (G.node[k]["degree"]*zoom) +1 #(G.node[k]["weight"]) /MaxWeight #addd 1 for viewiong all...
-            maxVal= max([G.degree[truc[0]] for truc in G.degree])
-            Visu['size'] = G.degree[k]*10.0/maxVal +4
+            Visu['size'] = G.node[k]["degree"]*10.0/max(G.degree().values()) +4
         #        Visu['size'] = np.log(int(G.node[k]["weight"])+1)*zoom+1#
             for cle in Visu.keys():
                 G.node[k]['viz'][cle] = Visu[cle]
