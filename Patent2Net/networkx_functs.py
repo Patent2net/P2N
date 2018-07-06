@@ -12,6 +12,9 @@ includes reading in edgelists, calculations on networks, adding attributes to no
 
 Does not include any  for error conditions, use at own risk!
 Run on Python 2.7 and NetworkX 1.6
+
+2018: seem that set.node_attributes has inverted the position of parameters:
+    (Net, label, values)
 '''
 
 import networkx as nx    # using 1.6, from http://networkx.lanl.gov/ 
@@ -77,7 +80,10 @@ def calculate_degree(graph):
     '''
     g = graph
     deg = nx.degree(g)
-    nx.set_node_attributes(g,'degree',deg)
+    dico = dict() #adapting for networkx 2.0
+    for nod, val in list(deg):
+        dico[nod] = val
+    nx.set_node_attributes(g, dico ,'degree')
     return g, deg
 
 def calculate_indegree(graph):
@@ -86,7 +92,10 @@ def calculate_indegree(graph):
     '''
     g = graph
     indeg = g.in_degree()
-    nx.set_node_attributes(g, 'indegree', indeg)
+    dico = dict() #adapting for networkx 2.0
+    for nod, val in list(indeg):
+        dico[nod] = val
+    nx.set_node_attributes(g, dico,'indegree')
     return g, indeg
     
 def calculate_outdegree(graph):
@@ -95,7 +104,10 @@ def calculate_outdegree(graph):
     '''
     g = graph
     outdeg = g.out_degree()
-    nx.set_node_attributes(g, 'outdegree', outdeg)
+    dico = dict() #adapting for networkx 2.0
+    for nod, val in list(deg):
+        dico[nod] = val
+    nx.set_node_attributes(g,  dico,'outdegree')
     return g, outdeg
 
 def calculate_betweenness(graph):
@@ -103,7 +115,7 @@ def calculate_betweenness(graph):
     '''
     g = graph
     bc=nx.betweenness_centrality(g)
-    nx.set_node_attributes(g,'betweenness',bc)
+    nx.set_node_attributes(g,bc, 'betweenness')
     return g, bc
     
 def calculate_eigenvector_centrality(graph):  
@@ -112,7 +124,7 @@ def calculate_eigenvector_centrality(graph):
     '''
     g = graph
     ec = nx.eigenvector_centrality(g)
-    nx.set_node_attributes(g,'eigen_cent',ec)
+    nx.set_node_attributes(g,ec, 'eigen_cent')
     #ec_sorted = sorted(ec.items(), key=itemgetter(1), reverse=True)
     return g, ec
 
@@ -122,7 +134,7 @@ def calculate_degree_centrality(graph):
     '''
     g = graph
     dc = nx.degree_centrality(g)
-    nx.set_node_attributes(g,'degree_cent',dc)
+    nx.set_node_attributes(g,dc,'degree_cent')
     degcent_sorted = sorted(dc.items(), key=itemgetter(1), reverse=True)
 #    for key,value in degcent_sorted[0:10]:
 #        print "Highest degree Centrality:", key, value

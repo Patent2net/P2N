@@ -1,14 +1,12 @@
 ﻿# Patent2Net configuration file
 ##############################
-# This example treat of around 10 patents containing the word "lentille"
-# very restrictive example, that has no sense, but just 10 patents... Quick test
-##############################
-# the "patents universe" corresponding to the request
+# request
 # insert below your request in cql format as done in the example
-request: ta="filter*" and ta="drink* water" AND (pn = U not (pn = UA or pn = US or pn = UY))
+request: TA="lentille"
 
-###############################
-# Name of files OR directories
+##############################
+# Directory to use
+# insert a compliant name (no space or special characters) for the "Patent Universe" (PU)
 DataDirectory: respirator
 
 ###############################
@@ -23,13 +21,13 @@ GatherBiblio: True
 
 # patent content (description, abstract, claims) completing patents bibliographic data
 GatherContent: True
-OPSGatherContentsv2-Iramuteq: False
-
-# Patent images
-OPSGatherContentsV2-Images:True
+OPSGatherContentsv2-Iramuteq: True
 
 #patents families extending the PU to families
 GatherFamilly: True
+
+#NEW 2018: images
+GatherImages: True
 
 ###############################
 # Networks. Produce both online and for download and local use of Gephi
@@ -80,7 +78,7 @@ FormateExportBiblio: True
 
 ###############################
 # Produce the world maps of inventors, applicants, deposit country
-FormateExportAttractivityCartography: True
+FormateExportAttractivityCartography: False
 FormateExportCountryCartography: True
 
 ###############################
@@ -97,4 +95,9 @@ FormateExportPivotTable: True
 # for download and local use of Carrot2 and Iramuteq
 FusionCarrot2: True
 FusionIramuteq2: True
+
+###############################
+# NEW Feature (BETA)
+# Double clustering system based on non so trivial words
+P2N-Cluster: True
 
