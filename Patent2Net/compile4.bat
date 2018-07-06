@@ -146,9 +146,20 @@ xcopy /S /Y extensions ..\distribution\Patent2Net\extensions
 xcopy /S /Y media ..\distribution\Patent2Net\media
 mkdir ..\distribution\RequestsSet
 copy /y *.info ..\distribution\
-del *.info
+
+mkdir ..\distribution\REQUESTS
+
+copy /y Process.bat ..\distribution\Patent2Net
+
+copy /y GatherProcess.bat  
+..\distribution\Patent2Net
+
+copy /y NetsProcess.bat  ..\distribution\Patent2Net
+
+copy /y FormatingProcess.bat  ..\distribution\Patent2Net
 
 REM cleaning
+del *.info
 rmdir /S /Q ..\distribution\FormateExportAttractivityCartography
 rmdir /S /Q ..\distribution\OPSGatherPatentsv2
 rmdir /S /Q ..\distribution\OPSGatherContentsV2-Iramuteq
