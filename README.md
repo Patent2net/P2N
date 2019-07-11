@@ -1,4 +1,8 @@
-     _____      _             _     ___    _   _      _           _____   ___    _   _ 
+  #Note: this is the old version. Please look forward the amazing [python 3.6+ version](https://github.com/Patent2net/P2N-v3)
+  No binary version, full python. Less buggy, fastest and many new features. 
+   
+   
+   _____      _             _     ___    _   _      _           _____   ___    _   _ 
     |  __ \    | |           | |   |__ \  | \ | |    | |      /  |  __ \ |__ \  | \ | | \
     | |__) |_ _| |_ ___ _ __ | |_     ) | |  \| | ___| |_    /   | |__) |   ) | |  \| |  \
     |  ___/ _` | __/ _ \ '_ \| __|   / /  | . ` |/ _ \ __|   |   |  ___/   / /  | . ` |   |
