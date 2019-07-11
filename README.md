@@ -1,4 +1,4 @@
-  #Note: this is the old version. Please look forward the amazing [python 3.6+ version](https://github.com/Patent2net/P2N-v3)
+  #Note: this is the old version. Please look forward the amazing [python 3.6+ version P2N-V3](https://github.com/Patent2net/P2N-v3)
   No binary version, full python. Less buggy, fastest and many new features. 
    
    
